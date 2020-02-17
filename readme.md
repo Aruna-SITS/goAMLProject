@@ -29,7 +29,7 @@ This README would normally document whatever steps are necessary to get your app
 * Other community or team contact
 
 #### Maven Build ###
-mvn clean install -DskipTests -Dbasedir=/home/viranga/projects/iaml -Dapps.config.root=/usr/apps/iaml
+mvn clean install -DskipTests -Dbasedir=~/projects/iaml
 
 
 #### please use follow as your VM parameter
