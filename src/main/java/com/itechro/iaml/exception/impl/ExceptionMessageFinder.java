@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@PropertySource("classpath:error_messages.properties")
+
 public class ExceptionMessageFinder {
 
     @Autowired
