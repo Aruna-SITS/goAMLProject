@@ -45,6 +45,7 @@ public class CTRJdbcDao extends BaseJDBCDao {
         Map<String, Object> params = new HashMap<>();
         StringBuilder SQL = new StringBuilder();
         SQL.append("SELECT * FROM L01_TRANSACTIONS");
+        SQL.append("  WHERE ROWNUM <101  "); //TODO :remove this where
         SQL.append(" ORDER BY TRAN_UID");
 
         return namedParameterJdbcTemplate.query(SQL.toString(), params, new ResultSetExtractor<HashMap<Integer, TransactionDTO>>() {

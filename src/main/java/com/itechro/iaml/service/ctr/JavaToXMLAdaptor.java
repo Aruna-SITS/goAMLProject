@@ -105,7 +105,7 @@ public class JavaToXMLAdaptor {
             FromToMappingDTO to = reportDTO.getTransactionTo();
 
 
-            if(from!=null){
+            if (from != null) {
                 TForeignCurrency fromForeignCurrency = factory.createTForeignCurrency();
 
                 if (from.getForeignCurrencyCode() != null) {
@@ -155,7 +155,6 @@ public class JavaToXMLAdaptor {
                         EntityNonClientDTO entityNonClient = from.getEntityNonClientDTO();
                         TEntity tEntity = factory.createTEntity();
                         tEntity.setName(entityNonClient.getName());
-                        //tEntity.setCommercialName(entityNonClient.get()); No column
                         tEntity.setIncorporationCountryCode(entityNonClient.getCountryCode());
                         tEntity.setIncorporationNumber(entityNonClient.getIncorporationNumber());
                         tFrom.setFromEntity(tEntity);
@@ -163,17 +162,16 @@ public class JavaToXMLAdaptor {
 
                         PersonNonClientDTO personNonClient = from.getPersonNonClientDTO();
                         TPerson tPerson = getTPerson(factory, from);
-                        //Other Columns are not available
                         tFrom.setFromPerson(tPerson);
                     } else {
                         LOG.error("The From Details invalid " + from.getTransactionType());
                     }
                     xmlTransaction.setTFrom(tFrom);
                 }
-            }else{
+            } else {
                 LOG.error("Transaction from details not found ");
             }
-            if(to!=null){
+            if (to != null) {
                 TForeignCurrency toForeignCurrency = factory.createTForeignCurrency();
                 if (to.getTransactionType().equals(applicationProperties.getToMyClient())) {
                     Report.Transaction.TToMyClient tToMyClient = factory.createReportTransactionTToMyClient();
@@ -220,22 +218,19 @@ public class JavaToXMLAdaptor {
                         EntityNonClientDTO entityNonClient = to.getEntityNonClientDTO();
                         TEntity tEntity = factory.createTEntity();
                         tEntity.setName(entityNonClient.getName());
-                        //tEntity.setCommercialName(entityNonClient.get()); No column
-                        //Other columns are not available
                         tEntity.setIncorporationCountryCode(entityNonClient.getCountryCode());
                         tEntity.setIncorporationNumber(entityNonClient.getIncorporationNumber());
                         tTo.setToEntity(tEntity);
                     } else if (to.getPersonNonClientDTO() != null) {
 
                         TPerson tPerson = getTPerson(factory, to);
-                        //Other Columns are not available
                         tTo.setToPerson(tPerson);
                     } else {
                         LOG.error("The To Details invalid " + to.getTransactionType());
                     }
                     xmlTransaction.setTTo(tTo);
                 }
-            }else{
+            } else {
                 LOG.error("Transaction to details not found ");
             }
 
@@ -249,41 +244,98 @@ public class JavaToXMLAdaptor {
         PersonNonClientDTO personNonClient = to.getPersonNonClientDTO();
         TPerson tPerson = factory.createTPerson();
         tPerson.setGender(personNonClient.getGender());
-        tPerson.setTitle(factory.createTPersonTitle(personNonClient.getTitle()));
+        if (personNonClient.getTitle() != null) {
+            tPerson.setTitle(factory.createTPersonTitle(personNonClient.getTitle()));
+        }
         tPerson.setFirstName(personNonClient.getFirstName());
         tPerson.setLastName(personNonClient.getLastName());
-        tPerson.setBirthdate(getXMLGregorianCalendarFromDate(personNonClient.getBirthDate()));
+        if (personNonClient.getBirthDate() != null) {
+            tPerson.setBirthdate(getXMLGregorianCalendarFromDate(personNonClient.getBirthDate()));
+        }
         tPerson.setIdNumber(personNonClient.getIdNumber());
         return tPerson;
     }
 
     //To map Account my client to xml TAccountMyClient
     private TAccountMyClient getTAccountMyClient(ObjectFactory factory, FromToMappingDTO from) {
+
         AccountsDTO accounts = from.getAccountsDTO();
         TAccountMyClient tAccountMyClient = factory.createTAccountMyClient();
+
         tAccountMyClient.setInstitutionName(accounts.getInstituationName());
         tAccountMyClient.setInstitutionCode(accounts.getInstitutionCode());
         tAccountMyClient.setSwift(accounts.getSwift());
-        //tAccountMyClient.setNonBankInstitution();//No Related Columns
         tAccountMyClient.setBranch(accounts.getBranch());
         tAccountMyClient.setAccount(accounts.getAccount());
         tAccountMyClient.setCurrencyCode(accounts.getCurrencyCode());
         tAccountMyClient.setAccountName(accounts.getAccountName());
-        //tAccountMyClient.setIban(); No Related Columns
-        //tAccountMyClient.setClientNumber(); No Related Columns
-        //tAccountMyClient.setPersonalAccountType(); No Related Columns
 
-//-------------------------------------------- Need to set Data---------------------------------------------------
+        if(from.getAccountsDTO().getEntitiesDTO()!=null){
+            FromToMappingDTO aTemp=new FromToMappingDTO();
+            aTemp.setEntitiesDTO(accounts.getEntitiesDTO());
+            tAccountMyClient.setTEntity(getTEntityMyClient(factory,aTemp));
+        }
+
         if (accounts.getRelatedPartyDTO() != null) {
             Iterator<RelatedPartyDTO> relatedPartyIterator = accounts.getRelatedPartyDTO().iterator();
 
             while (relatedPartyIterator.hasNext()) {
+
                 TAccountMyClient.Signatory signatory = factory.createTAccountMyClientSignatory();
+
                 RelatedPartyDTO relatedParty = relatedPartyIterator.next();
+
                 signatory.setRole(relatedParty.getRole());
                 signatory.setIsPrimary(relatedParty.getIsPrimary());
                 if (personMap.containsKey(from.getCifId())) {
-                    signatory.setTPerson(getTPersonMyClient(factory, personMap.get(from.getCifId())));
+                    PersonDTO person = personMap.get(from.getCifId());
+
+                    if (personalIdentificationMap.containsKey(person.getCifId())) {
+                        person.setPersonIdentificationDTO(personalIdentificationMap.get(person.getCifId()));
+                    } else {
+                        LOG.error("Transaction CIF_ID : " + person.getCifId() + " Personal Identification Details not found");
+                    }
+                    if (phoneMap.containsKey(person.getCifId()) && person.getCifId() != null) {
+                        person.setPhoneDTO(phoneMap.get(person.getCifId()));
+                    }
+                    if (person.getCifId() != null && addressMap.containsKey(person.getCifId())) {
+                        person.setAddressDTO(addressMap.get(person.getCifId()));
+                    }
+
+                    TPersonMyClient tPersonMyClient = getTPersonMyClient(factory, person);
+
+                    if (person.getPhoneDTO() != null) {
+                        Iterator<PhoneDTO> phoneIterator = person.getPhoneDTO().iterator();
+                        TPersonMyClient.Phones phones = factory.createTPersonMyClientPhones();
+                        setPhoneToXML(factory, phoneIterator, phones.getPhone());
+                        tPersonMyClient.setPhones(phones);
+                    }
+
+                    if (person.getAddressDTO() != null) {
+                        TPersonMyClient.Addresses addresses = factory.createTPersonMyClientAddresses();
+                        Iterator<AddressDTO> addressIterator = person.getAddressDTO().iterator();
+                        setAddressToXML(factory, addressIterator, addresses.getAddress());
+                    }
+
+                    if(person.getCifId()=="301569373"){
+                        LOG.error("");
+                    }
+                    if(person.getPersonIdentificationDTO()!=null){
+                        PersonIdentificationDTO personIdentification=person.getPersonIdentificationDTO();
+                        TPersonIdentification tPersonIdentification=factory.createTPersonIdentification();
+                        tPersonIdentification.setType(personIdentification.getIdentificationType());
+                        tPersonIdentification.setNumber(personIdentification.getNumber());
+                        if(personIdentification.getIssueDate()!=null){
+                            tPersonIdentification.setIssueDate(getXMLGregorianCalendarFromDate(personIdentification.getIssueDate()));
+                        }
+                        if(personIdentification.getExpiryDate()!=null){
+                            tPersonIdentification.setExpiryDate(getXMLGregorianCalendarFromDate(personIdentification.getExpiryDate()));
+                        }
+                        tPersonIdentification.setIssuedBy(personIdentification.getIssuedBy());
+                        tPersonIdentification.setIssueCountry(personIdentification.getIssueCountry());
+                        tPersonIdentification.setComments(personIdentification.getComment());
+                    }
+                    signatory.setTPerson(tPersonMyClient);
                 } else {
                     LOG.error("Valid Person Not found for the Signatory CIF ID " + from.getCifId() + " Transaction Number " + from.getTransId());
                 }
@@ -291,21 +343,26 @@ public class JavaToXMLAdaptor {
             }
         }
 
+        if (accounts.getOpened() != null) {
+            tAccountMyClient.setOpened(getXMLGregorianCalendarFromDate(accounts.getOpened()));
+        }
+        if (accounts.getClosed() != null) {
+            tAccountMyClient.setClosed(getXMLGregorianCalendarFromDate(accounts.getClosed()));
+        }
 
-//----------------------------------------------------------------------------------------------------------------
-        tAccountMyClient.setOpened(getXMLGregorianCalendarFromDate(accounts.getOpened()));
-        tAccountMyClient.setClosed(getXMLGregorianCalendarFromDate(accounts.getClosed()));
-        //tAccountMyClient.setBalance(BigDecimal.valueOf()); No Related Columns
-        //tAccountMyClient.setDateBalance(); No Related Columns
         tAccountMyClient.setStatusCode(accounts.getStatusCode());
-
-        tAccountMyClient.setBeneficiary(factory.createTAccountBeneficiary(accounts.getBeneficiary()));
-        tAccountMyClient.setBeneficiaryComment(factory.createTAccountBeneficiaryComment(accounts.getComments()));
+        if (accounts.getBeneficiary() != null) {
+            tAccountMyClient.setBeneficiary(factory.createTAccountBeneficiary(accounts.getBeneficiary()));
+        }
+        if (accounts.getBeneficiaryComment() != null) {
+            tAccountMyClient.setBeneficiaryComment(factory.createTAccountBeneficiaryComment(accounts.getComments()));
+        }
         tAccountMyClient.setComments(accounts.getComments());
         return tAccountMyClient;
     }
 
     private TEntityMyClient getTEntityMyClient(ObjectFactory factory, FromToMappingDTO to) {
+
         EntitiesDTO entities = to.getEntitiesDTO();
         TEntityMyClient tEntityMyClient = factory.createTEntityMyClient();
 
@@ -328,13 +385,18 @@ public class JavaToXMLAdaptor {
             tEntityMyClient.setAddresses(addresses);
         }
 
-        tEntityMyClient.setEmail(entities.getEmail());
-        //tEntityMyClient.setUrl(factory.createTEntityUrl()); no columns
-        //tEntityMyClient.setIncorporationState();No columns
+        if (entities.getEmail() != null) {
+            tEntityMyClient.setEmail(entities.getEmail());
+        }
+
         tEntityMyClient.setIncorporationCountryCode(entities.getIncorporationCountryCode());
-        tEntityMyClient.setIncorporationDate(getXMLGregorianCalendarFromDate(entities.getIncorporationDate()));
+        if (entities.getIncorporationDate() != null) {
+            tEntityMyClient.setIncorporationDate(getXMLGregorianCalendarFromDate(entities.getIncorporationDate()));
+        }
         tEntityMyClient.setBusinessClosed(Boolean.valueOf(entities.getBusinessClosed()));
-        tEntityMyClient.setDateBusinessClosed(getXMLGregorianCalendarFromDate(entities.getDateBusinessClosed()));
+        if (entities.getDateBusinessClosed() != null) {
+            tEntityMyClient.setDateBusinessClosed(getXMLGregorianCalendarFromDate(entities.getDateBusinessClosed()));
+        }
         tEntityMyClient.setTaxNumber(entities.getTaxNumber());
         tEntityMyClient.setTaxRegNumber(entities.getTaxRegNumber());
         return tEntityMyClient;
@@ -360,16 +422,15 @@ public class JavaToXMLAdaptor {
         TPersonMyClient tPersonMyClient = factory.createTPersonMyClient();
 
         tPersonMyClient.setGender(person.getGender());
-        tPersonMyClient.setTitle(factory.createTPersonTitle(person.getTitle()));
+        if (person.getTitle() != null) {
+            tPersonMyClient.setTitle(factory.createTPersonTitle(person.getTitle()));
+        }
         tPersonMyClient.setFirstName(person.getFirstName());
         tPersonMyClient.setLastName(person.getLastName());
         tPersonMyClient.setLastName(person.getLastName());
-        tPersonMyClient.setBirthdate(getXMLGregorianCalendarFromDate(person.getBirthDate()));
-        //tPersonMyClient.setBirthPlace(perso); No Columns
-        //tPersonMyClient.setAlias(perso); No Columns
-        //tPersonMyClient.setSsn(); No Columns
-        //tPersonMyClient.setPassportNumber(); No Columns
-        //tPersonMyClient.setPassportNumber(); No Columns
+        if (person.getBirthDate() != null) {
+            tPersonMyClient.setBirthdate(getXMLGregorianCalendarFromDate(person.getBirthDate()));
+        }
         tPersonMyClient.setIdNumber(person.getIdNumber());
         tPersonMyClient.setNationality1(person.getNationality1());
         tPersonMyClient.setNationality2(person.getNationality2());
@@ -389,16 +450,10 @@ public class JavaToXMLAdaptor {
             setAddressToXML(factory, addressIterator, addresses.getAddress());
             tPersonMyClient.setAddresses(addresses);
         }
-        tPersonMyClient.getEmail().add(person.getEmail());//The actual email format should be a list
+        if (person.getEmail() != null) {
+            tPersonMyClient.getEmail().add(person.getEmail());//The actual email format should be a list
+        }
         tPersonMyClient.setOccupation(person.getOccupation());
-        //tPersonMyClient.setEmployerName(person.getOccupation()); No Column
-        //tPersonMyClient.setEmployerAddressId();
-        //tPersonMyClient.setEmployerPhoneId();
-        //tPersonMyClient.setDeceased();
-        //tPersonMyClient.setDateDeceased();
-        //tPersonMyClient.setTaxNumber();
-        //tPersonMyClient.setTaxNumber();
-        //tPersonMyClient.setSourceOfWealth();
         tPersonMyClient.setComments(person.getComments());
         return tPersonMyClient;
     }
@@ -499,14 +554,41 @@ public class JavaToXMLAdaptor {
         } else if (transactionFromOrTo.getAcctNumber() != null) {
 
             LOG.info("Account Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
+            if (accountsMap.containsKey(transactionFromOrTo.getAcctNumber())) {
+                transactionFromOrTo.setAccountsDTO(accountsMap.get(transactionFromOrTo.getAcctNumber()));
+                if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
+                    transactionFromOrTo.getAccountsDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
+                }
+                if(personMap.containsKey(transactionFromOrTo.getCifId())){
+                    transactionFromOrTo.getAccountsDTO().setPersonDTO(personMap.get(transactionFromOrTo.getCifId()));
+                    if (personalIdentificationMap.containsKey(transactionFromOrTo.getCifId())) {
+                        transactionFromOrTo.getAccountsDTO().getPersonDTO().setPersonIdentificationDTO(personalIdentificationMap.get(transactionFromOrTo.getCifId()));
+                    } else {
+                        LOG.error("Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Personal Identification Details not found");
+                    }
+                    if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
+                        transactionFromOrTo.getAccountsDTO().getPersonDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
+                    }
+                    if (transactionFromOrTo.getCifId() != null && addressMap.containsKey(transactionFromOrTo.getCifId())) {
+                        transactionFromOrTo.getAccountsDTO().getPersonDTO().setAddressDTO(addressMap.get(transactionFromOrTo.getCifId()));
+                    }
+                }else if(entitiesMap.containsKey(transactionFromOrTo.getCifId())){
+                    transactionFromOrTo.getAccountsDTO().setEntitiesDTO(entitiesMap.get(transactionFromOrTo.getCifId()));
 
-            transactionFromOrTo.setAccountsDTO(accountsMap.get(transactionFromOrTo.getAcctNumber()));
-            if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
-                transactionFromOrTo.getAccountsDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
-            }
-            if (transactionFromOrTo.getCifId() != null && relatedPartyMap.containsKey(transactionFromOrTo.getCifId())) {
+                    if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
+                        transactionFromOrTo.getAccountsDTO().getEntitiesDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
+                    }
+                    if (transactionFromOrTo.getCifId() != null && addressMap.containsKey(transactionFromOrTo.getCifId())) {
+                        transactionFromOrTo.getAccountsDTO().getEntitiesDTO().setAddressDTO(addressMap.get(transactionFromOrTo.getCifId()));
+                    }
+                }
+                if (transactionFromOrTo.getCifId() != null && relatedPartyMap.containsKey(transactionFromOrTo.getCifId())) {
 
-                transactionFromOrTo.getAccountsDTO().setRelatedPartyDTO(relatedPartyMap.get(transactionFromOrTo.getCifId()));
+                    transactionFromOrTo.getAccountsDTO().setRelatedPartyDTO(relatedPartyMap.get(transactionFromOrTo.getCifId()));
+
+                }
+            } else {
+                LOG.error("Account Details not found, Account Number : " + transactionFromOrTo.getAcctNumber());
 
             }
 

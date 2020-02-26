@@ -28,6 +28,9 @@ public class RelatedPartyDTO {
     }
 
     public void setAccountNumber(String accountNumber) {
+        if(accountNumber!=null){
+            accountNumber = accountNumber.trim();
+        }
         this.accountNumber = accountNumber;
     }
 

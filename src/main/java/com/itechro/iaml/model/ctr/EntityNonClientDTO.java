@@ -45,6 +45,9 @@ public class EntityNonClientDTO {
     }
 
     public void setTranUid(String tranUid) {
+        if(tranUid!=null){
+            tranUid=tranUid.trim();
+        }
         this.tranUid = tranUid;
     }
 

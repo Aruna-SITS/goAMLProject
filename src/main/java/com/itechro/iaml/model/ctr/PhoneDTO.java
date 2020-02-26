@@ -19,6 +19,9 @@ public class PhoneDTO {
     }
 
     public void setCifId(String cifId) {
+        if(cifId!=null){
+            cifId=cifId.trim();
+        }
         this.cifId = cifId;
     }
 

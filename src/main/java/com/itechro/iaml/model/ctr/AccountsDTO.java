@@ -39,11 +39,31 @@ public class AccountsDTO {
 
     private Date Closed;
 
+    private PersonDTO personDTO;
+
+    private EntitiesDTO entitiesDTO;
+
     private List<PhoneDTO> phoneDTO;
 
     private List<AddressDTO> addressDTO;
 
     private List<RelatedPartyDTO> relatedPartyDTO;
+
+    public PersonDTO getPersonDTO() {
+        return personDTO;
+    }
+
+    public void setPersonDTO(PersonDTO personDTO) {
+        this.personDTO = personDTO;
+    }
+
+    public EntitiesDTO getEntitiesDTO() {
+        return entitiesDTO;
+    }
+
+    public void setEntitiesDTO(EntitiesDTO entitiesDTO) {
+        this.entitiesDTO = entitiesDTO;
+    }
 
     public List<RelatedPartyDTO> getRelatedPartyDTO() {
         return relatedPartyDTO;
@@ -74,7 +94,10 @@ public class AccountsDTO {
     }
 
     public void setAcctNumber(String acctNumber) {
-        AcctNumber = acctNumber;
+        if(acctNumber!=null){
+            acctNumber = acctNumber.trim();
+        }
+        AcctNumber=acctNumber;
     }
 
     public String getCifId() {
@@ -82,7 +105,10 @@ public class AccountsDTO {
     }
 
     public void setCifId(String cifId) {
-        CifId = cifId;
+        if(cifId!=null){
+            cifId = cifId.trim();
+        }
+        CifId=cifId;
     }
 
     public String getInstituationName() {
