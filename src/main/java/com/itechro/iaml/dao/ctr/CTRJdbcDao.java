@@ -61,8 +61,8 @@ public class CTRJdbcDao extends BaseJDBCDao {
         });
     }
 
-    public List<FromToMappingDTO> getFromToMappingRecords(Integer transactionNumber) {
-        List<FromToMappingDTO> results = new ArrayList<>();
+public HashMap<String,List<FromToMappingDTO>> getFromToMappingRecordsAsMap() {
+    HashMap<String,List<FromToMappingDTO>> results = new HashMap<>();
         Map<String, Object> params = new HashMap<>();
         StringBuilder SQL = new StringBuilder();
         SQL.append("SELECT * FROM (");
@@ -82,21 +82,22 @@ public class CTRJdbcDao extends BaseJDBCDao {
                 .append("' AS TRANTYPE ,L02_TO_NON_CLIENT.TRAN_UID,TO_FUNDS_CODE," +
                         "TO_FUNDS_COMMENT,TO_FOREIGN_CURRENCY,TO_COUNTRY,null as ACCT_NUMBER,null AS CIF_ID," +
                         "FOREIGN_CURRENCY_CODE,FOREIGN_AMOUNT,FOREIGN_EXCHANGE_RATE FROM L02_TO_NON_CLIENT");
-        SQL.append(") WHERE TRAN_UID=").append(transactionNumber);
-        SQL.append("ORDER BY TRAN_UID");
+        SQL.append(") ORDER BY TRAN_UID");
 
-
-        return namedParameterJdbcTemplate.query(SQL.toString(), params, new ResultSetExtractor<List<FromToMappingDTO>>() {
+        return namedParameterJdbcTemplate.query(SQL.toString(), params, new ResultSetExtractor<HashMap<String,List<FromToMappingDTO>>>() {
             @Override
-            public List<FromToMappingDTO> extractData(ResultSet rs) throws SQLException, DataAccessException {
+            public HashMap<String,List<FromToMappingDTO>> extractData(ResultSet rs) throws SQLException, DataAccessException {
                 while (rs.next()) {
                     FromToMappingDTO fromToMappingDTO = getFormToMappingDTO(rs);
-                    results.add(fromToMappingDTO);
+                    putFromToDTOIntoHashMap(results,fromToMappingDTO.getTransId().toString(),fromToMappingDTO);
+
                 }
+                LOG.info("getFromToMappingRecordsAsMap() completed and loaded the From & To Transactions");
                 return results;
             }
         });
     }
+
 
     public HashMap<String, AccountsDTO> getAccountsMap() {
         HashMap<String, AccountsDTO> results = new HashMap<>();
@@ -514,5 +515,13 @@ public class CTRJdbcDao extends BaseJDBCDao {
             hashMap.put(cifId, list);
         }
         list.add(relatedParty);
+    }
+    public void putFromToDTOIntoHashMap(HashMap<String,List<FromToMappingDTO>> hashMap, String cifId, FromToMappingDTO fromToMappingDTO) {
+        List<FromToMappingDTO> list = hashMap.get(cifId);
+        if (list == null) {
+            list = new ArrayList<FromToMappingDTO>();
+            hashMap.put(cifId, list);
+        }
+        list.add(fromToMappingDTO);
     }
 }

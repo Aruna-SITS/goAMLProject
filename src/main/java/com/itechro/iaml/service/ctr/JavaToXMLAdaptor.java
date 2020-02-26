@@ -26,6 +26,8 @@ public class JavaToXMLAdaptor {
 
     private HashMap<Integer, TransactionDTO> transactionsMap;
 
+    private HashMap<String, List<FromToMappingDTO>> fromToMappingDTOMap;
+
     private HashMap<String, EntitiesDTO> entitiesMap;
 
     private HashMap<String, PersonDTO> personMap;
@@ -74,13 +76,17 @@ public class JavaToXMLAdaptor {
 
         relatedPartyMap = this.ctrJdbcDao.getRelatedPartyMap();
 
+        fromToMappingDTOMap = this.ctrJdbcDao.getFromToMappingRecordsAsMap();
+
         ObjectFactory factory = new ObjectFactory();
         Report report = factory.createReport();
 
-        Iterator<Map.Entry<Integer, TransactionDTO>> transactionsIterator = transactionsMap.entrySet().iterator();
-        while (transactionsIterator.hasNext()) {
-            Map.Entry<Integer, TransactionDTO> aTransaction = transactionsIterator.next();
-            ReportDTO reportDTO = getATransactionForReportDTO(aTransaction.getKey());
+
+        for (Integer transactionNumber : transactionsMap.keySet()) {
+
+            List<FromToMappingDTO> fromToMappingDTO = fromToMappingDTOMap.get(transactionNumber.toString());
+
+            ReportDTO reportDTO = getATransactionForReportDTO(fromToMappingDTO, transactionNumber);
 
             report.setRentityId(reportDTO.getrEntityId());
             report.setSubmissionCode(SubmissionType.valueOf(reportDTO.getSubmissionCode()));
@@ -268,10 +274,10 @@ public class JavaToXMLAdaptor {
         tAccountMyClient.setCurrencyCode(accounts.getCurrencyCode());
         tAccountMyClient.setAccountName(accounts.getAccountName());
 
-        if(from.getAccountsDTO().getEntitiesDTO()!=null){
-            FromToMappingDTO aTemp=new FromToMappingDTO();
+        if (from.getAccountsDTO().getEntitiesDTO() != null) {
+            FromToMappingDTO aTemp = new FromToMappingDTO();
             aTemp.setEntitiesDTO(accounts.getEntitiesDTO());
-            tAccountMyClient.setTEntity(getTEntityMyClient(factory,aTemp));
+            tAccountMyClient.setTEntity(getTEntityMyClient(factory, aTemp));
         }
 
         if (accounts.getRelatedPartyDTO() != null) {
@@ -303,7 +309,7 @@ public class JavaToXMLAdaptor {
                         setAddressToXML(factory, addressIterator, addresses.getAddress());
                     }
 
-                    if(person.getPersonIdentificationDTO()!=null){
+                    if (person.getPersonIdentificationDTO() != null) {
 
                         setTPersonalIdentification(factory, person, tPersonMyClient);
 
@@ -468,7 +474,7 @@ public class JavaToXMLAdaptor {
         }
     }
 
-    private ReportDTO getATransactionForReportDTO(Integer transactionUid) {
+    private ReportDTO getATransactionForReportDTO(List<FromToMappingDTO> fromToMappingDTO, Integer transactionNumber) {
 
         ReportDTO reportDTO = new ReportDTO();
 
@@ -483,20 +489,17 @@ public class JavaToXMLAdaptor {
         }
 
         reportDTO.setCurrencyCodeLocal(applicationProperties.getCurrencyLocalCode());
+        reportDTO.setTransactionDTO(transactionsMap.get(transactionNumber));
 
-        reportDTO.setTransactionDTO(transactionsMap.get(transactionUid));
-
-        List<FromToMappingDTO> fromToMappingData = this.ctrJdbcDao.getFromToMappingRecords(transactionUid);
-
-        Iterator<FromToMappingDTO> fromToMappingDTOIterator = fromToMappingData.iterator();
+        Iterator<FromToMappingDTO> fromToMappingDTOIterator = fromToMappingDTO.iterator();
         while (fromToMappingDTOIterator.hasNext()) {
-            FromToMappingDTO fromToMappingDTO = fromToMappingDTOIterator.next();
-            if (fromToMappingDTO.getTransactionType().equals(applicationProperties.fromMyClient)
-                    || fromToMappingDTO.getTransactionType().equals(applicationProperties.fromNonClient)) {
-                reportDTO.setTransactionFrom(fromToMappingDTO);
+            FromToMappingDTO fromToMapping = fromToMappingDTOIterator.next();
+            if (fromToMapping.getTransactionType().equals(applicationProperties.fromMyClient)
+                    || fromToMapping.getTransactionType().equals(applicationProperties.fromNonClient)) {
+                reportDTO.setTransactionFrom(fromToMapping);
                 setValidLevels(reportDTO, reportDTO.getTransactionFrom());
             } else {
-                reportDTO.setTransactionTo(fromToMappingDTO);
+                reportDTO.setTransactionTo(fromToMapping);
                 setValidLevels(reportDTO, reportDTO.getTransactionTo());
             }
         }
@@ -558,7 +561,7 @@ public class JavaToXMLAdaptor {
                 if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
                     transactionFromOrTo.getAccountsDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
                 }
-                if(personMap.containsKey(transactionFromOrTo.getCifId())){
+                if (personMap.containsKey(transactionFromOrTo.getCifId())) {
                     transactionFromOrTo.getAccountsDTO().setPersonDTO(personMap.get(transactionFromOrTo.getCifId()));
                     if (personalIdentificationMap.containsKey(transactionFromOrTo.getCifId())) {
                         transactionFromOrTo.getAccountsDTO().getPersonDTO().setPersonIdentificationDTO(personalIdentificationMap.get(transactionFromOrTo.getCifId()));
@@ -572,7 +575,7 @@ public class JavaToXMLAdaptor {
                         transactionFromOrTo.getAccountsDTO().getPersonDTO().setAddressDTO(addressMap.get(transactionFromOrTo.getCifId()));
                     }
 
-                }else if(entitiesMap.containsKey(transactionFromOrTo.getCifId())){
+                } else if (entitiesMap.containsKey(transactionFromOrTo.getCifId())) {
                     transactionFromOrTo.getAccountsDTO().setEntitiesDTO(entitiesMap.get(transactionFromOrTo.getCifId()));
 
                     if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
