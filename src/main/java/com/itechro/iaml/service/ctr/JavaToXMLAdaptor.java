@@ -36,7 +36,7 @@ public class JavaToXMLAdaptor {
 
     private HashMap<String, EntityNonClientDTO> entityNonClientMap;
 
-    private HashMap<String, PersonIdentificationDTO> personalIdentificationMap;
+    private HashMap<String, List<PersonIdentificationDTO>> personalIdentificationMap;
 
     private HashMap<String, List<PhoneDTO>> phoneMap;
 
@@ -136,8 +136,6 @@ public class JavaToXMLAdaptor {
 
                         TPersonMyClient tPersonMyClient = getTPersonMyClient(factory, from.getPersonDTO());
                         tFromMyClient.setFromPerson(tPersonMyClient);
-                        tFromMyClient.setTConductor(tPersonMyClient);//as per the generated XML
-
 
                     }
                     xmlTransaction.setTFromMyClient(tFromMyClient);
@@ -290,18 +288,6 @@ public class JavaToXMLAdaptor {
                 if (personMap.containsKey(from.getCifId())) {
                     PersonDTO person = personMap.get(from.getCifId());
 
-                    if (personalIdentificationMap.containsKey(person.getCifId())) {
-                        person.setPersonIdentificationDTO(personalIdentificationMap.get(person.getCifId()));
-                    } else {
-                        LOG.error("Transaction CIF_ID : " + person.getCifId() + " Personal Identification Details not found");
-                    }
-                    if (phoneMap.containsKey(person.getCifId()) && person.getCifId() != null) {
-                        person.setPhoneDTO(phoneMap.get(person.getCifId()));
-                    }
-                    if (person.getCifId() != null && addressMap.containsKey(person.getCifId())) {
-                        person.setAddressDTO(addressMap.get(person.getCifId()));
-                    }
-
                     TPersonMyClient tPersonMyClient = getTPersonMyClient(factory, person);
 
                     if (person.getPhoneDTO() != null) {
@@ -317,23 +303,10 @@ public class JavaToXMLAdaptor {
                         setAddressToXML(factory, addressIterator, addresses.getAddress());
                     }
 
-                    if(person.getCifId()=="301569373"){
-                        LOG.error("");
-                    }
                     if(person.getPersonIdentificationDTO()!=null){
-                        PersonIdentificationDTO personIdentification=person.getPersonIdentificationDTO();
-                        TPersonIdentification tPersonIdentification=factory.createTPersonIdentification();
-                        tPersonIdentification.setType(personIdentification.getIdentificationType());
-                        tPersonIdentification.setNumber(personIdentification.getNumber());
-                        if(personIdentification.getIssueDate()!=null){
-                            tPersonIdentification.setIssueDate(getXMLGregorianCalendarFromDate(personIdentification.getIssueDate()));
-                        }
-                        if(personIdentification.getExpiryDate()!=null){
-                            tPersonIdentification.setExpiryDate(getXMLGregorianCalendarFromDate(personIdentification.getExpiryDate()));
-                        }
-                        tPersonIdentification.setIssuedBy(personIdentification.getIssuedBy());
-                        tPersonIdentification.setIssueCountry(personIdentification.getIssueCountry());
-                        tPersonIdentification.setComments(personIdentification.getComment());
+
+                        setTPersonalIdentification(factory, person, tPersonMyClient);
+
                     }
                     signatory.setTPerson(tPersonMyClient);
                 } else {
@@ -450,12 +423,36 @@ public class JavaToXMLAdaptor {
             setAddressToXML(factory, addressIterator, addresses.getAddress());
             tPersonMyClient.setAddresses(addresses);
         }
+
+
+        setTPersonalIdentification(factory, person, tPersonMyClient);
+
         if (person.getEmail() != null) {
             tPersonMyClient.getEmail().add(person.getEmail());//The actual email format should be a list
         }
         tPersonMyClient.setOccupation(person.getOccupation());
         tPersonMyClient.setComments(person.getComments());
         return tPersonMyClient;
+    }
+
+    private void setTPersonalIdentification(ObjectFactory factory, PersonDTO person, TPersonMyClient tPersonMyClient) {
+        Iterator<PersonIdentificationDTO> phoneIterator = person.getPersonIdentificationDTO().iterator();
+        TPersonIdentification tPersonIdentification = factory.createTPersonIdentification();
+        while (phoneIterator.hasNext()) {
+            PersonIdentificationDTO personIdentification = phoneIterator.next();
+            tPersonIdentification.setType(personIdentification.getIdentificationType());
+            tPersonIdentification.setNumber(personIdentification.getNumber());
+            if (personIdentification.getIssueDate() != null) {
+                tPersonIdentification.setIssueDate(getXMLGregorianCalendarFromDate(personIdentification.getIssueDate()));
+            }
+            if (personIdentification.getExpiryDate() != null) {
+                tPersonIdentification.setExpiryDate(getXMLGregorianCalendarFromDate(personIdentification.getExpiryDate()));
+            }
+            tPersonIdentification.setIssuedBy(personIdentification.getIssuedBy());
+            tPersonIdentification.setIssueCountry(personIdentification.getIssueCountry());
+            tPersonIdentification.setComments(personIdentification.getComment());
+            tPersonMyClient.getIdentification().add(tPersonIdentification);
+        }
     }
 
     private void setPhoneToXML(ObjectFactory factory, Iterator<PhoneDTO> phoneIterator, List<TPhone> phone) {
@@ -531,6 +528,8 @@ public class JavaToXMLAdaptor {
                 if (transactionFromOrTo.getCifId() != null && addressMap.containsKey(transactionFromOrTo.getCifId())) {
                     transactionFromOrTo.getPersonDTO().setAddressDTO(addressMap.get(transactionFromOrTo.getCifId()));
                 }
+
+
             } else {
                 LOG.error("Person Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Cif_Id in Person Table  " + personMap.containsKey(transactionFromOrTo.getCifId()));
             }
@@ -572,6 +571,7 @@ public class JavaToXMLAdaptor {
                     if (transactionFromOrTo.getCifId() != null && addressMap.containsKey(transactionFromOrTo.getCifId())) {
                         transactionFromOrTo.getAccountsDTO().getPersonDTO().setAddressDTO(addressMap.get(transactionFromOrTo.getCifId()));
                     }
+
                 }else if(entitiesMap.containsKey(transactionFromOrTo.getCifId())){
                     transactionFromOrTo.getAccountsDTO().setEntitiesDTO(entitiesMap.get(transactionFromOrTo.getCifId()));
 

@@ -16,6 +16,37 @@
         <t_from_my_client>
             <from_funds_code>CASH</from_funds_code>
             <from_foreign_currency/>
+            <from_person>
+                <gender>M</gender>
+                <title>Mr.</title>
+                <first_name>Chakrawarthige Upali Dayananda</first_name>
+                <last_name>Wijeratne</last_name>
+                <id_number>194815202609</id_number>
+                <nationality1>LK</nationality1>
+                <residence>LK</residence>
+                <phones>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0768158178</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>No71, Panchikawatte Road</address>
+                        <city>Colombo 10</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <occupation>Retired</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>194815202609</number>
+                    <issue_date>2016-10-20T00:00:00.000+05:30</issue_date>
+                </identification>
+            </from_person>
             <from_country>LK</from_country>
         </t_from_my_client>
         <t_to_my_client>
@@ -29,6 +60,42 @@
                 <account_name>SAVINGS ACCOUNT-SANHINDA</account_name>
                 <signatory>
                     <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>M</gender>
+                        <title>Mr.</title>
+                        <first_name>Chakrawarthige Upali Dayananda</first_name>
+                        <last_name>Wijeratne</last_name>
+                        <id_number>194815202609</id_number>
+                        <nationality1>LK</nationality1>
+                        <residence>LK</residence>
+                        <phones>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0768158178</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>CORS</address_type>
+<address>No71, Panchikawatte Road</address>
+<city>Colombo 10</city>
+<country_code>LK</country_code>
+                            </address>
+                        </addresses>
+                        <occupation>Retired</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>194815202609</number>
+                            <issue_date>2016-10-20T00:00:00.000+05:30</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>194815202609</number>
+                            <issue_date>2016-10-20T00:00:00.000+05:30</issue_date>
+                        </identification>
+                    </t_person>
                     <role>Account Holder</role>
                 </signatory>
                 <status_code>ACTV</status_code>
@@ -215,6 +282,14 @@
                         </addresses>
                         <email>maheshdezoysa@ymail.com</email>
                         <occupation>Student</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>850694060V</number>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>850694060V</number>
+                        </identification>
                     </t_person>
                     <role>Account Holder</role>
                 </signatory>
@@ -946,39 +1021,6 @@
         <t_from_my_client>
             <from_funds_code>CASH</from_funds_code>
             <from_foreign_currency/>
-            <t_conductor>
-                <gender>M</gender>
-                <title>Mr.</title>
-                <first_name>Katchi Mohamed</first_name>
-                <last_name>Jabeer</last_name>
-                <birthdate>1969-08-30T00:00:00.000+05:30</birthdate>
-                <id_number>692430794V</id_number>
-                <nationality1>LK</nationality1>
-                <residence>LK</residence>
-                <phones>
-                    <phone>
-                        <tph_contact_type>PRVT</tph_contact_type>
-                        <tph_communication_type>MOPH</tph_communication_type>
-                        <tph_country_prefix>94</tph_country_prefix>
-                        <tph_number>0772254776</tph_number>
-                    </phone>
-                    <phone>
-                        <tph_contact_type>CORS</tph_contact_type>
-                        <tph_communication_type>LNPH</tph_communication_type>
-                        <tph_country_prefix>94</tph_country_prefix>
-                        <tph_number>0262227277</tph_number>
-                    </phone>
-                </phones>
-                <addresses>
-                    <address>
-                        <address_type>CORS</address_type>
-                        <address>No117, N C Road</address>
-                        <city>Trincomalee</city>
-                        <country_code>LK</country_code>
-                    </address>
-                </addresses>
-                <occupation>Business</occupation>
-            </t_conductor>
             <from_person>
                 <gender>M</gender>
                 <title>Mr.</title>
@@ -1011,6 +1053,10 @@
                     </address>
                 </addresses>
                 <occupation>Business</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>692430794V</number>
+                </identification>
             </from_person>
             <from_country>LK</from_country>
         </t_from_my_client>
@@ -1057,6 +1103,14 @@
                             </address>
                         </addresses>
                         <occupation>Business</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>692430794V</number>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>692430794V</number>
+                        </identification>
                     </t_person>
                     <role>Account Holder</role>
                 </signatory>
@@ -1105,33 +1159,6 @@
         <t_from_my_client>
             <from_funds_code>CASH</from_funds_code>
             <from_foreign_currency/>
-            <t_conductor>
-                <gender>M</gender>
-                <title>Mr.</title>
-                <first_name>Herath Mudiyanselage Asanka Chamara</first_name>
-                <last_name>Herath</last_name>
-                <birthdate>1976-04-04T00:00:00.000+05:30</birthdate>
-                <id_number>760951650V</id_number>
-                <nationality1>LK</nationality1>
-                <residence>LK</residence>
-                <phones>
-                    <phone>
-                        <tph_contact_type>PRVT</tph_contact_type>
-                        <tph_communication_type>MOPH</tph_communication_type>
-                        <tph_country_prefix>94</tph_country_prefix>
-                        <tph_number>0777277170</tph_number>
-                    </phone>
-                </phones>
-                <addresses>
-                    <address>
-                        <address_type>CORS</address_type>
-                        <address>Daraluwa, Daraluwa (N W P)</address>
-                        <city>Makandura</city>
-                        <country_code>LK</country_code>
-                    </address>
-                </addresses>
-                <occupation>Business</occupation>
-            </t_conductor>
             <from_person>
                 <gender>M</gender>
                 <title>Mr.</title>
@@ -1158,6 +1185,11 @@
                     </address>
                 </addresses>
                 <occupation>Business</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>760951650V</number>
+                    <issue_date>2014-08-24T00:00:00.000+05:30</issue_date>
+                </identification>
             </from_person>
             <from_country>LK</from_country>
         </t_from_my_client>
@@ -1198,6 +1230,16 @@
                             </address>
                         </addresses>
                         <occupation>Business</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>760951650V</number>
+                            <issue_date>2014-08-24T00:00:00.000+05:30</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>760951650V</number>
+                            <issue_date>2014-08-24T00:00:00.000+05:30</issue_date>
+                        </identification>
                     </t_person>
                     <role>Account Holder</role>
                 </signatory>
@@ -1229,6 +1271,16 @@
                             </address>
                         </addresses>
                         <occupation>Business</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>760951650V</number>
+                            <issue_date>2014-08-24T00:00:00.000+05:30</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>760951650V</number>
+                            <issue_date>2014-08-24T00:00:00.000+05:30</issue_date>
+                        </identification>
                     </t_person>
                     <role>Authorised Signatory</role>
                 </signatory>
@@ -1260,6 +1312,16 @@
                             </address>
                         </addresses>
                         <occupation>Business</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>760951650V</number>
+                            <issue_date>2014-08-24T00:00:00.000+05:30</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>760951650V</number>
+                            <issue_date>2014-08-24T00:00:00.000+05:30</issue_date>
+                        </identification>
                     </t_person>
                     <role>Authorised Signatory</role>
                 </signatory>
@@ -2911,39 +2973,6 @@
         <t_from_my_client>
             <from_funds_code>CASH</from_funds_code>
             <from_foreign_currency/>
-            <t_conductor>
-                <gender>M</gender>
-                <title>Mr.</title>
-                <first_name>Namanadhan</first_name>
-                <last_name>Prasanna</last_name>
-                <birthdate>1989-11-26T00:00:00.000+05:30</birthdate>
-                <id_number>893312129V</id_number>
-                <nationality1>LK</nationality1>
-                <residence>LK</residence>
-                <phones>
-                    <phone>
-                        <tph_contact_type>PRVT</tph_contact_type>
-                        <tph_communication_type>MOPH</tph_communication_type>
-                        <tph_country_prefix>94</tph_country_prefix>
-                        <tph_number>0777770556</tph_number>
-                    </phone>
-                    <phone>
-                        <tph_contact_type>PRVT</tph_contact_type>
-                        <tph_communication_type>MOPH</tph_communication_type>
-                        <tph_country_prefix>94</tph_country_prefix>
-                        <tph_number>0775253956</tph_number>
-                    </phone>
-                </phones>
-                <addresses>
-                    <address>
-                        <address_type>PRVT</address_type>
-                        <address>Diyanilla Watta, Hulganoya</address>
-                        <city>Pussellawa</city>
-                        <country_code>LK</country_code>
-                    </address>
-                </addresses>
-                <occupation>Business</occupation>
-            </t_conductor>
             <from_person>
                 <gender>M</gender>
                 <title>Mr.</title>
@@ -2976,6 +3005,11 @@
                     </address>
                 </addresses>
                 <occupation>Business</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>893312129V</number>
+                    <issue_date>2006-11-29T00:00:00.000+05:30</issue_date>
+                </identification>
             </from_person>
             <from_country>LK</from_country>
         </t_from_my_client>
@@ -3022,6 +3056,16 @@
                             </address>
                         </addresses>
                         <occupation>Business</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>893312129V</number>
+                            <issue_date>2006-11-29T00:00:00.000+05:30</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>893312129V</number>
+                            <issue_date>2006-11-29T00:00:00.000+05:30</issue_date>
+                        </identification>
                     </t_person>
                     <role>Account Holder</role>
                 </signatory>
@@ -3393,40 +3437,6 @@
         <t_from_my_client>
             <from_funds_code>CASH</from_funds_code>
             <from_foreign_currency/>
-            <t_conductor>
-                <gender>M</gender>
-                <title>Mr.</title>
-                <first_name>Gamini Kapila Kumara</first_name>
-                <last_name>Alawatte</last_name>
-                <birthdate>1966-08-16T00:00:00.000+05:30</birthdate>
-                <id_number>662292850V</id_number>
-                <nationality1>LK</nationality1>
-                <residence>LK</residence>
-                <phones>
-                    <phone>
-                        <tph_contact_type>PRVT</tph_contact_type>
-                        <tph_communication_type>MOPH</tph_communication_type>
-                        <tph_country_prefix>94</tph_country_prefix>
-                        <tph_number>0773129565</tph_number>
-                    </phone>
-                    <phone>
-                        <tph_contact_type>CORS</tph_contact_type>
-                        <tph_communication_type>LNPH</tph_communication_type>
-                        <tph_country_prefix>94</tph_country_prefix>
-                        <tph_number>0552276195</tph_number>
-                    </phone>
-                </phones>
-                <addresses>
-                    <address>
-                        <address_type>CORS</address_type>
-                        <address>No 75, Pothuwil Road</address>
-                        <city>Monaragala</city>
-                        <country_code>LK</country_code>
-                    </address>
-                </addresses>
-                <email>gaminialawatta@yahoo.com</email>
-                <occupation>Business</occupation>
-            </t_conductor>
             <from_person>
                 <gender>M</gender>
                 <title>Mr.</title>
@@ -3460,6 +3470,10 @@
                 </addresses>
                 <email>gaminialawatta@yahoo.com</email>
                 <occupation>Business</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>662292850V</number>
+                </identification>
             </from_person>
             <from_country>LK</from_country>
         </t_from_my_client>
@@ -3507,6 +3521,14 @@
                         </addresses>
                         <email>gaminialawatta@yahoo.com</email>
                         <occupation>Business</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>662292850V</number>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>662292850V</number>
+                        </identification>
                     </t_person>
                     <role>Account Holder</role>
                 </signatory>
@@ -4807,6 +4829,16 @@
                             </address>
                         </addresses>
                         <occupation>Unemployed</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>773260346V</number>
+                            <issue_date>2019-03-25T00:00:00.000+05:30</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>773260346V</number>
+                            <issue_date>2019-03-25T00:00:00.000+05:30</issue_date>
+                        </identification>
                     </t_person>
                     <role>Authorised Signatory</role>
                 </signatory>
@@ -4844,6 +4876,16 @@
                             </address>
                         </addresses>
                         <occupation>Unemployed</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>773260346V</number>
+                            <issue_date>2019-03-25T00:00:00.000+05:30</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>773260346V</number>
+                            <issue_date>2019-03-25T00:00:00.000+05:30</issue_date>
+                        </identification>
                     </t_person>
                     <role>Account Holder</role>
                 </signatory>
@@ -5348,33 +5390,6 @@
         <t_from_my_client>
             <from_funds_code>CASH</from_funds_code>
             <from_foreign_currency/>
-            <t_conductor>
-                <gender>F</gender>
-                <title>Mrs.</title>
-                <first_name>Jayakody Arachchilage Chandrika</first_name>
-                <last_name>Jayakody</last_name>
-                <birthdate>1976-10-26T00:00:00.000+05:30</birthdate>
-                <id_number>197680000204</id_number>
-                <nationality1>LK</nationality1>
-                <residence>LK</residence>
-                <phones>
-                    <phone>
-                        <tph_contact_type>PRVT</tph_contact_type>
-                        <tph_communication_type>MOPH</tph_communication_type>
-                        <tph_country_prefix>94</tph_country_prefix>
-                        <tph_number>0766246894</tph_number>
-                    </phone>
-                </phones>
-                <addresses>
-                    <address>
-                        <address_type>CORS</address_type>
-                        <address>Thalgahakotuwa Waththa, Ihala Galayaya</address>
-                        <city>Pannala</city>
-                        <country_code>LK</country_code>
-                    </address>
-                </addresses>
-                <occupation>House Wife</occupation>
-            </t_conductor>
             <from_person>
                 <gender>F</gender>
                 <title>Mrs.</title>
@@ -5401,6 +5416,11 @@
                     </address>
                 </addresses>
                 <occupation>House Wife</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>197680000204</number>
+                    <issue_date>2018-03-19T00:00:00.000+05:30</issue_date>
+                </identification>
             </from_person>
             <from_country>LK</from_country>
         </t_from_my_client>
@@ -5441,6 +5461,16 @@
                             </address>
                         </addresses>
                         <occupation>House Wife</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>197680000204</number>
+                            <issue_date>2018-03-19T00:00:00.000+05:30</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>197680000204</number>
+                            <issue_date>2018-03-19T00:00:00.000+05:30</issue_date>
+                        </identification>
                     </t_person>
                     <role>Account Holder</role>
                 </signatory>
@@ -5683,40 +5713,6 @@
         <t_from_my_client>
             <from_funds_code>CASH</from_funds_code>
             <from_foreign_currency/>
-            <t_conductor>
-                <gender>M</gender>
-                <title>Mr.</title>
-                <first_name>Maddumage Prabath</first_name>
-                <last_name>Gunasekara</last_name>
-                <birthdate>1980-05-27T00:00:00.000+05:30</birthdate>
-                <id_number>801480012V</id_number>
-                <nationality1>LK</nationality1>
-                <residence>LK</residence>
-                <phones>
-                    <phone>
-                        <tph_contact_type>PRVT</tph_contact_type>
-                        <tph_communication_type>MOPH</tph_communication_type>
-                        <tph_country_prefix>94</tph_country_prefix>
-                        <tph_number>0772930952</tph_number>
-                    </phone>
-                    <phone>
-                        <tph_contact_type>PRVT</tph_contact_type>
-                        <tph_communication_type>MOPH</tph_communication_type>
-                        <tph_country_prefix>94</tph_country_prefix>
-                        <tph_number>0712930952</tph_number>
-                    </phone>
-                </phones>
-                <addresses>
-                    <address>
-                        <address_type>CORS</address_type>
-                        <address>183/2, Dutugamunu Street</address>
-                        <city>Kohuwala</city>
-                        <country_code>LK</country_code>
-                    </address>
-                </addresses>
-                <email>prabathobey@gmail.com</email>
-                <occupation>Unemployed</occupation>
-            </t_conductor>
             <from_person>
                 <gender>M</gender>
                 <title>Mr.</title>
@@ -5750,6 +5746,11 @@
                 </addresses>
                 <email>prabathobey@gmail.com</email>
                 <occupation>Unemployed</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>801480012V</number>
+                    <issue_date>1999-01-01T00:00:00.000+06:00</issue_date>
+                </identification>
             </from_person>
             <from_country>LK</from_country>
         </t_from_my_client>
@@ -5797,6 +5798,16 @@
                         </addresses>
                         <email>prabathobey@gmail.com</email>
                         <occupation>Unemployed</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>801480012V</number>
+                            <issue_date>1999-01-01T00:00:00.000+06:00</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>801480012V</number>
+                            <issue_date>1999-01-01T00:00:00.000+06:00</issue_date>
+                        </identification>
                     </t_person>
                     <role>Account Holder</role>
                 </signatory>

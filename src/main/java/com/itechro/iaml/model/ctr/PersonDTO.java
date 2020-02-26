@@ -37,7 +37,7 @@ public class PersonDTO {
 
     private String comments;
 
-    private PersonIdentificationDTO personIdentificationDTO;
+    private List<PersonIdentificationDTO> personIdentificationDTO;
 
     private List<PhoneDTO> phoneDTO;
 
@@ -59,20 +59,16 @@ public class PersonDTO {
         this.phoneDTO = phoneDTO;
     }
 
-    public void addAddress(AddressDTO addressDTO) {
-        this.addressDTO.add(addressDTO);
+    public String getCifId() {
+        return cifId;
     }
 
-    public PersonIdentificationDTO getPersonIdentificationDTO() {
+    public List<PersonIdentificationDTO> getPersonIdentificationDTO() {
         return personIdentificationDTO;
     }
 
-    public void setPersonIdentificationDTO(PersonIdentificationDTO personIdentificationDTO) {
+    public void setPersonIdentificationDTO(List<PersonIdentificationDTO> personIdentificationDTO) {
         this.personIdentificationDTO = personIdentificationDTO;
-    }
-
-    public String getCifId() {
-        return cifId;
     }
 
     public void setCifId(String cifId) {

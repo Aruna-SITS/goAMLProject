@@ -229,18 +229,18 @@ public class CTRJdbcDao extends BaseJDBCDao {
         });
     }
 
-    public HashMap<String,PersonIdentificationDTO> getPersonIdentificationMap() {
-        HashMap<String,PersonIdentificationDTO> results = new HashMap<>();
+    public HashMap<String,List<PersonIdentificationDTO>> getPersonIdentificationMap() {
+        HashMap<String,List<PersonIdentificationDTO>> results = new HashMap<>();
         Map<String, Object> params = new HashMap<>();
         StringBuilder SQL = new StringBuilder();
         SQL.append("SELECT * FROM L01_PERSON_IDENTIFICATION");
 
-        return namedParameterJdbcTemplate.query(SQL.toString(), params, new ResultSetExtractor<HashMap<String,PersonIdentificationDTO>>() {
+        return namedParameterJdbcTemplate.query(SQL.toString(), params, new ResultSetExtractor<HashMap<String,List<PersonIdentificationDTO>>>() {
             @Override
-            public HashMap<String,PersonIdentificationDTO> extractData(ResultSet rs) throws SQLException, DataAccessException {
+            public HashMap<String,List<PersonIdentificationDTO>> extractData(ResultSet rs) throws SQLException, DataAccessException {
                 while (rs.next()) {
                     PersonIdentificationDTO personIdentificationDTO = getPersonIdentificationDTO(rs);
-                    results.put(personIdentificationDTO.getCifId(),personIdentificationDTO);
+                    putPersonalIdentificationIntoHashMap(results,personIdentificationDTO.getCifId(),personIdentificationDTO);
                 }
                 LOG.info("getPersonIdentificationMap() completed and loaded the Personal Identification Details ");
                 return results;
@@ -490,6 +490,14 @@ public class CTRJdbcDao extends BaseJDBCDao {
             hashMap.put(cifId, list);
         }
         list.add(PhoneNumber);
+    }
+    public void putPersonalIdentificationIntoHashMap(HashMap<String,List<PersonIdentificationDTO>> hashMap, String cifId, PersonIdentificationDTO identification) {
+        List<PersonIdentificationDTO> list = hashMap.get(cifId);
+        if (list == null) {
+            list = new ArrayList<PersonIdentificationDTO>();
+            hashMap.put(cifId, list);
+        }
+        list.add(identification);
     }
     public void putAddressIntoHashMap(HashMap<String,List<AddressDTO>> hashMap, String cifId, AddressDTO address) {
         List<AddressDTO> list = hashMap.get(cifId);
