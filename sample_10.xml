@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<report>
+    <rentity_id>7278</rentity_id>
+    <submission_code>E</submission_code>
+    <report_code>CTR</report_code>
+    <entity_reference></entity_reference>
+    <submission_date>2020-02-21T19:00:00.000+05:30</submission_date>
+    <currency_code_local>LKR</currency_code_local>
+    <transaction>
+        <transactionnumber>0125515120200116125258</transactionnumber>
+        <internal_ref_number>0125515120200116125258</internal_ref_number>
+        <transaction_location>NEGOMBO</transaction_location>
+        <transaction_description>SV-DEPO-3RD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>2100000</amount_local>
+        <t_from>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_person>
+                <first_name>VIJAYAKUMAR</first_name>
+                <last_name>HEYKANTHAN</last_name>
+                <id_number>922930589V</id_number>
+            </from_person>
+            <from_country>LK</from_country>
+        </t_from>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>AKKARAIPATTU</branch>
+                <account>111154482766</account>
+                <currency_code>LKR</currency_code>
+                <account_name>DOUBLE S SAVINGS -PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0127115120200116131119</transactionnumber>
+        <internal_ref_number>0127115120200116131119</internal_ref_number>
+        <transaction_location>BATTARAMULLA</transaction_location>
+        <transaction_description>CA-DEPO-OWN</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>2000000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_entity>
+                <name>HOME LANDS SKYLINE (PRIVATE) LIMITED</name>
+                <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                <business>Agriculture - Rubber</business>
+                <phones>
+                    <phone>
+                        <tph_contact_type>CORS</tph_contact_type>
+                        <tph_communication_type>LNPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0112710020</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>PERM</address_type>
+                        <address>No 1060, Pannipitiya Rd</address>
+                        <city>Battaramulla</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <incorporation_country_code>LK</incorporation_country_code>
+                <incorporation_date>2015-03-06T00:00:00.000+05:30</incorporation_date>
+                <business_closed>false</business_closed>
+            </from_entity>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>BORELLA</branch>
+                <account>000410022087</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CA BUSINESS SUPREME</account_name>
+                <t_entity>
+                    <name>HOME LANDS SKYLINE (PRIVATE) LIMITED</name>
+                    <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                    <business>Agriculture - Rubber</business>
+                    <phones>
+                        <phone>
+                            <tph_contact_type>CORS</tph_contact_type>
+                            <tph_communication_type>LNPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0112710020</tph_number>
+                        </phone>
+                    </phones>
+                    <addresses>
+                        <address>
+                            <address_type>PERM</address_type>
+                            <address>No 1060, Pannipitiya Rd</address>
+                            <city>Battaramulla</city>
+                            <country_code>LK</country_code>
+                        </address>
+                    </addresses>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>2015-03-06T00:00:00.000+05:30</incorporation_date>
+                    <business_closed>false</business_closed>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0147111120200116182124</transactionnumber>
+        <internal_ref_number>0147111120200116182124</internal_ref_number>
+        <transaction_location>COLOMBO SUPER</transaction_location>
+        <transaction_description>CA-DEPO-OWN</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1016215</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_person>
+                <gender>M</gender>
+                <title>Mr.</title>
+                <first_name>Maddumage Prabath</first_name>
+                <last_name>Gunasekara</last_name>
+                <birthdate>1980-05-27T00:00:00.000+05:30</birthdate>
+                <id_number>801480012V</id_number>
+                <nationality1>LK</nationality1>
+                <residence>LK</residence>
+                <phones>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0772930952</tph_number>
+                    </phone>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0712930952</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>183/2, Dutugamunu Street</address>
+                        <city>Kohuwala</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <email>prabathobey@gmail.com</email>
+                <occupation>Unemployed</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>801480012V</number>
+                    <issue_date>1999-01-01T00:00:00.000+06:00</issue_date>
+                </identification>
+            </from_person>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>NUGEGODA</branch>
+                <account>000350056246</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CURRENT ACCOUNT-PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>M</gender>
+                        <title>Mr.</title>
+                        <first_name>Maddumage Prabath</first_name>
+                        <last_name>Gunasekara</last_name>
+                        <birthdate>1980-05-27T00:00:00.000+05:30</birthdate>
+                        <id_number>801480012V</id_number>
+                        <nationality1>LK</nationality1>
+                        <residence>LK</residence>
+                        <phones>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0772930952</tph_number>
+                            </phone>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0712930952</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>CORS</address_type>
+<address>183/2, Dutugamunu Street</address>
+<city>Kohuwala</city>
+<country_code>LK</country_code>
+                            </address>
+                        </addresses>
+                        <email>prabathobey@gmail.com</email>
+                        <occupation>Unemployed</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>801480012V</number>
+                            <issue_date>1999-01-01T00:00:00.000+06:00</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>801480012V</number>
+                            <issue_date>1999-01-01T00:00:00.000+06:00</issue_date>
+                        </identification>
+                    </t_person>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>019059120200116133318</transactionnumber>
+        <internal_ref_number>019059120200116133318</internal_ref_number>
+        <transaction_location>PANADURA SUPER</transaction_location>
+        <transaction_description>SV-DEPO-3RD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1000000</amount_local>
+        <t_from>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_person>
+                <first_name>P B H P</first_name>
+                <last_name>PEIRIS</last_name>
+                <id_number>762940833V</id_number>
+            </from_person>
+            <from_country>LK</from_country>
+        </t_from>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>PILIYANDALA</branch>
+                <account>101954832846</account>
+                <currency_code>LKR</currency_code>
+                <account_name>DOUBLE S SAVINGS -PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0124301120200116124127</transactionnumber>
+        <internal_ref_number>0124301120200116124127</internal_ref_number>
+        <transaction_location>MAHARAGAMA</transaction_location>
+        <transaction_description>CA-DEPO-OWN</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1345850</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_entity>
+                <name>CHANDRASIRI AGENCIES (PVT) LTD</name>
+                <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                <business>Manufacturing - Other (Mining)</business>
+                <phones>
+                    <phone>
+                        <tph_contact_type>CORS</tph_contact_type>
+                        <tph_communication_type>LNPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>2850579</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>PERM</address_type>
+                        <address>179/2, Old Road, Nawinna</address>
+                        <city>Maharagama</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <email>chandrasiridi@sltnet.lk</email>
+                <incorporation_country_code>LK</incorporation_country_code>
+                <incorporation_date>1994-03-01T00:00:00.000+05:30</incorporation_date>
+                <business_closed>false</business_closed>
+            </from_entity>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>MAHARAGAMA</branch>
+                <account>001310007311</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CA BUSINESS SUPREME</account_name>
+                <t_entity>
+                    <name>CHANDRASIRI AGENCIES (PVT) LTD</name>
+                    <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                    <business>Manufacturing - Other (Mining)</business>
+                    <phones>
+                        <phone>
+                            <tph_contact_type>CORS</tph_contact_type>
+                            <tph_communication_type>LNPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>2850579</tph_number>
+                        </phone>
+                    </phones>
+                    <addresses>
+                        <address>
+                            <address_type>PERM</address_type>
+                            <address>179/2, Old Road, Nawinna</address>
+                            <city>Maharagama</city>
+                            <country_code>LK</country_code>
+                        </address>
+                    </addresses>
+                    <email>chandrasiridi@sltnet.lk</email>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>1994-03-01T00:00:00.000+05:30</incorporation_date>
+                    <business_closed>false</business_closed>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0130190120200116134155</transactionnumber>
+        <internal_ref_number>0130190120200116134155</internal_ref_number>
+        <transaction_location>RATNAPURA</transaction_location>
+        <transaction_description>CA-DEPO-OWN</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>2746059</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_entity>
+                <name>CENTRAL FINANCE COMPANY PLC</name>
+                <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                <addresses>
+                    <address>
+                        <address_type>PERM</address_type>
+                        <address>The Central Finance Company Limited</address>
+                        <city>Colombo 2</city>
+                    </address>
+                </addresses>
+                <email>sampathf@cf.lk</email>
+                <incorporation_country_code>LK</incorporation_country_code>
+                <incorporation_date>1990-01-01T00:00:00.000+05:30</incorporation_date>
+                <business_closed>false</business_closed>
+            </from_entity>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>CITY OFFICE</branch>
+                <account>002930022414</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CA BUSINESS SUPREME</account_name>
+                <t_entity>
+                    <name>CENTRAL FINANCE COMPANY PLC</name>
+                    <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                    <addresses>
+                        <address>
+                            <address_type>PERM</address_type>
+                            <address>The Central Finance Company Limited</address>
+                            <city>Colombo 2</city>
+                        </address>
+                    </addresses>
+                    <email>sampathf@cf.lk</email>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>1990-01-01T00:00:00.000+05:30</incorporation_date>
+                    <business_closed>false</business_closed>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0130214120200116134638</transactionnumber>
+        <internal_ref_number>0130214120200116134638</internal_ref_number>
+        <transaction_location>BAMBALAPITIYA</transaction_location>
+        <transaction_description>CA-DEPO-OWN</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1800000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_entity>
+                <name>MY CHEMIST INTERNATIONAL PVT LTD</name>
+                <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                <business>Traders -  Pharmaceuticals and Chemists</business>
+                <phones>
+                    <phone>
+                        <tph_contact_type>CORS</tph_contact_type>
+                        <tph_communication_type>LNPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0114518669</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>No 37, Kirulapona Avenue</address>
+                        <city>Colombo 5</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <email>sarathj@mychemist.lk</email>
+                <incorporation_country_code>LK</incorporation_country_code>
+                <incorporation_date>2005-08-03T00:00:00.000+06:00</incorporation_date>
+                <business_closed>false</business_closed>
+                <tax_number>114426938</tax_number>
+            </from_entity>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>BAMBALAPITIYA</branch>
+                <account>001110004385</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CURRENT ACCOUNT-TRADE</account_name>
+                <t_entity>
+                    <name>MY CHEMIST INTERNATIONAL PVT LTD</name>
+                    <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                    <business>Traders -  Pharmaceuticals and Chemists</business>
+                    <phones>
+                        <phone>
+                            <tph_contact_type>CORS</tph_contact_type>
+                            <tph_communication_type>LNPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0114518669</tph_number>
+                        </phone>
+                    </phones>
+                    <addresses>
+                        <address>
+                            <address_type>CORS</address_type>
+                            <address>No 37, Kirulapona Avenue</address>
+                            <city>Colombo 5</city>
+                            <country_code>LK</country_code>
+                        </address>
+                    </addresses>
+                    <email>sarathj@mychemist.lk</email>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>2005-08-03T00:00:00.000+06:00</incorporation_date>
+                    <business_closed>false</business_closed>
+                    <tax_number>114426938</tax_number>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0130597120200116134656</transactionnumber>
+        <internal_ref_number>0130597120200116134656</internal_ref_number>
+        <transaction_location>BANDARAWELA</transaction_location>
+        <transaction_description>CA-DEPO-3RD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>2501364</amount_local>
+        <t_from>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_person>
+                <first_name>W M</first_name>
+                <last_name>WIMALARATHNA</last_name>
+                <id_number>862243900V</id_number>
+            </from_person>
+            <from_country>LK</from_country>
+        </t_from>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>CITY OFFICE</branch>
+                <account>002930022414</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CA BUSINESS SUPREME</account_name>
+                <t_entity>
+                    <name>CENTRAL FINANCE COMPANY PLC</name>
+                    <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                    <addresses>
+                        <address>
+                            <address_type>PERM</address_type>
+                            <address>The Central Finance Company Limited</address>
+                            <city>Colombo 2</city>
+                        </address>
+                    </addresses>
+                    <email>sampathf@cf.lk</email>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>1990-01-01T00:00:00.000+05:30</incorporation_date>
+                    <business_closed>false</business_closed>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0129176120200116133642</transactionnumber>
+        <internal_ref_number>0129176120200116133642</internal_ref_number>
+        <transaction_location>HENDALA</transaction_location>
+        <transaction_description>SV-DEPO-OWN</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1500000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>WATTALA</branch>
+                <account>100854511187</account>
+                <currency_code>LKR</currency_code>
+                <account_name>HIT-SAV ACCOUNT-PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0123776120200116123626</transactionnumber>
+        <internal_ref_number>0123776120200116123626</internal_ref_number>
+        <transaction_location>NAWALA KOSWATTA</transaction_location>
+        <transaction_description>CA-DEPO-3RD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>3000000</amount_local>
+        <t_from>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_person>
+                <first_name>WELIVITIGODAGE SHASHIE GAYAN</first_name>
+                <last_name>KUMARA</last_name>
+                <id_number>861500756V</id_number>
+            </from_person>
+            <from_country>LK</from_country>
+        </t_from>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>RATMALANA</branch>
+                <account>001810011722</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CURRENT ACCOUNT-TRADE</account_name>
+                <t_entity>
+                    <name>S G TEKNIX</name>
+                    <incorporation_legal_form>SOLE PROPRITORSHIP</incorporation_legal_form>
+                    <business>Traders - Others</business>
+                    <phones>
+                        <phone>
+                            <tph_contact_type>PRVT</tph_contact_type>
+                            <tph_communication_type>MOPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0768368841</tph_number>
+                        </phone>
+                    </phones>
+                    <addresses>
+                        <address>
+                            <address_type>PERM</address_type>
+                            <address>No45a, Sri Dharmarama Road</address>
+                            <city>Ratmalana</city>
+                            <country_code>LK</country_code>
+                        </address>
+                    </addresses>
+                    <email>sgteknix@live.com</email>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>2017-07-27T00:00:00.000+05:30</incorporation_date>
+                    <business_closed>false</business_closed>
+                    <tax_number>0000</tax_number>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+</report>

@@ -30,6 +30,11 @@ public class TransactionDTO {
 
     private Integer amountLocal;
 
+
+    private FromToMappingDTO transactionFrom;
+
+    private FromToMappingDTO transactionTo;
+
     public Integer getTran_uid() {
         return tran_uid;
     }
@@ -134,4 +139,19 @@ public class TransactionDTO {
         this.amountLocal = amountLocal;
     }
 
+    public FromToMappingDTO getTransactionFrom() {
+        return transactionFrom;
+    }
+
+    public void setTransactionFrom(FromToMappingDTO transactionFrom) {
+        this.transactionFrom = transactionFrom;
+    }
+
+    public FromToMappingDTO getTransactionTo() {
+        return transactionTo;
+    }
+
+    public void setTransactionTo(FromToMappingDTO transactionTo) {
+        this.transactionTo = transactionTo;
+    }
 }

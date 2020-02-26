@@ -1,0 +1,1043 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<report>
+    <rentity_id>7278</rentity_id>
+    <submission_code>E</submission_code>
+    <report_code>CTR</report_code>
+    <entity_reference></entity_reference>
+    <submission_date>2020-02-21T19:00:00.000+05:30</submission_date>
+    <currency_code_local>LKR</currency_code_local>
+    <transaction>
+        <transactionnumber>0113016120200116110019</transactionnumber>
+        <internal_ref_number>0113016120200116110019</internal_ref_number>
+        <transaction_location>CHILAW</transaction_location>
+        <transaction_description>SV-WTHD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1550000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>ELEC</from_funds_code>
+            <from_foreign_currency/>
+            <from_account>
+                <institution_code>7278</institution_code>
+                <branch>KATUGASTOTA</branch>
+                <account>103257369951</account>
+                <currency_code>LKR</currency_code>
+                <account_name>HIT-SAV ACCOUNT-PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>M</gender>
+                        <title>Mr.</title>
+                        <first_name>Wijesundara Mudiyanselage Sumith</first_name>
+                        <last_name>Bandara</last_name>
+                        <birthdate>1980-05-22T00:00:00.000+05:30</birthdate>
+                        <id_number>801432417V</id_number>
+                        <nationality1>LK</nationality1>
+                        <residence>LK</residence>
+                        <phones>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0777147182</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>CORS</address_type>
+<address>No 24/06,Aluthganthota Road, Mavilmada</address>
+<city>Kandy</city>
+<country_code>LK</country_code>
+                            </address>
+                        </addresses>
+                        <occupation>Business</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>801432417V</number>
+                            <issue_date>1980-05-22T00:00:00.000+05:30</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>801432417V</number>
+                            <issue_date>1980-05-22T00:00:00.000+05:30</issue_date>
+                        </identification>
+                    </t_person>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </from_account>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>CASH</to_funds_code>
+            <to_foreign_currency/>
+            <to_person>
+                <gender>M</gender>
+                <title>Mr.</title>
+                <first_name>Wijesundara Mudiyanselage Sumith</first_name>
+                <last_name>Bandara</last_name>
+                <birthdate>1980-05-22T00:00:00.000+05:30</birthdate>
+                <id_number>801432417V</id_number>
+                <nationality1>LK</nationality1>
+                <residence>LK</residence>
+                <phones>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0777147182</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>No 24/06,Aluthganthota Road, Mavilmada</address>
+                        <city>Kandy</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <occupation>Business</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>801432417V</number>
+                    <issue_date>1980-05-22T00:00:00.000+05:30</issue_date>
+                </identification>
+            </to_person>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0114416120200116110721</transactionnumber>
+        <internal_ref_number>0114416120200116110721</internal_ref_number>
+        <transaction_location>RAJAGIRIYA</transaction_location>
+        <transaction_description>SV-WTHD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1222000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>ELEC</from_funds_code>
+            <from_foreign_currency/>
+            <from_account>
+                <institution_code>7278</institution_code>
+                <branch>RAJAGIRIYA</branch>
+                <account>112253618961</account>
+                <currency_code>LKR</currency_code>
+                <account_name>HIT-SAV ACCOUNT-PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>M</gender>
+                        <title>Ven.</title>
+                        <first_name>Rajagiriye Chanda</first_name>
+                        <last_name>Vimala Thero</last_name>
+                        <birthdate>1966-05-02T00:00:00.000+05:30</birthdate>
+                        <id_number>661231319V</id_number>
+                        <nationality1>LK</nationality1>
+                        <residence>LK</residence>
+                        <phones>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0777454342</tph_number>
+                            </phone>
+                            <phone>
+<tph_contact_type>CORS</tph_contact_type>
+<tph_communication_type>LNPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>2888576</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>CORS</address_type>
+<address>No 156, Pattana Viharaya, U R Perera Road</address>
+<city>Rajagiriya</city>
+<country_code>LK</country_code>
+                            </address>
+                        </addresses>
+                        <occupation>Unemployed</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>661231319V</number>
+                            <issue_date>2016-05-18T00:00:00.000+05:30</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>661231319V</number>
+                            <issue_date>2016-05-18T00:00:00.000+05:30</issue_date>
+                        </identification>
+                    </t_person>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </from_account>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>CASH</to_funds_code>
+            <to_foreign_currency/>
+            <to_person>
+                <gender>M</gender>
+                <title>Ven.</title>
+                <first_name>Rajagiriye Chanda</first_name>
+                <last_name>Vimala Thero</last_name>
+                <birthdate>1966-05-02T00:00:00.000+05:30</birthdate>
+                <id_number>661231319V</id_number>
+                <nationality1>LK</nationality1>
+                <residence>LK</residence>
+                <phones>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0777454342</tph_number>
+                    </phone>
+                    <phone>
+                        <tph_contact_type>CORS</tph_contact_type>
+                        <tph_communication_type>LNPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>2888576</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>No 156, Pattana Viharaya, U R Perera Road</address>
+                        <city>Rajagiriya</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <occupation>Unemployed</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>661231319V</number>
+                    <issue_date>2016-05-18T00:00:00.000+05:30</issue_date>
+                </identification>
+            </to_person>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0111972120200116104644</transactionnumber>
+        <internal_ref_number>0111972120200116104644</internal_ref_number>
+        <transaction_location>KIRINDIWELA</transaction_location>
+        <transaction_description>SV-WTHD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1500000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>ELEC</from_funds_code>
+            <from_foreign_currency/>
+            <from_account>
+                <institution_code>7278</institution_code>
+                <branch>KIRINDIWELA</branch>
+                <account>108354395592</account>
+                <currency_code>LKR</currency_code>
+                <account_name>DOUBLE S SAVINGS -PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>F</gender>
+                        <title>Mrs.</title>
+                        <first_name>Jayalath Arachchige</first_name>
+                        <last_name>Prabhamangala</last_name>
+                        <birthdate>1972-07-10T00:00:00.000+05:30</birthdate>
+                        <id_number>726921261V</id_number>
+                        <nationality1>LK</nationality1>
+                        <residence>LK</residence>
+                        <phones>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0715614099</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>CORS</address_type>
+<address>No3, Baliwila</address>
+<city>Radawana</city>
+<country_code>LK</country_code>
+                            </address>
+                        </addresses>
+                        <occupation>Government Servant</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>726921261V</number>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>726921261V</number>
+                        </identification>
+                    </t_person>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </from_account>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>CASH</to_funds_code>
+            <to_foreign_currency/>
+            <to_person>
+                <gender>F</gender>
+                <title>Mrs.</title>
+                <first_name>Jayalath Arachchige</first_name>
+                <last_name>Prabhamangala</last_name>
+                <birthdate>1972-07-10T00:00:00.000+05:30</birthdate>
+                <id_number>726921261V</id_number>
+                <nationality1>LK</nationality1>
+                <residence>LK</residence>
+                <phones>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0715614099</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>No3, Baliwila</address>
+                        <city>Radawana</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <occupation>Government Servant</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>726921261V</number>
+                </identification>
+            </to_person>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0112198120200116104958</transactionnumber>
+        <internal_ref_number>0112198120200116104958</internal_ref_number>
+        <transaction_location>COLOMBO SUPER</transaction_location>
+        <transaction_description>SV-WTHD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>15000000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>ELEC</from_funds_code>
+            <from_foreign_currency/>
+            <from_account>
+                <institution_code>7278</institution_code>
+                <branch>SOORIYAWEWA</branch>
+                <account>115757253169</account>
+                <currency_code>LKR</currency_code>
+                <account_name>DOUBLE S SAVINGS -PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>M</gender>
+                        <title>Mr.</title>
+                        <first_name>Xiong</first_name>
+                        <last_name>Fangjun</last_name>
+                        <birthdate>1975-06-30T00:00:00.000+05:30</birthdate>
+                        <id_number>ED1061280</id_number>
+                        <nationality1>CN</nationality1>
+                        <residence>CN</residence>
+                        <phones>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0770470956</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>CORS</address_type>
+<address>Cscec, Bedigamthota</address>
+<city>Suriyawewa</city>
+<country_code>LK</country_code>
+                            </address>
+                        </addresses>
+                        <occupation>Accountant</occupation>
+                        <identification>
+                            <type>PPT</type>
+                            <number>ED1061280</number>
+                            <issue_date>2018-07-20T00:00:00.000+05:30</issue_date>
+                            <issue_country>CN</issue_country>
+                        </identification>
+                        <identification>
+                            <type>PPT</type>
+                            <number>ED1061280</number>
+                            <issue_date>2018-07-20T00:00:00.000+05:30</issue_date>
+                            <issue_country>CN</issue_country>
+                        </identification>
+                    </t_person>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </from_account>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>CASH</to_funds_code>
+            <to_foreign_currency/>
+            <to_person>
+                <gender>M</gender>
+                <title>Mr.</title>
+                <first_name>Xiong</first_name>
+                <last_name>Fangjun</last_name>
+                <birthdate>1975-06-30T00:00:00.000+05:30</birthdate>
+                <id_number>ED1061280</id_number>
+                <nationality1>CN</nationality1>
+                <residence>CN</residence>
+                <phones>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0770470956</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>Cscec, Bedigamthota</address>
+                        <city>Suriyawewa</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <occupation>Accountant</occupation>
+                <identification>
+                    <type>PPT</type>
+                    <number>ED1061280</number>
+                    <issue_date>2018-07-20T00:00:00.000+05:30</issue_date>
+                    <issue_country>CN</issue_country>
+                </identification>
+            </to_person>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>016959120200116100524</transactionnumber>
+        <internal_ref_number>016959120200116100524</internal_ref_number>
+        <transaction_location>JA-ELA</transaction_location>
+        <transaction_description>SV-WTHD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>6000000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>ELEC</from_funds_code>
+            <from_foreign_currency/>
+            <from_account>
+                <institution_code>7278</institution_code>
+                <branch>KIRIBATHGODA</branch>
+                <account>100557077481</account>
+                <currency_code>LKR</currency_code>
+                <account_name>HIT-SAV ACCOUNT-PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>M</gender>
+                        <title>Mr.</title>
+                        <first_name>Bulathsinghalage Vinol Prageeth</first_name>
+                        <last_name>Cooray</last_name>
+                        <birthdate>1986-03-23T00:00:00.000+05:30</birthdate>
+                        <id_number>860830922V</id_number>
+                        <nationality1>LK</nationality1>
+                        <residence>LK</residence>
+                        <phones>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0763621684</tph_number>
+                            </phone>
+                            <phone>
+<tph_contact_type>CORS</tph_contact_type>
+<tph_communication_type>LNPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0112237100</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>CORS</address_type>
+<address>490/7, Lionel Mitchel Mawatha, Eriyawetiya</address>
+<city>Kelaniya</city>
+<country_code>LK</country_code>
+                            </address>
+                        </addresses>
+                        <email>vinol.cooray@hotmail.com</email>
+                        <occupation>Accountant</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>860830922V</number>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>860830922V</number>
+                        </identification>
+                    </t_person>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </from_account>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>CASH</to_funds_code>
+            <to_foreign_currency/>
+            <to_person>
+                <gender>M</gender>
+                <title>Mr.</title>
+                <first_name>Bulathsinghalage Vinol Prageeth</first_name>
+                <last_name>Cooray</last_name>
+                <birthdate>1986-03-23T00:00:00.000+05:30</birthdate>
+                <id_number>860830922V</id_number>
+                <nationality1>LK</nationality1>
+                <residence>LK</residence>
+                <phones>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0763621684</tph_number>
+                    </phone>
+                    <phone>
+                        <tph_contact_type>CORS</tph_contact_type>
+                        <tph_communication_type>LNPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0112237100</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>490/7, Lionel Mitchel Mawatha, Eriyawetiya</address>
+                        <city>Kelaniya</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <email>vinol.cooray@hotmail.com</email>
+                <occupation>Accountant</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>860830922V</number>
+                </identification>
+            </to_person>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0116512120200116112644</transactionnumber>
+        <internal_ref_number>0116512120200116112644</internal_ref_number>
+        <transaction_location>RAJAGIRIYA</transaction_location>
+        <transaction_description>SV-WTHD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>4000000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>ELEC</from_funds_code>
+            <from_foreign_currency/>
+            <from_account>
+                <institution_code>7278</institution_code>
+                <branch>PELMADULLA</branch>
+                <account>110353527516</account>
+                <currency_code>LKR</currency_code>
+                <account_name>HIT-SAV ACCOUNT-PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>M</gender>
+                        <title>Mr.</title>
+                        <first_name>Siriwardana Liyanage Rohitha Ruwan</first_name>
+                        <last_name>Premathilaka</last_name>
+                        <birthdate>1980-08-18T00:00:00.000+05:30</birthdate>
+                        <id_number>802310927V</id_number>
+                        <nationality1>LK</nationality1>
+                        <residence>LK</residence>
+                        <phones>
+                            <phone>
+<tph_contact_type>CORS</tph_contact_type>
+<tph_communication_type>LNPH</tph_communication_type>
+<tph_number>1502152371</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>CORS</address_type>
+<address>P O Box 810 Algurg Consultantsa, Ds Department</address>
+<city>Dubai</city>
+<country_code>AE</country_code>
+                            </address>
+                        </addresses>
+                        <occupation>Foreign Employer</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>802310927V</number>
+                            <issue_date>1999-05-02T00:00:00.000+06:00</issue_date>
+                            <issue_country>LK</issue_country>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>802310927V</number>
+                            <issue_date>1999-05-02T00:00:00.000+06:00</issue_date>
+                            <issue_country>LK</issue_country>
+                        </identification>
+                    </t_person>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </from_account>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>CASH</to_funds_code>
+            <to_foreign_currency/>
+            <to_person>
+                <gender>M</gender>
+                <title>Mr.</title>
+                <first_name>Siriwardana Liyanage Rohitha Ruwan</first_name>
+                <last_name>Premathilaka</last_name>
+                <birthdate>1980-08-18T00:00:00.000+05:30</birthdate>
+                <id_number>802310927V</id_number>
+                <nationality1>LK</nationality1>
+                <residence>LK</residence>
+                <phones>
+                    <phone>
+                        <tph_contact_type>CORS</tph_contact_type>
+                        <tph_communication_type>LNPH</tph_communication_type>
+                        <tph_number>1502152371</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>P O Box 810 Algurg Consultantsa, Ds Department</address>
+                        <city>Dubai</city>
+                        <country_code>AE</country_code>
+                    </address>
+                </addresses>
+                <occupation>Foreign Employer</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>802310927V</number>
+                    <issue_date>1999-05-02T00:00:00.000+06:00</issue_date>
+                    <issue_country>LK</issue_country>
+                </identification>
+            </to_person>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0118381120200116114532</transactionnumber>
+        <internal_ref_number>0118381120200116114532</internal_ref_number>
+        <transaction_location>HETTIPOLA</transaction_location>
+        <transaction_description>SV-WTHD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>2500000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>ELEC</from_funds_code>
+            <from_foreign_currency/>
+            <from_account>
+                <institution_code>7278</institution_code>
+                <branch>HETTIPOLA</branch>
+                <account>118761004276</account>
+                <currency_code>LKR</currency_code>
+                <account_name>MONEY MARKET INVESTMENT SAVINGS-  SAMAJA</account_name>
+                <t_entity>
+                    <name>SIRI ANGULIMALA CHAITHYA SANWARDANA ARAMUDALA</name>
+                    <incorporation_legal_form>SOCIETIES</incorporation_legal_form>
+                    <phones>
+                        <phone>
+                            <tph_contact_type>PRVT</tph_contact_type>
+                            <tph_communication_type>MOPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0768255736</tph_number>
+                        </phone>
+                        <phone>
+                            <tph_contact_type>CORS</tph_contact_type>
+                            <tph_communication_type>LNPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0374937350</tph_number>
+                        </phone>
+                    </phones>
+                    <addresses>
+                        <address>
+                            <address_type>PERM</address_type>
+                            <address>Mahamewna Bhawana Asapuwa, Ma Unawa,Bowaththa</address>
+                            <city>Bingiriya</city>
+                            <country_code>LK</country_code>
+                        </address>
+                    </addresses>
+                    <email>mbm.mahamevnawa@gmail.com</email>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>2019-01-24T00:00:00.000+05:30</incorporation_date>
+                    <business_closed>false</business_closed>
+                    <tax_number>N/A</tax_number>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </from_account>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>CASH</to_funds_code>
+            <to_foreign_currency/>
+            <to_entity>
+                <name>SIRI ANGULIMALA CHAITHYA SANWARDANA ARAMUDALA</name>
+                <incorporation_legal_form>SOCIETIES</incorporation_legal_form>
+                <phones>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0768255736</tph_number>
+                    </phone>
+                    <phone>
+                        <tph_contact_type>CORS</tph_contact_type>
+                        <tph_communication_type>LNPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0374937350</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>PERM</address_type>
+                        <address>Mahamewna Bhawana Asapuwa, Ma Unawa,Bowaththa</address>
+                        <city>Bingiriya</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <email>mbm.mahamevnawa@gmail.com</email>
+                <incorporation_country_code>LK</incorporation_country_code>
+                <incorporation_date>2019-01-24T00:00:00.000+05:30</incorporation_date>
+                <business_closed>false</business_closed>
+                <tax_number>N/A</tax_number>
+            </to_entity>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0117833120200116113852</transactionnumber>
+        <internal_ref_number>0117833120200116113852</internal_ref_number>
+        <transaction_location>MAKOLA</transaction_location>
+        <transaction_description>SV-WTHD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1000000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>ELEC</from_funds_code>
+            <from_foreign_currency/>
+            <from_account>
+                <institution_code>7278</institution_code>
+                <branch>MAKOLA</branch>
+                <account>120754488467</account>
+                <currency_code>LKR</currency_code>
+                <account_name>DOUBLE S SAVINGS -PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>F</gender>
+                        <title>Rev.</title>
+                        <first_name>Welimada Sangamiththa</first_name>
+                        <last_name>Theraniya</last_name>
+                        <birthdate>1980-10-13T00:00:00.000+05:30</birthdate>
+                        <id_number>807876031V</id_number>
+                        <nationality1>LK</nationality1>
+                        <residence>LK</residence>
+                        <phones>
+                            <phone>
+<tph_contact_type>CORS</tph_contact_type>
+<tph_communication_type>LNPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0112905596</tph_number>
+                            </phone>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0712877299</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>CORS</address_type>
+<address>Bikshuni Hostel Manelwatta Temple, Bollagala</address>
+<city>Kelaniya</city>
+<country_code>LK</country_code>
+                            </address>
+                        </addresses>
+                        <occupation>Student</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>807876031V</number>
+                            <issue_date>2011-10-31T00:00:00.000+05:30</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>807876031V</number>
+                            <issue_date>2011-10-31T00:00:00.000+05:30</issue_date>
+                        </identification>
+                    </t_person>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </from_account>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>CASH</to_funds_code>
+            <to_foreign_currency/>
+            <to_person>
+                <gender>F</gender>
+                <title>Rev.</title>
+                <first_name>Welimada Sangamiththa</first_name>
+                <last_name>Theraniya</last_name>
+                <birthdate>1980-10-13T00:00:00.000+05:30</birthdate>
+                <id_number>807876031V</id_number>
+                <nationality1>LK</nationality1>
+                <residence>LK</residence>
+                <phones>
+                    <phone>
+                        <tph_contact_type>CORS</tph_contact_type>
+                        <tph_communication_type>LNPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0112905596</tph_number>
+                    </phone>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0712877299</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>Bikshuni Hostel Manelwatta Temple, Bollagala</address>
+                        <city>Kelaniya</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <occupation>Student</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>807876031V</number>
+                    <issue_date>2011-10-31T00:00:00.000+05:30</issue_date>
+                </identification>
+            </to_person>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0118027120200116113930</transactionnumber>
+        <internal_ref_number>0118027120200116113930</internal_ref_number>
+        <transaction_location>MAHARAGAMA SUPER</transaction_location>
+        <transaction_description>SV-WTHD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>2027000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>ELEC</from_funds_code>
+            <from_foreign_currency/>
+            <from_account>
+                <institution_code>7278</institution_code>
+                <branch>MAHARAGAMA SUPER</branch>
+                <account>109254741088</account>
+                <currency_code>LKR</currency_code>
+                <account_name>HIT-SAV ACCOUNT-PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>M</gender>
+                        <title>Mr.</title>
+                        <first_name>Yakdehige Don Gihan Sameera Gunarathne</first_name>
+                        <last_name>Gunaratne</last_name>
+                        <birthdate>1985-01-23T00:00:00.000+05:30</birthdate>
+                        <id_number>850232539V</id_number>
+                        <nationality1>LK</nationality1>
+                        <residence>LK</residence>
+                        <phones>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0718130873</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>CORS</address_type>
+<address>208, High Level Road</address>
+<city>Maharagama</city>
+<country_code>LK</country_code>
+                            </address>
+                        </addresses>
+                        <occupation>Business</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>850232539V</number>
+                            <issue_date>2002-10-30T00:00:00.000+06:00</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>850232539V</number>
+                            <issue_date>2002-10-30T00:00:00.000+06:00</issue_date>
+                        </identification>
+                    </t_person>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </from_account>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>CASH</to_funds_code>
+            <to_foreign_currency/>
+            <to_person>
+                <gender>M</gender>
+                <title>Mr.</title>
+                <first_name>Yakdehige Don Gihan Sameera Gunarathne</first_name>
+                <last_name>Gunaratne</last_name>
+                <birthdate>1985-01-23T00:00:00.000+05:30</birthdate>
+                <id_number>850232539V</id_number>
+                <nationality1>LK</nationality1>
+                <residence>LK</residence>
+                <phones>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0718130873</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>208, High Level Road</address>
+                        <city>Maharagama</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <occupation>Business</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>850232539V</number>
+                    <issue_date>2002-10-30T00:00:00.000+06:00</issue_date>
+                </identification>
+            </to_person>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0118209120200116114129</transactionnumber>
+        <internal_ref_number>0118209120200116114129</internal_ref_number>
+        <transaction_location>MALABE</transaction_location>
+        <transaction_description>SV-WTHD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1250000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>ELEC</from_funds_code>
+            <from_foreign_currency/>
+            <from_account>
+                <institution_code>7278</institution_code>
+                <branch>MALABE</branch>
+                <account>103957244560</account>
+                <currency_code>LKR</currency_code>
+                <account_name>DOUBLE S SAVINGS -PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>M</gender>
+                        <title>Mr.</title>
+                        <first_name>Hetti Arachchige Samantha</first_name>
+                        <last_name>Udayarathna</last_name>
+                        <birthdate>1966-12-19T00:00:00.000+05:30</birthdate>
+                        <id_number>663540963V</id_number>
+                        <nationality1>LK</nationality1>
+                        <residence>LK</residence>
+                        <phones>
+                            <phone>
+<tph_contact_type>CORS</tph_contact_type>
+<tph_communication_type>LNPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0112563703</tph_number>
+                            </phone>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0710885236</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>CORS</address_type>
+<address>No 1/4, Kahantota Road</address>
+<city>Malabe</city>
+<country_code>LK</country_code>
+                            </address>
+                        </addresses>
+                        <occupation>Business</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>663540963V</number>
+                            <issue_date>2010-01-18T00:00:00.000+05:30</issue_date>
+                            <issue_country>LK</issue_country>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>663540963V</number>
+                            <issue_date>2010-01-18T00:00:00.000+05:30</issue_date>
+                            <issue_country>LK</issue_country>
+                        </identification>
+                    </t_person>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </from_account>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>CASH</to_funds_code>
+            <to_foreign_currency/>
+            <to_person>
+                <gender>M</gender>
+                <title>Mr.</title>
+                <first_name>Hetti Arachchige Samantha</first_name>
+                <last_name>Udayarathna</last_name>
+                <birthdate>1966-12-19T00:00:00.000+05:30</birthdate>
+                <id_number>663540963V</id_number>
+                <nationality1>LK</nationality1>
+                <residence>LK</residence>
+                <phones>
+                    <phone>
+                        <tph_contact_type>CORS</tph_contact_type>
+                        <tph_communication_type>LNPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0112563703</tph_number>
+                    </phone>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0710885236</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>No 1/4, Kahantota Road</address>
+                        <city>Malabe</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <occupation>Business</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>663540963V</number>
+                    <issue_date>2010-01-18T00:00:00.000+05:30</issue_date>
+                    <issue_country>LK</issue_country>
+                </identification>
+            </to_person>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+</report>

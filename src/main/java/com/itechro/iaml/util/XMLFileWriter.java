@@ -20,7 +20,7 @@ public class XMLFileWriter {
         marshallerObj.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
         try {
-            marshallerObj.marshal(report, new FileOutputStream("sample.xml"));
+            marshallerObj.marshal(report, new FileOutputStream(fileName));
         } catch (FileNotFoundException e) {
             LOG.error("ERROR: Generating exm file failed. {}", report.getRentityId());
         }

@@ -1,0 +1,721 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<report>
+    <rentity_id>7278</rentity_id>
+    <submission_code>E</submission_code>
+    <report_code>CTR</report_code>
+    <entity_reference></entity_reference>
+    <submission_date>2020-02-21T19:00:00.000+05:30</submission_date>
+    <currency_code_local>LKR</currency_code_local>
+    <transaction>
+        <transactionnumber>0135752120200116143243</transactionnumber>
+        <internal_ref_number>0135752120200116143243</internal_ref_number>
+        <transaction_location>KOHUWALA</transaction_location>
+        <transaction_description>SV-DEPO-OWN</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1220000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>NUGEGODA</branch>
+                <account>100354056038</account>
+                <currency_code>LKR</currency_code>
+                <account_name>DOUBLE S SAVINGS -PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>017645120200116100603</transactionnumber>
+        <internal_ref_number>017645120200116100603</internal_ref_number>
+        <transaction_location>PRINCE STREET</transaction_location>
+        <transaction_description>CA-DEPO-OWN</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>2189000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_person>
+                <gender>M</gender>
+                <title>Mr.</title>
+                <first_name>Namanadhan</first_name>
+                <last_name>Prasanna</last_name>
+                <birthdate>1989-11-26T00:00:00.000+05:30</birthdate>
+                <id_number>893312129V</id_number>
+                <nationality1>LK</nationality1>
+                <residence>LK</residence>
+                <phones>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0777770556</tph_number>
+                    </phone>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0775253956</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>PRVT</address_type>
+                        <address>Diyanilla Watta, Hulganoya</address>
+                        <city>Pussellawa</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <occupation>Business</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>893312129V</number>
+                    <issue_date>2006-11-29T00:00:00.000+05:30</issue_date>
+                </identification>
+            </from_person>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>PRINCE STREET</branch>
+                <account>021750006032</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CURRENT ACCOUNT-PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>M</gender>
+                        <title>Mr.</title>
+                        <first_name>Namanadhan</first_name>
+                        <last_name>Prasanna</last_name>
+                        <birthdate>1989-11-26T00:00:00.000+05:30</birthdate>
+                        <id_number>893312129V</id_number>
+                        <nationality1>LK</nationality1>
+                        <residence>LK</residence>
+                        <phones>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0777770556</tph_number>
+                            </phone>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0775253956</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>PRVT</address_type>
+<address>Diyanilla Watta, Hulganoya</address>
+<city>Pussellawa</city>
+<country_code>LK</country_code>
+                            </address>
+                        </addresses>
+                        <occupation>Business</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>893312129V</number>
+                            <issue_date>2006-11-29T00:00:00.000+05:30</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>893312129V</number>
+                            <issue_date>2006-11-29T00:00:00.000+05:30</issue_date>
+                        </identification>
+                    </t_person>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>019562120200116102210</transactionnumber>
+        <internal_ref_number>019562120200116102210</internal_ref_number>
+        <transaction_location>THIMBIRIGASYAYA</transaction_location>
+        <transaction_description>CA-DEPO-3RD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>2925000</amount_local>
+        <t_from>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_person>
+                <first_name>SUBASINGHAGE HEMAKUMARA</first_name>
+                <last_name>SUGATHADASA</last_name>
+                <id_number>642831461V</id_number>
+            </from_person>
+            <from_country>LK</from_country>
+        </t_from>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>THIMBIRIGASYAYA</branch>
+                <account>003410001844</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CA BUSINESS SUPREME</account_name>
+                <t_entity>
+                    <name>G T B STEEL CORPORATION(PVT)</name>
+                    <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                    <phones>
+                        <phone>
+                            <tph_contact_type>CORS</tph_contact_type>
+                            <tph_communication_type>LNPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0112501351</tph_number>
+                        </phone>
+                    </phones>
+                    <addresses>
+                        <address>
+                            <address_type>CORS</address_type>
+                            <address>No 15, Botheju Road, Off Thimbirigasyaya Road</address>
+                            <city>Colombo 5</city>
+                            <country_code>LK</country_code>
+                        </address>
+                    </addresses>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>2012-07-23T00:00:00.000+05:30</incorporation_date>
+                    <business_closed>false</business_closed>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0126392120200116130239</transactionnumber>
+        <internal_ref_number>0126392120200116130239</internal_ref_number>
+        <transaction_location>DIGANA</transaction_location>
+        <transaction_description>CA-DEPO-OWN</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>2252095</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_entity>
+                <name>CENTRAL FINANCE COMPANY PLC</name>
+                <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                <addresses>
+                    <address>
+                        <address_type>PERM</address_type>
+                        <address>The Central Finance Company Limited</address>
+                        <city>Colombo 2</city>
+                    </address>
+                </addresses>
+                <email>sampathf@cf.lk</email>
+                <incorporation_country_code>LK</incorporation_country_code>
+                <incorporation_date>1990-01-01T00:00:00.000+05:30</incorporation_date>
+                <business_closed>false</business_closed>
+            </from_entity>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>CITY OFFICE</branch>
+                <account>002930022414</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CA BUSINESS SUPREME</account_name>
+                <t_entity>
+                    <name>CENTRAL FINANCE COMPANY PLC</name>
+                    <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                    <addresses>
+                        <address>
+                            <address_type>PERM</address_type>
+                            <address>The Central Finance Company Limited</address>
+                            <city>Colombo 2</city>
+                        </address>
+                    </addresses>
+                    <email>sampathf@cf.lk</email>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>1990-01-01T00:00:00.000+05:30</incorporation_date>
+                    <business_closed>false</business_closed>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0131424120200116135707</transactionnumber>
+        <internal_ref_number>0131424120200116135707</internal_ref_number>
+        <transaction_location>PETTAH</transaction_location>
+        <transaction_description>CA-DEPO-OWN</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1500000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_entity>
+                <name>JEEAR</name>
+                <incorporation_legal_form>PARTNERSHIP </incorporation_legal_form>
+                <business>Traders - Wholesalers</business>
+                <addresses>
+                    <address>
+                        <address_type>PERM</address_type>
+                        <address>No:44, 4th Cross Street</address>
+                        <city>Colombo 11</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <incorporation_country_code>LK</incorporation_country_code>
+                <incorporation_date>2009-01-22T00:00:00.000+05:30</incorporation_date>
+                <business_closed>false</business_closed>
+            </from_entity>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>PETTAH</branch>
+                <account>000210032800</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CA BUSINESS SUPREME</account_name>
+                <t_entity>
+                    <name>JEEAR</name>
+                    <incorporation_legal_form>PARTNERSHIP </incorporation_legal_form>
+                    <business>Traders - Wholesalers</business>
+                    <addresses>
+                        <address>
+                            <address_type>PERM</address_type>
+                            <address>No:44, 4th Cross Street</address>
+                            <city>Colombo 11</city>
+                            <country_code>LK</country_code>
+                        </address>
+                    </addresses>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>2009-01-22T00:00:00.000+05:30</incorporation_date>
+                    <business_closed>false</business_closed>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0133393120200116143559</transactionnumber>
+        <internal_ref_number>0133393120200116143559</internal_ref_number>
+        <transaction_location>NAVAM MAWATHA</transaction_location>
+        <transaction_description>CA-DEPO-3RD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>4255435</amount_local>
+        <t_from>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_person>
+                <first_name>GALAPITAGE AYESHA MADHUMALI</first_name>
+                <last_name>SENADHEERA</last_name>
+                <id_number>857103335V</id_number>
+            </from_person>
+            <from_country>LK</from_country>
+        </t_from>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>HEADQUARTERS</branch>
+                <account>002930009930</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CURRENT ACCOUNT-TRADE</account_name>
+                <t_entity>
+                    <name>SIYAPATHA FINANCE PLC</name>
+                    <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                    <phones>
+                        <phone>
+                            <tph_contact_type>CORS</tph_contact_type>
+                            <tph_communication_type>LNPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0117605606</tph_number>
+                        </phone>
+                        <phone>
+                            <tph_contact_type>CORS</tph_contact_type>
+                            <tph_communication_type>LNPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0117605605</tph_number>
+                        </phone>
+                    </phones>
+                    <addresses>
+                        <address>
+                            <address_type>PERM</address_type>
+                            <address>46/12, Navam Mawatha</address>
+                            <city>Colombo 2</city>
+                            <country_code>LK</country_code>
+                        </address>
+                    </addresses>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>2005-03-07T00:00:00.000+06:00</incorporation_date>
+                    <business_closed>false</business_closed>
+                    <tax_number>134012307</tax_number>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0134165120200116142009</transactionnumber>
+        <internal_ref_number>0134165120200116142009</internal_ref_number>
+        <transaction_location>PANADURA SUPER</transaction_location>
+        <transaction_description>CA-DEPO-OWN</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1250000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_entity>
+                <name>MILLENNIUM INVESTMENT SOLUTION PVT LTD</name>
+                <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                <business>Traders - Automobile Dealers &amp; Garages</business>
+                <phones>
+                    <phone>
+                        <tph_contact_type>CORS</tph_contact_type>
+                        <tph_communication_type>LNPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0384932932</tph_number>
+                    </phone>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0777777645</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>PERM</address_type>
+                        <address>No 92 Horana Rd, Wekada</address>
+                        <city>Panadura</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <incorporation_country_code>LK</incorporation_country_code>
+                <incorporation_date>2017-11-14T00:00:00.000+05:30</incorporation_date>
+                <business_closed>false</business_closed>
+                <tax_number>1</tax_number>
+            </from_entity>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>PANADURA SUPER</branch>
+                <account>002610013360</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CURRENT ACCOUNT-TRADE</account_name>
+                <t_entity>
+                    <name>MILLENNIUM INVESTMENT SOLUTION PVT LTD</name>
+                    <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                    <business>Traders - Automobile Dealers &amp; Garages</business>
+                    <phones>
+                        <phone>
+                            <tph_contact_type>CORS</tph_contact_type>
+                            <tph_communication_type>LNPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0384932932</tph_number>
+                        </phone>
+                        <phone>
+                            <tph_contact_type>PRVT</tph_contact_type>
+                            <tph_communication_type>MOPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0777777645</tph_number>
+                        </phone>
+                    </phones>
+                    <addresses>
+                        <address>
+                            <address_type>PERM</address_type>
+                            <address>No 92 Horana Rd, Wekada</address>
+                            <city>Panadura</city>
+                            <country_code>LK</country_code>
+                        </address>
+                    </addresses>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>2017-11-14T00:00:00.000+05:30</incorporation_date>
+                    <business_closed>false</business_closed>
+                    <tax_number>1</tax_number>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0134604120200116142454</transactionnumber>
+        <internal_ref_number>0134604120200116142454</internal_ref_number>
+        <transaction_location>MONARAGALA</transaction_location>
+        <transaction_description>CA-DEPO-OWN</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>4120500</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_person>
+                <gender>M</gender>
+                <title>Mr.</title>
+                <first_name>Gamini Kapila Kumara</first_name>
+                <last_name>Alawatte</last_name>
+                <birthdate>1966-08-16T00:00:00.000+05:30</birthdate>
+                <id_number>662292850V</id_number>
+                <nationality1>LK</nationality1>
+                <residence>LK</residence>
+                <phones>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0773129565</tph_number>
+                    </phone>
+                    <phone>
+                        <tph_contact_type>CORS</tph_contact_type>
+                        <tph_communication_type>LNPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0552276195</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>No 75, Pothuwil Road</address>
+                        <city>Monaragala</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <email>gaminialawatta@yahoo.com</email>
+                <occupation>Business</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>662292850V</number>
+                </identification>
+            </from_person>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>MONARAGALA</branch>
+                <account>007450000013</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CA PERSONAL SUPREME</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>M</gender>
+                        <title>Mr.</title>
+                        <first_name>Gamini Kapila Kumara</first_name>
+                        <last_name>Alawatte</last_name>
+                        <birthdate>1966-08-16T00:00:00.000+05:30</birthdate>
+                        <id_number>662292850V</id_number>
+                        <nationality1>LK</nationality1>
+                        <residence>LK</residence>
+                        <phones>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0773129565</tph_number>
+                            </phone>
+                            <phone>
+<tph_contact_type>CORS</tph_contact_type>
+<tph_communication_type>LNPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0552276195</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>CORS</address_type>
+<address>No 75, Pothuwil Road</address>
+<city>Monaragala</city>
+<country_code>LK</country_code>
+                            </address>
+                        </addresses>
+                        <email>gaminialawatta@yahoo.com</email>
+                        <occupation>Business</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>662292850V</number>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>662292850V</number>
+                        </identification>
+                    </t_person>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>013579120200116092452</transactionnumber>
+        <internal_ref_number>013579120200116092452</internal_ref_number>
+        <transaction_location>KANDY SUPER</transaction_location>
+        <transaction_description>CA-DEPO-3RD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>4500000</amount_local>
+        <t_from>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_person>
+                <first_name>KAPUHENNAYAKE MUDIYANSELAGE</first_name>
+                <last_name>NANDASENA</last_name>
+                <id_number>501700592V</id_number>
+            </from_person>
+            <from_country>LK</from_country>
+        </t_from>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>CITY OFFICE</branch>
+                <account>000710000093</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CA BUSINESS SUPREME</account_name>
+                <t_entity>
+                    <name>INDRA TRADERS (PRIVATE) LIMITED</name>
+                    <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                    <business>Traders - Automobile Dealers &amp; Garages</business>
+                    <phones>
+                        <phone>
+                            <tph_contact_type>CORS</tph_contact_type>
+                            <tph_communication_type>LNPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0812223152</tph_number>
+                        </phone>
+                        <phone>
+                            <tph_contact_type>CORS</tph_contact_type>
+                            <tph_communication_type>LNPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0812234346</tph_number>
+                        </phone>
+                        <phone>
+                            <tph_contact_type>PRVT</tph_contact_type>
+                            <tph_communication_type>MOPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0713736111</tph_number>
+                        </phone>
+                        <phone>
+                            <tph_contact_type>PRVT</tph_contact_type>
+                            <tph_communication_type>LNPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0812232030</tph_number>
+                        </phone>
+                    </phones>
+                    <addresses>
+                        <address>
+                            <address_type>PERM</address_type>
+                            <address>1 Yonmerengne Simon Hewage Indra        -Kum, Ara Silva                            2 Upali</address>
+                            <city>Kandy</city>
+                            <country_code>LK</country_code>
+                        </address>
+                    </addresses>
+                    <email>indrar@sltnet.lk</email>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>2008-02-11T00:00:00.000+05:30</incorporation_date>
+                    <business_closed>false</business_closed>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0111648120200116104046</transactionnumber>
+        <internal_ref_number>0111648120200116104046</internal_ref_number>
+        <transaction_location>HANWELLA</transaction_location>
+        <transaction_description>TD-NEW-DEPO</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>6300000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>HANWELLA</branch>
+                <account>213756712858</account>
+                <currency_code>LKR</currency_code>
+                <account_name>FD-MAT.INT-I/F PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+</report>

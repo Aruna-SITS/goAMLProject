@@ -3,10 +3,13 @@ package com.itechro.iaml.service.ctr;
 import com.itechro.iaml.config.IAMLProperties;
 import com.itechro.iaml.dao.ctr.CTRJdbcDao;
 import com.itechro.iaml.model.ctr.*;
+import com.itechro.iaml.service.ctr.support.ReportDataLoader;
+import com.itechro.iaml.util.XMLFileWriter;
 import generated.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -18,9 +21,11 @@ import java.util.*;
 
 public class JavaToXMLAdaptor {
 
+
     private static final Logger LOG = LoggerFactory.getLogger(JavaToXMLAdaptor.class);
 
     private CTRJdbcDao ctrJdbcDao;
+
 
     private IAMLProperties applicationProperties;
 
@@ -54,39 +59,42 @@ public class JavaToXMLAdaptor {
         this.applicationProperties = applicationProperties;
     }
 
-    public Report getReport() {
+    public void generateReport() throws JAXBException {
 
-        transactionsMap = this.ctrJdbcDao.getTransactionsAsMap();
 
-        entitiesMap = this.ctrJdbcDao.getEntitiesMap();
+        ReportDataLoader reportDataLoader = new ReportDataLoader();
+        reportDataLoader.setCtrJdbcDao(ctrJdbcDao);
+        reportDataLoader.loadData();
 
-        personMap = this.ctrJdbcDao.getPersonMap();
 
-        accountsMap = this.ctrJdbcDao.getAccountsMap();
-
-        personNonClientMap = this.ctrJdbcDao.getPersonNonClientMap();
-
-        entityNonClientMap = this.ctrJdbcDao.getEntityNonClientList();
-
-        personalIdentificationMap = this.ctrJdbcDao.getPersonIdentificationMap();
-
-        phoneMap = this.ctrJdbcDao.getPhoneMap();
-
-        addressMap = this.ctrJdbcDao.getAddressMap();
-
-        relatedPartyMap = this.ctrJdbcDao.getRelatedPartyMap();
-
-        fromToMappingDTOMap = this.ctrJdbcDao.getFromToMappingRecordsAsMap();
+        transactionsMap = reportDataLoader.getTransactionsMap();
+        entitiesMap = reportDataLoader.getEntitiesMap();
+        personMap = reportDataLoader.getPersonMap();
+        accountsMap = reportDataLoader.getAccountsMap();
+        personNonClientMap = reportDataLoader.getPersonNonClientMap();
+        entityNonClientMap = reportDataLoader.getEntityNonClientMap();
+        personalIdentificationMap = reportDataLoader.getPersonalIdentificationMap();
+        phoneMap = reportDataLoader.getPhoneMap();
+        addressMap = reportDataLoader.getAddressMap();
+        relatedPartyMap = reportDataLoader.getRelatedPartyMap();
+        fromToMappingDTOMap = reportDataLoader.getFromToMappingDTOMap();
 
         ObjectFactory factory = new ObjectFactory();
         Report report = factory.createReport();
 
-
+        int a = 0;
+        int fileNumber = 1;
         for (Integer transactionNumber : transactionsMap.keySet()) {
+            if (a == applicationProperties.getNumberOfRecordsToLoad()) {
 
-            List<FromToMappingDTO> fromToMappingDTO = fromToMappingDTOMap.get(transactionNumber.toString());
+                XMLFileWriter.writeReportXML("sample_" + fileNumber + ".xml", report);
+                fileNumber++;
+                report = factory.createReport();
+                a = 0;
+            }
+            a++;
 
-            ReportDTO reportDTO = getATransactionForReportDTO(fromToMappingDTO, transactionNumber);
+            ReportDTO reportDTO = getATransactionForReportDTO(transactionNumber);
 
             report.setRentityId(reportDTO.getrEntityId());
             report.setSubmissionCode(SubmissionType.valueOf(reportDTO.getSubmissionCode()));
@@ -240,7 +248,9 @@ public class JavaToXMLAdaptor {
 
             report.getTransaction().add(xmlTransaction);
         }
-        return report;
+        if (a != 0) {
+            XMLFileWriter.writeReportXML("sample_" + fileNumber + ".xml", report);
+        }
     }
 
     //To map non client person to TPerson xml object
@@ -474,7 +484,9 @@ public class JavaToXMLAdaptor {
         }
     }
 
-    private ReportDTO getATransactionForReportDTO(List<FromToMappingDTO> fromToMappingDTO, Integer transactionNumber) {
+    private ReportDTO getATransactionForReportDTO(Integer transactionNumber) {
+
+        List<FromToMappingDTO> fromToMappingDTO = fromToMappingDTOMap.get(transactionNumber.toString());
 
         ReportDTO reportDTO = new ReportDTO();
 
@@ -542,7 +554,7 @@ public class JavaToXMLAdaptor {
 
             LOG.info("Entity Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
             if (transactionFromOrTo.getCifId() != null) {
-                transactionFromOrTo.setEntitiesDTO(entitiesMap.get(reportDTO.getTransactionFrom().getCifId()));
+                transactionFromOrTo.setEntitiesDTO(entitiesMap.get(transactionFromOrTo.getCifId()));
                 if (transactionFromOrTo.getCifId() != null && phoneMap.containsKey(transactionFromOrTo.getCifId())) {
                     transactionFromOrTo.getEntitiesDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
                 }

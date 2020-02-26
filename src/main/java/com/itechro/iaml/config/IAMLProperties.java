@@ -6,24 +6,36 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class IAMLProperties {
+
     @Value("${public.REntity.Id}")
     public Integer publicREntityId;
+
     @Value("${public.submission.code}")
     public String submissionCode;
+
     @Value("${public.report.code}")
     public String reportCode;
+
     @Value("${public.submission.date}")
     public String submissionDate;
+
     @Value("${public.currency.local.code}")
     public String currencyLocalCode;
+
     @Value("${public.to.non.client}")
     public String toNonMyClient;
+
     @Value("${public.to.my.client}")
     public String toMyClient;
+
     @Value("${public.from.non.client}")
     public String fromNonClient;
+
     @Value("${public.from.my.client}")
     public String fromMyClient;
+
+    @Value("${public.number.of.records.to.load}")
+    public Integer numberOfRecordsToLoad;
 
     public String getToNonMyClient() {
         return toNonMyClient;
@@ -95,5 +107,13 @@ public class IAMLProperties {
 
     public void setCurrencyLocalCode(String currencyLocalCode) {
         this.currencyLocalCode = currencyLocalCode;
+    }
+
+    public Integer getNumberOfRecordsToLoad() {
+        return numberOfRecordsToLoad;
+    }
+
+    public void setNumberOfRecordsToLoad(Integer numberOfRecordsToLoad) {
+        this.numberOfRecordsToLoad = numberOfRecordsToLoad;
     }
 }

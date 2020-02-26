@@ -1,0 +1,722 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<report>
+    <rentity_id>7278</rentity_id>
+    <submission_code>E</submission_code>
+    <report_code>CTR</report_code>
+    <entity_reference></entity_reference>
+    <submission_date>2020-02-21T19:00:00.000+05:30</submission_date>
+    <currency_code_local>LKR</currency_code_local>
+    <transaction>
+        <transactionnumber>0125912120200116125829</transactionnumber>
+        <internal_ref_number>0125912120200116125829</internal_ref_number>
+        <transaction_location>KADAWATHA</transaction_location>
+        <transaction_description>SV-WTHD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>2520000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>ELEC</from_funds_code>
+            <from_foreign_currency/>
+            <from_account>
+                <institution_code>7278</institution_code>
+                <branch>KADAWATHA</branch>
+                <account>106050045288</account>
+                <currency_code>LKR</currency_code>
+                <account_name>SAVINGS ACCOUNT-SANHINDA</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>F</gender>
+                        <title>Mrs.</title>
+                        <first_name>Kalugamage Sriyalatha</first_name>
+                        <last_name>Perera</last_name>
+                        <birthdate>1955-02-19T00:00:00.000+05:30</birthdate>
+                        <id_number>555501714V</id_number>
+                        <nationality1>LK</nationality1>
+                        <residence>LK</residence>
+                        <phones>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0723526645</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>CORS</address_type>
+<address>No445/17  Kendaliyaddapaluwa, Dewala Road</address>
+<city>Kadawata</city>
+<country_code>LK</country_code>
+                            </address>
+                        </addresses>
+                        <occupation>Unemployed</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>555501714V</number>
+                            <issue_date>2003-09-18T00:00:00.000+06:00</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>555501714V</number>
+                            <issue_date>2003-09-18T00:00:00.000+06:00</issue_date>
+                        </identification>
+                    </t_person>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </from_account>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>CASH</to_funds_code>
+            <to_foreign_currency/>
+            <to_person>
+                <gender>F</gender>
+                <title>Mrs.</title>
+                <first_name>Kalugamage Sriyalatha</first_name>
+                <last_name>Perera</last_name>
+                <birthdate>1955-02-19T00:00:00.000+05:30</birthdate>
+                <id_number>555501714V</id_number>
+                <nationality1>LK</nationality1>
+                <residence>LK</residence>
+                <phones>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0723526645</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>No445/17  Kendaliyaddapaluwa, Dewala Road</address>
+                        <city>Kadawata</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <occupation>Unemployed</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>555501714V</number>
+                    <issue_date>2003-09-18T00:00:00.000+06:00</issue_date>
+                </identification>
+            </to_person>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0135880120200116143733</transactionnumber>
+        <internal_ref_number>0135880120200116143733</internal_ref_number>
+        <transaction_location>WELLAWATTHA SUPER</transaction_location>
+        <transaction_description>SV-WTHD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1000000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>ELEC</from_funds_code>
+            <from_foreign_currency/>
+            <from_account>
+                <institution_code>7278</institution_code>
+                <branch>KANDY SUPER</branch>
+                <account>100757106664</account>
+                <currency_code>LKR</currency_code>
+                <account_name>HIT-SAV ACCOUNT-PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>F</gender>
+                        <title>Mrs.</title>
+                        <first_name>Ruppegoda Gamage Sandyalatha</first_name>
+                        <last_name>Hamine</last_name>
+                        <birthdate>1966-12-17T00:00:00.000+05:30</birthdate>
+                        <id_number>668520618V</id_number>
+                        <nationality1>LK</nationality1>
+                        <residence>LK</residence>
+                        <phones>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0716348707</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>CORS</address_type>
+<address>255 Dutugemunu Mawatha, Watapuluwa</address>
+<city>Kandy</city>
+<country_code>LK</country_code>
+                            </address>
+                        </addresses>
+                        <occupation>Unemployed</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>668520618V</number>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>668520618V</number>
+                        </identification>
+                    </t_person>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </from_account>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>CASH</to_funds_code>
+            <to_foreign_currency/>
+            <to_person>
+                <gender>F</gender>
+                <title>Mrs.</title>
+                <first_name>Ruppegoda Gamage Sandyalatha</first_name>
+                <last_name>Hamine</last_name>
+                <birthdate>1966-12-17T00:00:00.000+05:30</birthdate>
+                <id_number>668520618V</id_number>
+                <nationality1>LK</nationality1>
+                <residence>LK</residence>
+                <phones>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0716348707</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>255 Dutugemunu Mawatha, Watapuluwa</address>
+                        <city>Kandy</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <occupation>Unemployed</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>668520618V</number>
+                </identification>
+            </to_person>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>014456120200116093606</transactionnumber>
+        <internal_ref_number>014456120200116093606</internal_ref_number>
+        <transaction_location>WELLAMPITIYA</transaction_location>
+        <transaction_description>SV-DEPO-OWN</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>2500000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_person>
+                <gender>M</gender>
+                <title>Mr.</title>
+                <first_name>Chakrawarthige Upali Dayananda</first_name>
+                <last_name>Wijeratne</last_name>
+                <id_number>194815202609</id_number>
+                <nationality1>LK</nationality1>
+                <residence>LK</residence>
+                <phones>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0768158178</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>No71, Panchikawatte Road</address>
+                        <city>Colombo 10</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <occupation>Retired</occupation>
+                <identification>
+                    <type>NIC</type>
+                    <number>194815202609</number>
+                    <issue_date>2016-10-20T00:00:00.000+05:30</issue_date>
+                </identification>
+            </from_person>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>THALAWATHUGODA</branch>
+                <account>117853936077</account>
+                <currency_code>LKR</currency_code>
+                <account_name>SAVINGS ACCOUNT-SANHINDA</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>M</gender>
+                        <title>Mr.</title>
+                        <first_name>Chakrawarthige Upali Dayananda</first_name>
+                        <last_name>Wijeratne</last_name>
+                        <id_number>194815202609</id_number>
+                        <nationality1>LK</nationality1>
+                        <residence>LK</residence>
+                        <phones>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0768158178</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>CORS</address_type>
+<address>No71, Panchikawatte Road</address>
+<city>Colombo 10</city>
+<country_code>LK</country_code>
+                            </address>
+                        </addresses>
+                        <occupation>Retired</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>194815202609</number>
+                            <issue_date>2016-10-20T00:00:00.000+05:30</issue_date>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>194815202609</number>
+                            <issue_date>2016-10-20T00:00:00.000+05:30</issue_date>
+                        </identification>
+                    </t_person>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0112241120200116104744</transactionnumber>
+        <internal_ref_number>0112241120200116104744</internal_ref_number>
+        <transaction_location>BADULLA</transaction_location>
+        <transaction_description>CA-DEPO-3RD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>4791266</amount_local>
+        <t_from>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_person>
+                <first_name>WANNISINHE MUDIYANSELAGE WIMALARATHNA</first_name>
+                <last_name>BANDA</last_name>
+                <id_number>862243900V</id_number>
+            </from_person>
+            <from_country>LK</from_country>
+        </t_from>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>CITY OFFICE</branch>
+                <account>002930022414</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CA BUSINESS SUPREME</account_name>
+                <t_entity>
+                    <name>CENTRAL FINANCE COMPANY PLC</name>
+                    <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                    <addresses>
+                        <address>
+                            <address_type>PERM</address_type>
+                            <address>The Central Finance Company Limited</address>
+                            <city>Colombo 2</city>
+                        </address>
+                    </addresses>
+                    <email>sampathf@cf.lk</email>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>1990-01-01T00:00:00.000+05:30</incorporation_date>
+                    <business_closed>false</business_closed>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0113021120200116105322</transactionnumber>
+        <internal_ref_number>0113021120200116105322</internal_ref_number>
+        <transaction_location>MORAWAKA</transaction_location>
+        <transaction_description>CA-DEPO-OWN</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1038990</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_entity>
+                <name>HNB FINANCE LIMITED</name>
+                <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                <incorporation_number>PB965.</incorporation_number>
+                <phones>
+                    <phone>
+                        <tph_contact_type>CORS</tph_contact_type>
+                        <tph_communication_type>LNPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0112176262</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>No 168, Nawala Road</address>
+                        <city>Nugegoda</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <incorporation_country_code>LK</incorporation_country_code>
+                <incorporation_date>2015-07-17T00:00:00.000+05:30</incorporation_date>
+                <business_closed>false</business_closed>
+            </from_entity>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>MORAWAKA</branch>
+                <account>001510002632</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CA BUSINESS SUPREME</account_name>
+                <t_entity>
+                    <name>HNB FINANCE LIMITED</name>
+                    <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                    <incorporation_number>PB965.</incorporation_number>
+                    <phones>
+                        <phone>
+                            <tph_contact_type>CORS</tph_contact_type>
+                            <tph_communication_type>LNPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0112176262</tph_number>
+                        </phone>
+                    </phones>
+                    <addresses>
+                        <address>
+                            <address_type>CORS</address_type>
+                            <address>No 168, Nawala Road</address>
+                            <city>Nugegoda</city>
+                            <country_code>LK</country_code>
+                        </address>
+                    </addresses>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>2015-07-17T00:00:00.000+05:30</incorporation_date>
+                    <business_closed>false</business_closed>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0114715120200116123725</transactionnumber>
+        <internal_ref_number>0114715120200116123725</internal_ref_number>
+        <transaction_location>MAWANELLA</transaction_location>
+        <transaction_description>SV-DEPO-3RD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1000000</amount_local>
+        <t_from>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_person>
+                <first_name>PILLEGODA</first_name>
+            </from_person>
+            <from_country>LK</from_country>
+        </t_from>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>NEGOMBO II</branch>
+                <account>108854473800</account>
+                <currency_code>LKR</currency_code>
+                <account_name>DOUBLE S SAVINGS -PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <t_person>
+                        <gender>M</gender>
+                        <title>Mr.</title>
+                        <first_name>Weerakkody Mahesh Pathmal</first_name>
+                        <last_name>Zoysa</last_name>
+                        <id_number>850694060V</id_number>
+                        <nationality1>LK</nationality1>
+                        <phones>
+                            <phone>
+<tph_contact_type>PRVT</tph_contact_type>
+<tph_communication_type>MOPH</tph_communication_type>
+<tph_country_prefix>94</tph_country_prefix>
+<tph_number>0772097334</tph_number>
+                            </phone>
+                        </phones>
+                        <addresses>
+                            <address>
+<address_type>CORS</address_type>
+<address>386c, Bandaranayake Mawatha, Kimbulapitiya Road</address>
+<city>Negombo</city>
+<country_code>LK</country_code>
+                            </address>
+                        </addresses>
+                        <email>maheshdezoysa@ymail.com</email>
+                        <occupation>Student</occupation>
+                        <identification>
+                            <type>NIC</type>
+                            <number>850694060V</number>
+                        </identification>
+                        <identification>
+                            <type>NIC</type>
+                            <number>850694060V</number>
+                        </identification>
+                    </t_person>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0128048120200116131829</transactionnumber>
+        <internal_ref_number>0128048120200116131829</internal_ref_number>
+        <transaction_location>BAMBALAPITIYA</transaction_location>
+        <transaction_description>SV-DEPO-OWN</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1500000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>BAMBALAPITIYA</branch>
+                <account>101157982487</account>
+                <currency_code>LKR</currency_code>
+                <account_name>DOUBLE S SAVINGS -PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0132032120200116153107</transactionnumber>
+        <internal_ref_number>0132032120200116153107</internal_ref_number>
+        <transaction_location>TALAWAKELE</transaction_location>
+        <transaction_description>SV-DEPO-3RD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1000000</amount_local>
+        <t_from>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_person>
+                <first_name>SAJAN DANITH</first_name>
+                <last_name>SIRIWARDHANE</last_name>
+                <id_number>943461775V</id_number>
+            </from_person>
+            <from_country>LK</from_country>
+        </t_from>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>BALANGODA</branch>
+                <account>109753370937</account>
+                <currency_code>LKR</currency_code>
+                <account_name>DOUBLE S SAVINGS -PERSONAL</account_name>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0134453120200116142411</transactionnumber>
+        <internal_ref_number>0134453120200116142411</internal_ref_number>
+        <transaction_location>MINUWNGODA</transaction_location>
+        <transaction_description>CA-DEPO-3RD</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1095000</amount_local>
+        <t_from>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_person>
+                <first_name>P D I S</first_name>
+                <last_name>DAYARATHNA</last_name>
+                <id_number>963020678V</id_number>
+            </from_person>
+            <from_country>LK</from_country>
+        </t_from>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>BORELLA</branch>
+                <account>000410017229</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CA BUSINESS SUPREME</account_name>
+                <t_entity>
+                    <name>PRIME LANDS (PVT)LTD</name>
+                    <incorporation_legal_form>LIMITED LIABILITIES </incorporation_legal_form>
+                    <phones>
+                        <phone>
+                            <tph_contact_type>CORS</tph_contact_type>
+                            <tph_communication_type>LNPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0112692344</tph_number>
+                        </phone>
+                        <phone>
+                            <tph_contact_type>CORS</tph_contact_type>
+                            <tph_communication_type>LNPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0112699822</tph_number>
+                        </phone>
+                        <phone>
+                            <tph_contact_type>PRVT</tph_contact_type>
+                            <tph_communication_type>LNPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0114209691</tph_number>
+                        </phone>
+                    </phones>
+                    <addresses>
+                        <address>
+                            <address_type>CORS</address_type>
+                            <address>No 75, Ds Senanayake Mw</address>
+                            <city>Colombo 8</city>
+                            <country_code>LK</country_code>
+                        </address>
+                    </addresses>
+                    <email>info@primelands.lk</email>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>2007-03-19T00:00:00.000+05:30</incorporation_date>
+                    <business_closed>false</business_closed>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+    <transaction>
+        <transactionnumber>0134932120200116142826</transactionnumber>
+        <internal_ref_number>0134932120200116142826</internal_ref_number>
+        <transaction_location>ANURADHAPURA SUPER</transaction_location>
+        <transaction_description>CA-DEPO-OWN</transaction_description>
+        <transmode_code>BRCH</transmode_code>
+        <amount_local>1385000</amount_local>
+        <t_from_my_client>
+            <from_funds_code>CASH</from_funds_code>
+            <from_foreign_currency/>
+            <from_entity>
+                <name>SEEDEVI MEGA TIMBER STORES</name>
+                <incorporation_legal_form>PARTNERSHIP </incorporation_legal_form>
+                <incorporation_number>NCP/NPE/003168</incorporation_number>
+                <phones>
+                    <phone>
+                        <tph_contact_type>PRVT</tph_contact_type>
+                        <tph_communication_type>MOPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0777918838</tph_number>
+                    </phone>
+                    <phone>
+                        <tph_contact_type>CORS</tph_contact_type>
+                        <tph_communication_type>LNPH</tph_communication_type>
+                        <tph_country_prefix>94</tph_country_prefix>
+                        <tph_number>0252224747</tph_number>
+                    </phone>
+                </phones>
+                <addresses>
+                    <address>
+                        <address_type>CORS</address_type>
+                        <address>Seedevi Mega Timber Stores, 562/86/B Udaya Mawatha</address>
+                        <city>Anuradhapura</city>
+                        <country_code>LK</country_code>
+                    </address>
+                </addresses>
+                <incorporation_country_code>LK</incorporation_country_code>
+                <incorporation_date>2008-04-01T00:00:00.000+05:30</incorporation_date>
+                <business_closed>false</business_closed>
+            </from_entity>
+            <from_country>LK</from_country>
+        </t_from_my_client>
+        <t_to_my_client>
+            <to_funds_code>ELEC</to_funds_code>
+            <to_foreign_currency/>
+            <to_account>
+                <institution_code>7278</institution_code>
+                <branch>ANURADHAPURA SUPER</branch>
+                <account>002110006201</account>
+                <currency_code>LKR</currency_code>
+                <account_name>CA BUSINESS SUPREME</account_name>
+                <t_entity>
+                    <name>SEEDEVI MEGA TIMBER STORES</name>
+                    <incorporation_legal_form>PARTNERSHIP </incorporation_legal_form>
+                    <incorporation_number>NCP/NPE/003168</incorporation_number>
+                    <phones>
+                        <phone>
+                            <tph_contact_type>PRVT</tph_contact_type>
+                            <tph_communication_type>MOPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0777918838</tph_number>
+                        </phone>
+                        <phone>
+                            <tph_contact_type>CORS</tph_contact_type>
+                            <tph_communication_type>LNPH</tph_communication_type>
+                            <tph_country_prefix>94</tph_country_prefix>
+                            <tph_number>0252224747</tph_number>
+                        </phone>
+                    </phones>
+                    <addresses>
+                        <address>
+                            <address_type>CORS</address_type>
+                            <address>Seedevi Mega Timber Stores, 562/86/B Udaya Mawatha</address>
+                            <city>Anuradhapura</city>
+                            <country_code>LK</country_code>
+                        </address>
+                    </addresses>
+                    <incorporation_country_code>LK</incorporation_country_code>
+                    <incorporation_date>2008-04-01T00:00:00.000+05:30</incorporation_date>
+                    <business_closed>false</business_closed>
+                </t_entity>
+                <signatory>
+                    <is_primary>true</is_primary>
+                    <role>Account Holder</role>
+                </signatory>
+                <status_code>ACTV</status_code>
+            </to_account>
+            <to_country>LK</to_country>
+        </t_to_my_client>
+    </transaction>
+</report>

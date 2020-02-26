@@ -1,6 +1,7 @@
 package com.itechro.iaml.model.ctr;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,8 @@ public class ReportDTO implements Serializable {
 
     private TransactionDTO transactionDTO;
 
+    private List<TransactionDTO> transactionDTOList;
+
     private FromToMappingDTO transactionFrom;
 
     private FromToMappingDTO transactionTo;
@@ -29,7 +32,6 @@ public class ReportDTO implements Serializable {
     public void setTransactionTo(FromToMappingDTO transactionTo) {
         this.transactionTo = transactionTo;
     }
-
 
 
     public FromToMappingDTO getTransactionFrom() {
@@ -86,5 +88,16 @@ public class ReportDTO implements Serializable {
 
     public void setTransactionDTO(TransactionDTO transactionDTO) {
         this.transactionDTO = transactionDTO;
+    }
+
+    public List<TransactionDTO> getTransactionDTOList() {
+        if (transactionDTOList == null) {
+            transactionDTOList = new ArrayList<>();
+        }
+        return transactionDTOList;
+    }
+
+    public void setTransactionDTOList(List<TransactionDTO> transactionDTOList) {
+        this.transactionDTOList = transactionDTOList;
     }
 }

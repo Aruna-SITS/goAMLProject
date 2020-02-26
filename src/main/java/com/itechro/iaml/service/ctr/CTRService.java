@@ -3,7 +3,6 @@ package com.itechro.iaml.service.ctr;
 import com.itechro.iaml.config.IAMLProperties;
 import com.itechro.iaml.dao.ctr.CTRJdbcDao;
 import com.itechro.iaml.exception.impl.AppsException;
-import com.itechro.iaml.model.ctr.*;
 import com.itechro.iaml.util.CalendarUtil;
 import com.itechro.iaml.util.XMLFileWriter;
 import generated.ObjectFactory;
@@ -16,12 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBException;
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
 public class CTRService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(CTRService.class);
 
     @Autowired
     private CTRJdbcDao ctrJdbcDao;
@@ -62,6 +61,6 @@ public class CTRService {
         JavaToXMLAdaptor adaptor= new JavaToXMLAdaptor();
         adaptor.setApplicationProperties(applicationProperties);
         adaptor.setCtrJdbcDao(this.ctrJdbcDao);
-        XMLFileWriter.writeReportXML("sample.xml", adaptor.getReport());
+        adaptor.generateReport();
     }
 }
