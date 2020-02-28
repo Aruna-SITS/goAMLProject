@@ -11,12 +11,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableTransactionManagement
 @PropertySource("classpath:apps.properties")
+@PropertySource(name = "iaml.properties", value = "file:${apps.config.root}/iaml.properties")
 public class IAMLApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(IAMLApplication.class, args);
     }
-
 
     @Bean
     public CTRService getCTRService(){
@@ -25,6 +25,7 @@ public class IAMLApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-     //   getCTRService().generateSampleReport();
+        getCTRService().generateSampleReport();
+        System.exit(0);
     }
 }

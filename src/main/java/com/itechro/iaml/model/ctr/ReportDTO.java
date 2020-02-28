@@ -11,6 +11,8 @@ public class ReportDTO implements Serializable {
 
     private String submissionCode;
 
+    private String entityReference;
+
     private String reportCode;
 
     private Date submissionDate;
@@ -99,5 +101,13 @@ public class ReportDTO implements Serializable {
 
     public void setTransactionDTOList(List<TransactionDTO> transactionDTOList) {
         this.transactionDTOList = transactionDTOList;
+    }
+
+    public String getEntityReference() {
+        return entityReference;
+    }
+
+    public void setEntityReference(String entityReference) {
+        this.entityReference = entityReference;
     }
 }

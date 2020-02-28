@@ -34,3 +34,10 @@ mvn clean install -DskipTests -Dbasedir=~/projects/iaml
 
 #### please use follow as your VM parameter
 apps.config.root=/usr/apps/iaml
+
+### Executing the jar in command prompt 
+java -jar iaml.jar --apps.config.root=absolute_path_of_your_config_folder
+#Example : java -jar iaml.jar --apps.config.root=/home/dayalan/Desktop/JAR/config
+
+### To preserve log entries 
+java -jar iaml.jar --apps.config.root=absolute_path_of_your_config_folder >fileName.txt

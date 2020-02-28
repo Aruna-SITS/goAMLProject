@@ -4,7 +4,6 @@ import com.itechro.iaml.config.IAMLProperties;
 import com.itechro.iaml.dao.ctr.CTRJdbcDao;
 import com.itechro.iaml.exception.impl.AppsException;
 import com.itechro.iaml.util.CalendarUtil;
-import com.itechro.iaml.util.XMLFileWriter;
 import generated.ObjectFactory;
 import generated.Report;
 import generated.ReportType;
@@ -15,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBException;
-import java.util.*;
+import java.util.Date;
 
 @Service
 public class CTRService {
@@ -53,12 +52,12 @@ public class CTRService {
         transaction2.setTransactionnumber("0121393120200101124541");
         report.getTransaction().add(transaction2);
 
-        XMLFileWriter.writeReportXML("sample1.xml",report);
+        //XMLFileWriter.writeReportXML("sample1.xml",report);
     }
 
     public void generateSampleReport() throws JAXBException, AppsException {
 
-        JavaToXMLAdaptor adaptor= new JavaToXMLAdaptor();
+        JavaToXMLAdaptor adaptor = new JavaToXMLAdaptor();
         adaptor.setApplicationProperties(applicationProperties);
         adaptor.setCtrJdbcDao(this.ctrJdbcDao);
         adaptor.generateReport();

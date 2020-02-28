@@ -28,7 +28,7 @@ public class TransactionDTO {
 
     private Integer rate;
 
-    private Integer amountLocal;
+    private Double amountLocal;
 
 
     private FromToMappingDTO transactionFrom;
@@ -131,11 +131,11 @@ public class TransactionDTO {
         this.rate = rate;
     }
 
-    public Integer getAmountLocal() {
+    public Double getAmountLocal() {
         return amountLocal;
     }
 
-    public void setAmountLocal(Integer amountLocal) {
+    public void setAmountLocal(Double amountLocal) {
         this.amountLocal = amountLocal;
     }
 

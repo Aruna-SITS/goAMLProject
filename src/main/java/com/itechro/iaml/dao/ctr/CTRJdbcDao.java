@@ -45,8 +45,9 @@ public class CTRJdbcDao extends BaseJDBCDao {
         Map<String, Object> params = new HashMap<>();
         StringBuilder SQL = new StringBuilder();
         SQL.append("SELECT * FROM L01_TRANSACTIONS");
-        SQL.append("  WHERE ROWNUM <500  "); //TODO :remove this where
-        SQL.append(" ORDER BY TRAN_UID");
+        SQL.append(" WHERE REPORT_INDICATOR='");
+        SQL.append(appProperties.getReportIndicator());
+        SQL.append("' ORDER BY TRAN_UID");
 
         return namedParameterJdbcTemplate.query(SQL.toString(), params, new ResultSetExtractor<HashMap<Integer, TransactionDTO>>() {
             @Override
@@ -279,7 +280,7 @@ public HashMap<String,List<FromToMappingDTO>> getFromToMappingRecordsAsMap() {
             public HashMap<String,List<RelatedPartyDTO>>  extractData(ResultSet rs) throws SQLException, DataAccessException {
                 while (rs.next()) {
                     RelatedPartyDTO relatedPartyDTO = getRelatedPartyDTO(rs);
-                    putRelatedPartyIntoHashMap(results,relatedPartyDTO.getCifId(),relatedPartyDTO);
+                    putRelatedPartyIntoHashMap(results,relatedPartyDTO.getAccountNumber(),relatedPartyDTO);
                 }
                 LOG.info("getRelatedPartyMap() completed and loaded the Related Details ");
                 return results;
@@ -303,7 +304,7 @@ public HashMap<String,List<FromToMappingDTO>> getFromToMappingRecordsAsMap() {
         transactionDTO.setAmt(rs.getInt("AMT"));
         transactionDTO.setTransCurrencyCode(rs.getString("TRAN_CRNCY_CODE"));
         transactionDTO.setRate(rs.getInt("RATE"));
-        transactionDTO.setAmountLocal(rs.getInt("LOCAL_AMT"));
+        transactionDTO.setAmountLocal(rs.getDouble("LOCAL_AMT"));
 
         return transactionDTO;
     }

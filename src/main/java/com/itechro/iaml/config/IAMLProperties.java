@@ -1,7 +1,6 @@
 package com.itechro.iaml.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -36,6 +35,36 @@ public class IAMLProperties {
 
     @Value("${public.number.of.records.to.load}")
     public Integer numberOfRecordsToLoad;
+
+    @Value("${public.output.xml.file.name}")
+    public String outputXmlFileName;
+
+    @Value("${public.entity.reference}")
+    public String entityReference;
+
+    @Value("${public.error.log.file.name}")
+    public String errorLogFileName;
+
+    @Value("${public.warning.log.file.name}")
+    public String warningLogFileName;
+
+    @Value("${public.success.log.file.name}")
+    public String successLogFileName;
+
+    @Value("${public.error.log.file.path}")
+    public String errorLogFilePath;
+
+    @Value("${public.warning.log.file.path}")
+    public String warningLogFilePath;
+
+    @Value("${public.success.log.file.path}")
+    public String successLogFilePath;
+
+    @Value("${public.output.xml.file.path}")
+    public String outputXmlFilePath;
+
+    @Value("${public.report.indicator}")
+    public String reportIndicator;
 
     public String getToNonMyClient() {
         return toNonMyClient;
@@ -115,5 +144,85 @@ public class IAMLProperties {
 
     public void setNumberOfRecordsToLoad(Integer numberOfRecordsToLoad) {
         this.numberOfRecordsToLoad = numberOfRecordsToLoad;
+    }
+
+    public String getOutputXmlFileName() {
+        return outputXmlFileName;
+    }
+
+    public void setOutputXmlFileName(String outputXmlFileName) {
+        this.outputXmlFileName = outputXmlFileName;
+    }
+
+    public String getEntityReference() {
+        return entityReference;
+    }
+
+    public void setEntityReference(String entityReference) {
+        this.entityReference = entityReference;
+    }
+
+    public String getErrorLogFileName() {
+        return errorLogFileName;
+    }
+
+    public void setErrorLogFileName(String errorLogFileName) {
+        this.errorLogFileName = errorLogFileName;
+    }
+
+    public String getWarningLogFileName() {
+        return warningLogFileName;
+    }
+
+    public void setWarningLogFileName(String warningLogFileName) {
+        this.warningLogFileName = warningLogFileName;
+    }
+
+    public String getSuccessLogFileName() {
+        return successLogFileName;
+    }
+
+    public void setSuccessLogFileName(String successLogFileName) {
+        this.successLogFileName = successLogFileName;
+    }
+
+    public String getErrorLogFilePath() {
+        return errorLogFilePath;
+    }
+
+    public void setErrorLogFilePath(String errorLogFilePath) {
+        this.errorLogFilePath = errorLogFilePath;
+    }
+
+    public String getWarningLogFilePath() {
+        return warningLogFilePath;
+    }
+
+    public void setWarningLogFilePath(String warningLogFilePath) {
+        this.warningLogFilePath = warningLogFilePath;
+    }
+
+    public String getSuccessLogFilePath() {
+        return successLogFilePath;
+    }
+
+    public void setSuccessLogFilePath(String successLogFilePath) {
+        this.successLogFilePath = successLogFilePath;
+    }
+
+    public String getOutputXmlFilePath() {
+        return outputXmlFilePath;
+    }
+
+    public void setOutputXmlFilePath(String outputXmlFilePath) {
+        this.outputXmlFilePath = outputXmlFilePath;
+    }
+
+    public String getReportIndicator() {
+        return reportIndicator;
+    }
+
+    public void setReportIndicator(String reportIndicator) {
+        this.reportIndicator = reportIndicator;
     }
 }

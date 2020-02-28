@@ -2,18 +2,9 @@ package com.itechro.iaml.service.ctr.support;
 
 import com.itechro.iaml.config.IAMLProperties;
 import com.itechro.iaml.dao.ctr.CTRJdbcDao;
-import com.itechro.iaml.exception.impl.AppsException;
 import com.itechro.iaml.model.ctr.*;
-import com.itechro.iaml.service.ctr.JavaToXMLAdaptor;
-import com.itechro.iaml.util.CalendarUtil;
-import com.itechro.iaml.util.XMLFileWriter;
-import generated.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;

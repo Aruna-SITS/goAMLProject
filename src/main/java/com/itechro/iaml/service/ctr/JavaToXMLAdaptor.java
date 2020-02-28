@@ -6,13 +6,17 @@ import com.itechro.iaml.model.ctr.*;
 import com.itechro.iaml.service.ctr.support.ReportDataLoader;
 import com.itechro.iaml.util.XMLFileWriter;
 import generated.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.io.File;
+import java.io.FileWriter;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -21,11 +25,15 @@ import java.util.*;
 
 public class JavaToXMLAdaptor {
 
-
     private static final Logger LOG = LoggerFactory.getLogger(JavaToXMLAdaptor.class);
 
-    private CTRJdbcDao ctrJdbcDao;
+    private static List<String> errorsLog = new ArrayList<>();
 
+    private static List<String> warnings = new ArrayList<>();
+
+    private static List<String> successLog = new ArrayList<>();
+
+    private CTRJdbcDao ctrJdbcDao;
 
     private IAMLProperties applicationProperties;
 
@@ -82,38 +90,128 @@ public class JavaToXMLAdaptor {
         ObjectFactory factory = new ObjectFactory();
         Report report = factory.createReport();
 
-        int a = 0;
+        LOG.info("+++++++++++++++++++++++++ Execution Started ++++++++++++++++++++++++++++");
+        successLog.add(new Date() + "+++++++++++++++++++++++++ Execution Started ++++++++++++++++++++++++++++");
+
+        int recordCounter = 0;
         int fileNumber = 1;
         for (Integer transactionNumber : transactionsMap.keySet()) {
-            if (a == applicationProperties.getNumberOfRecordsToLoad()) {
+            if (recordCounter == applicationProperties.getNumberOfRecordsToLoad()) {
 
-                XMLFileWriter.writeReportXML("sample_" + fileNumber + ".xml", report);
-                fileNumber++;
+                XMLFileWriter.writeReportXML(applicationProperties.getOutputXmlFilePath(),applicationProperties.getOutputXmlFileName() + fileNumber + ".xml", report);
                 report = factory.createReport();
-                a = 0;
+
+                createLogFile(fileNumber,successLog,applicationProperties.getSuccessLogFileName(),applicationProperties.getSuccessLogFilePath());
+                createLogFile(fileNumber,errorsLog,applicationProperties.getErrorLogFileName(),applicationProperties.getErrorLogFilePath());
+                createLogFile(fileNumber,warnings,applicationProperties.getWarningLogFileName(),applicationProperties.getWarningLogFilePath());
+
+                successLog.clear();
+                errorsLog.clear();
+                warnings.clear();
+
+                fileNumber++;
+                recordCounter = 0;
             }
-            a++;
+            recordCounter++;
 
             ReportDTO reportDTO = getATransactionForReportDTO(transactionNumber);
+            
+            if (reportDTO.getrEntityId() != null) {
+                report.setRentityId(reportDTO.getrEntityId());
+            } else {
+                LOG.error("No value date found for REntityId.  Please set recordCounter value in Application Property File.");
+                errorsLog.add("No value date found for REntityId.  Please set recordCounter value in Application Property File.");
+            }
+            if (reportDTO.getSubmissionCode() != null) {
+                report.setSubmissionCode(SubmissionType.valueOf(reportDTO.getSubmissionCode()));//M
+            } else {
+                LOG.error("No value date found for Submission Date.  Please set recordCounter value in Application Property File.");
+                errorsLog.add("No value date found for Submission Date.  Please set recordCounter value in Application Property File.");
+            }
+            if (reportDTO.getReportCode() != null) {
+                report.setReportCode(ReportType.valueOf(reportDTO.getReportCode()));//M
+            } else {
+                LOG.error("No value date found for Report Code. Please set recordCounter value in Application Property File.");
+                errorsLog.add("No value date found for Submission Date.  Please set recordCounter value in Application Property File.");
+            }
+            if (reportDTO.getSubmissionDate() != null) {
+                report.setSubmissionDate(getXMLGregorianCalendarFromString(applicationProperties.getSubmissionDate()));//M
+            } else {
+                LOG.error("No value date found for Report Code. Please set recordCounter value in Application Property File.");
+                errorsLog.add("No value date found for Submission Date.  Please set recordCounter value in Application Property File.");
+            }
 
-            report.setRentityId(reportDTO.getrEntityId());
-            report.setSubmissionCode(SubmissionType.valueOf(reportDTO.getSubmissionCode()));
-            report.setReportCode(ReportType.valueOf(reportDTO.getReportCode()));
-            report.setSubmissionDate(getXMLGregorianCalendarFromString(applicationProperties.getSubmissionDate()));
-            report.setCurrencyCodeLocal(reportDTO.getCurrencyCodeLocal());
-            report.setEntityReference("");
+            if (reportDTO.getCurrencyCodeLocal() != null) {
+                report.setCurrencyCodeLocal(reportDTO.getCurrencyCodeLocal());//M
+            } else {
+                LOG.error("No value date found for Currency Local Code. Please set recordCounter value in Application Property File.");
+                errorsLog.add("No value date found for Currency Local Code.  Please set recordCounter value in Application Property File.");
+            }
+            if (reportDTO.getEntityReference() != null) {
+                report.setEntityReference(reportDTO.getEntityReference());//M
+            } else {
+                LOG.error("No value date found for Entity Reference. Please set recordCounter value in Application Property File.");
+                errorsLog.add("No value date found for Entity Reference.  Please set recordCounter value in Application Property File.");
+            }
+            //TODO: create recordCounter report indicator
+            report.setReportIndicators(factory.createReportReportIndicators());//M
 
             Report.Transaction xmlTransaction = factory.createReportTransaction();
 
             TransactionDTO transaction = reportDTO.getTransactionDTO();
 
-            xmlTransaction.setTransactionnumber(transaction.getTransactionNumber());
-            xmlTransaction.setInternalRefNumber(transaction.getInternalRefNumber());
-            xmlTransaction.setTransactionLocation(transaction.getTransactionLocation());
-            xmlTransaction.setTransactionDescription(transaction.getTransactionDescription());
-            xmlTransaction.setTransmodeCode(transaction.getTransModeCode());
-            xmlTransaction.setAmountLocal(BigDecimal.valueOf(transaction.getAmountLocal()));
+            if (transaction.getTransactionNumber() != null) {
+                xmlTransaction.setTransactionnumber(transaction.getTransactionNumber());//M
+            } else {
+                LOG.error("No value date found for Transaction Number. Transaction_UID " + transaction.getTran_uid());
+                errorsLog.add("No value date found for Transaction Number. Transaction_UID " + transaction.getTran_uid());
+            }
+            if (transaction.getInternalRefNumber() != null) {
+                xmlTransaction.setInternalRefNumber(transaction.getInternalRefNumber());//N
+            } else {
+                LOG.warn("No value date found for Internal Reference Number. Transaction Number " + transaction.getTransactionNumber());
+                warnings.add("No value date found for Internal Reference Number. Transaction_UID " + transaction.getTransactionNumber());
+            }
+            if (transaction.getTransModeCode() != null) {
+                xmlTransaction.setTransmodeCode(transaction.getTransModeCode());
+                if ("BRANCH".equalsIgnoreCase(transaction.getTransModeCode())) {
+                    if (transaction.getTransactionLocation() != null) {
+                        xmlTransaction.setTransactionLocation(transaction.getTransactionLocation());//Conditionally
+                    } else {
+                        LOG.warn("No value date found for Transaction Location. Transaction_UID " + transaction.getTransactionNumber());
+                        warnings.add("No value date found for Transaction Location. Transaction_UID " + transaction.getTransactionNumber());
+                    }
+                }
+            } else {
+                LOG.error("No value date found for Transaction Mode Code. Transaction_UID " + transaction.getTransactionNumber());
+                errorsLog.add("No value date found for Transaction Mode Code. Transaction_UID " + transaction.getTransactionNumber());
+            }
+            if (transaction.getTransactionDescription() != null) {
+                xmlTransaction.setTransactionDescription(transaction.getTransactionDescription());//M
+            } else {
+                LOG.error("No value date found for Transaction Description. Transaction_UID " + transaction.getTransactionNumber());
+                errorsLog.add("No value date found for Transaction Description. Transaction_UID " + transaction.getTransactionNumber());
+            }
 
+            if (transaction.getAmountLocal() != null) {
+                xmlTransaction.setAmountLocal(new BigDecimal(transaction.getAmountLocal()).setScale(2,BigDecimal.ROUND_DOWN));
+            } else {
+                LOG.error("No value date found for Amount Local : " + transaction.getDateTransaction() + " Transaction_UID " + transaction.getTran_uid());
+                errorsLog.add("No value date found for Amount Local : " + transaction.getDateTransaction() + " Transaction_UID " + transaction.getTran_uid());
+            }
+
+            if (transaction.getValueDate() != null) {
+                xmlTransaction.setValueDate(getXMLGregorianCalendarFromDate(transaction.getValueDate()));//M
+            } else {
+                LOG.error("No value date found for transaction number : " + transaction.getDateTransaction() + " Transaction_UID " + transaction.getTran_uid());
+                errorsLog.add("No value date found for transaction number : " + transaction.getDateTransaction() + " Transaction_UID " + transaction.getTran_uid());
+            }
+            if (transaction.getDateTransaction() != null) {
+                xmlTransaction.setDateTransaction(getXMLGregorianCalendarFromDate(transaction.getDateTransaction()));//M
+            } else {
+                LOG.error("No date transaction found for Date Transaction. Transaction number : " + transaction.getTransactionNumber() + " Transaction_UID " + transaction.getTran_uid());
+                errorsLog.add("No date transaction found for Date Transaction. Transaction number : " + transaction.getTransactionNumber() + " Transaction_UID " + transaction.getTran_uid());
+            }
 
             FromToMappingDTO from = reportDTO.getTransactionFrom();
             FromToMappingDTO to = reportDTO.getTransactionTo();
@@ -124,17 +222,35 @@ public class JavaToXMLAdaptor {
 
                 if (from.getForeignCurrencyCode() != null) {
                     fromForeignCurrency.setForeignCurrencyCode(from.getForeignCurrencyCode());
-                    fromForeignCurrency.setForeignAmount(BigDecimal.valueOf(from.getForeignAmount()));
+                    fromForeignCurrency.setForeignAmount(new BigDecimal(from.getForeignAmount()).setScale(2,BigDecimal.ROUND_DOWN));
                     fromForeignCurrency.setForeignExchangeRate(BigDecimal.valueOf(from.getForeignExchangeRate()));
                 }
 
                 if (from.getTransactionType().equals(applicationProperties.getFromMyClient())) {
                     Report.Transaction.TFromMyClient tFromMyClient = factory.createReportTransactionTFromMyClient();
 
-                    tFromMyClient.setFromFundsCode(from.getFundsCode());
-                    tFromMyClient.setFromForeignCurrency(fromForeignCurrency);
-                    tFromMyClient.setFromCountry(from.getCountry());
-                    tFromMyClient.setFromFundsComment(from.getFundsComment());
+                    if (from.getFundsCode() != null) {
+                        tFromMyClient.setFromFundsCode(from.getFundsCode());//M
+                    } else {
+                        LOG.error("No country data found for From Funds Code. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+                        errorsLog.add("No country data found for From Funds Code. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+                    }
+                    if (fromForeignCurrency != null) {
+                        tFromMyClient.setFromForeignCurrency(fromForeignCurrency);//N
+                    }
+
+                    if (from.getCountry() != null) {
+                        tFromMyClient.setFromCountry(from.getCountry());//M
+                    } else {
+                        LOG.error("No country data found for transaction number : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+                        errorsLog.add("No country data found for transaction number : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+                    }
+                    if (StringUtils.isNotBlank(from.getFundsComment())) {
+                        tFromMyClient.setFromFundsComment(from.getFundsComment());//C
+                    } else if (StringUtils.isNotBlank(from.getFundsComment()) && "OTHER".equalsIgnoreCase(from.getFundsCode())) {
+                        //TODO att error log
+                    }
+
                     if (from.getAccountsDTO() != null) {
 
                         TAccountMyClient tAccountMyClient = getTAccountMyClient(factory, from);
@@ -166,7 +282,12 @@ public class JavaToXMLAdaptor {
 
                         EntityNonClientDTO entityNonClient = from.getEntityNonClientDTO();
                         TEntity tEntity = factory.createTEntity();
-                        tEntity.setName(entityNonClient.getName());
+                        if (entityNonClient.getName() != null) {
+                            tEntity.setName(entityNonClient.getName());
+                        } else {
+                            LOG.error("Name of the Entity Non Client is Empty " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+                            errorsLog.add("Name of the Entity Non Client is Empty " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+                        }
                         tEntity.setIncorporationCountryCode(entityNonClient.getCountryCode());
                         tEntity.setIncorporationNumber(entityNonClient.getIncorporationNumber());
                         tFrom.setFromEntity(tEntity);
@@ -177,11 +298,13 @@ public class JavaToXMLAdaptor {
                         tFrom.setFromPerson(tPerson);
                     } else {
                         LOG.error("The From Details invalid " + from.getTransactionType());
+                        errorsLog.add("Transaction Id " + from.getTransId() + "The From Details invalid " + from.getTransactionType());
                     }
                     xmlTransaction.setTFrom(tFrom);
                 }
             } else {
                 LOG.error("Transaction from details not found ");
+                errorsLog.add("ransaction from details not found");
             }
             if (to != null) {
                 TForeignCurrency toForeignCurrency = factory.createTForeignCurrency();
@@ -195,7 +318,7 @@ public class JavaToXMLAdaptor {
 
                     if (toForeignCurrency.getForeignCurrencyCode() != null) {
                         toForeignCurrency.setForeignCurrencyCode(to.getForeignCurrencyCode());
-                        toForeignCurrency.setForeignAmount(BigDecimal.valueOf(to.getForeignAmount()));
+                        toForeignCurrency.setForeignAmount(new BigDecimal(from.getForeignAmount()).setScale(2,BigDecimal.ROUND_DOWN));
                         toForeignCurrency.setForeignExchangeRate(BigDecimal.valueOf(to.getForeignExchangeRate()));
                     }
 
@@ -213,6 +336,7 @@ public class JavaToXMLAdaptor {
                     } else if (to.getPersonDTO() != null) {
 
                         TPersonMyClient tPersonMyClient = getTPersonMyClient(factory, to.getPersonDTO());
+
                         tToMyClient.setToPerson(tPersonMyClient);
 
                     }
@@ -239,17 +363,35 @@ public class JavaToXMLAdaptor {
                         tTo.setToPerson(tPerson);
                     } else {
                         LOG.error("The To Details invalid " + to.getTransactionType());
+                        errorsLog.add("The To Details invalid " + to.getTransactionType());
                     }
                     xmlTransaction.setTTo(tTo);
                 }
             } else {
                 LOG.error("Transaction to details not found ");
+                errorsLog.add("Transaction to details not found ");
             }
 
             report.getTransaction().add(xmlTransaction);
         }
-        if (a != 0) {
-            XMLFileWriter.writeReportXML("sample_" + fileNumber + ".xml", report);
+        if (recordCounter != 0) {
+            XMLFileWriter.writeReportXML(applicationProperties.getOutputXmlFilePath(),applicationProperties.getOutputXmlFileName() + fileNumber + ".xml", report);
+        }
+        LOG.info("+++++++++++++++++++++++++ Execution Completed ++++++++++++++++++++++++++++");
+        successLog.add(new Date() + "+++++++++++++++++++++++++ Execution Completed ++++++++++++++++++++++++++++");
+
+    }
+
+    private void createLogFile(int fileNumber,List<String> logData,String fileName,String path) {
+        try{
+            FileWriter writer = new FileWriter(new File(path,fileName+fileNumber+".txt"));
+            for(String str: logData) {
+                writer.write(str + System.lineSeparator());
+            }
+            writer.close();
+        }catch (Exception e){
+            LOG.error("Couldn't create Success log file.");
+            errorsLog.add("Couldn't create Success log file.");
         }
     }
 
@@ -276,18 +418,89 @@ public class JavaToXMLAdaptor {
         AccountsDTO accounts = from.getAccountsDTO();
         TAccountMyClient tAccountMyClient = factory.createTAccountMyClient();
 
-        tAccountMyClient.setInstitutionName(accounts.getInstituationName());
-        tAccountMyClient.setInstitutionCode(accounts.getInstitutionCode());
-        tAccountMyClient.setSwift(accounts.getSwift());
-        tAccountMyClient.setBranch(accounts.getBranch());
-        tAccountMyClient.setAccount(accounts.getAccount());
-        tAccountMyClient.setCurrencyCode(accounts.getCurrencyCode());
-        tAccountMyClient.setAccountName(accounts.getAccountName());
+        if (accounts.getInstituationName() != null) {
+            tAccountMyClient.setInstitutionName(accounts.getInstituationName());
+        } else {
+            LOG.error("No data found for Institution Name. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Institution Name. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+        }
+        if (accounts.getInstitutionCode() != null) {
+            tAccountMyClient.setInstitutionCode(accounts.getInstitutionCode());
+        } else {
+            LOG.error("No data found for Institution Code. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Institution Code. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+        }
+        if (accounts.getSwift() != null) {
+            tAccountMyClient.setSwift(accounts.getSwift());
+        } else {
+            LOG.error("No data found for Swift. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Swift. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+        }
+        if (accounts.getAccount() != null) {
+            tAccountMyClient.setAccount(accounts.getAccount());
+        } else {
+            LOG.error("No data found for Account. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Account. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+        }
+        if (accounts.getBranch() != null) {
+            tAccountMyClient.setBranch(accounts.getBranch());
+        } else {
+            LOG.error("No data found for Branch. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Branch. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+        }
+
+        if (accounts.getCurrencyCode() != null) {
+            tAccountMyClient.setCurrencyCode(accounts.getCurrencyCode());
+        } else {
+            LOG.error("No data found for Currency Code. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Currency Code. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+        }
+
+        if (accounts.getAccountName() != null) {
+            tAccountMyClient.setAccountName(accounts.getAccountName());
+        } else {
+            LOG.warn("No data found for Account Name. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            warnings.add("No data found for Account Name. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+        }
 
         if (from.getAccountsDTO().getEntitiesDTO() != null) {
-            FromToMappingDTO aTemp = new FromToMappingDTO();
+            FromToMappingDTO aTemp = from;
             aTemp.setEntitiesDTO(accounts.getEntitiesDTO());
             tAccountMyClient.setTEntity(getTEntityMyClient(factory, aTemp));
+        }
+        if (accounts.getOpened() != null) {
+            tAccountMyClient.setOpened(getXMLGregorianCalendarFromDate(accounts.getOpened()));
+        } else {
+            LOG.warn("No data found for Opened Date. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            warnings.add("No data found for  Opened Date. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+        }
+        if (accounts.getClosed() != null) {
+            tAccountMyClient.setClosed(getXMLGregorianCalendarFromDate(accounts.getClosed()));
+        }
+        if (accounts.getStatusCode() != null) {
+            tAccountMyClient.setStatusCode(accounts.getStatusCode());
+        } else {
+            LOG.error("No data found for Opened Date. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for  Opened Date. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+        }
+        if (accounts.getBeneficiary() != null) {
+            tAccountMyClient.setBeneficiary(factory.createTAccountBeneficiary(accounts.getBeneficiary()));
+        } else {
+            LOG.error("No data found for Beneficiary. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for  Beneficiary. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+        }
+        if (accounts.getBeneficiaryComment() != null) {
+            tAccountMyClient.setBeneficiaryComment(factory.createTAccountBeneficiaryComment(accounts.getComments()));
+        } else {
+            LOG.error("No data found for Beneficiary Comment. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for  Beneficiary Comment. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+        }
+
+        if (accounts.getComments() != null) {
+            tAccountMyClient.setComments(accounts.getComments());
+        } else {
+            LOG.error("No data found for Comments. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for  Comments. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
         }
 
         if (accounts.getRelatedPartyDTO() != null) {
@@ -295,114 +508,219 @@ public class JavaToXMLAdaptor {
 
             while (relatedPartyIterator.hasNext()) {
 
-                TAccountMyClient.Signatory signatory = factory.createTAccountMyClientSignatory();
-
                 RelatedPartyDTO relatedParty = relatedPartyIterator.next();
 
-                signatory.setRole(relatedParty.getRole());
-                signatory.setIsPrimary(relatedParty.getIsPrimary());
-                if (personMap.containsKey(from.getCifId())) {
-                    PersonDTO person = personMap.get(from.getCifId());
+                if (personMap.containsKey(relatedParty.getCifId())) {
+                    PersonDTO person = personMap.get(relatedParty.getCifId());
+                    if(person.getCifId()!=null){
+                        TAccountMyClient.Signatory signatory = factory.createTAccountMyClientSignatory();
+                        signatory.setRole(relatedParty.getRole());
+                        signatory.setIsPrimary(relatedParty.getIsPrimary());
+                        if(addressMap.containsKey(person.getCifId())){
+                            person.setAddressDTO(addressMap.get(person.getCifId()));
+                        }else{
+                            LOG.error("No data found for Address. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+                            errorsLog.add("No data found for  Address. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+                        }
+                        if(phoneMap.containsKey(person.getCifId())){
+                            person.setPhoneDTO(phoneMap.get(person.getCifId()));
+                        }else {
+                            LOG.warn("No data found for Phone. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+                            warnings.add("No data found for  Phone. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+                        }
+                        TPersonMyClient tPersonMyClient = getTPersonMyClient(factory, person);
 
-                    TPersonMyClient tPersonMyClient = getTPersonMyClient(factory, person);
+                        if (person.getPhoneDTO() != null) {
+                            Iterator<PhoneDTO> phoneIterator = person.getPhoneDTO().iterator();
+                            TPersonMyClient.Phones phones = factory.createTPersonMyClientPhones();
+                            setPhoneToXML(factory, phoneIterator, phones.getPhone(),person.getCifId());
+                            tPersonMyClient.setPhones(phones);
+                        }
 
-                    if (person.getPhoneDTO() != null) {
-                        Iterator<PhoneDTO> phoneIterator = person.getPhoneDTO().iterator();
-                        TPersonMyClient.Phones phones = factory.createTPersonMyClientPhones();
-                        setPhoneToXML(factory, phoneIterator, phones.getPhone());
-                        tPersonMyClient.setPhones(phones);
+                        if (person.getAddressDTO() != null) {
+                            TPersonMyClient.Addresses addresses = factory.createTPersonMyClientAddresses();
+                            Iterator<AddressDTO> addressIterator = person.getAddressDTO().iterator();
+                            setAddressToXML(factory, addressIterator, addresses.getAddress(),from.getCifId());
+                        }
+
+                        if (person.getPersonIdentificationDTO() != null) {
+
+                            setTPersonalIdentification(factory, person, tPersonMyClient);
+
+                        }
+                        signatory.setTPerson(tPersonMyClient);
+                        tAccountMyClient.getSignatory().add(signatory);
+                    }else{
+                        LOG.error("Valid Person Not found for the Signatory CIF ID " + from.getCifId() + " Transaction Number " + from.getTransId());
+                        errorsLog.add("Valid Person Not found for the Signatory CIF ID " + from.getCifId() + " Transaction Number " + from.getTransId());
                     }
-
-                    if (person.getAddressDTO() != null) {
-                        TPersonMyClient.Addresses addresses = factory.createTPersonMyClientAddresses();
-                        Iterator<AddressDTO> addressIterator = person.getAddressDTO().iterator();
-                        setAddressToXML(factory, addressIterator, addresses.getAddress());
-                    }
-
-                    if (person.getPersonIdentificationDTO() != null) {
-
-                        setTPersonalIdentification(factory, person, tPersonMyClient);
-
-                    }
-                    signatory.setTPerson(tPersonMyClient);
                 } else {
                     LOG.error("Valid Person Not found for the Signatory CIF ID " + from.getCifId() + " Transaction Number " + from.getTransId());
+                    errorsLog.add("Valid Person Not found for the Signatory CIF ID " + from.getCifId() + " Transaction Number " + from.getTransId());
+
                 }
-                tAccountMyClient.getSignatory().add(signatory);
             }
         }
 
-        if (accounts.getOpened() != null) {
-            tAccountMyClient.setOpened(getXMLGregorianCalendarFromDate(accounts.getOpened()));
-        }
-        if (accounts.getClosed() != null) {
-            tAccountMyClient.setClosed(getXMLGregorianCalendarFromDate(accounts.getClosed()));
-        }
 
-        tAccountMyClient.setStatusCode(accounts.getStatusCode());
-        if (accounts.getBeneficiary() != null) {
-            tAccountMyClient.setBeneficiary(factory.createTAccountBeneficiary(accounts.getBeneficiary()));
-        }
-        if (accounts.getBeneficiaryComment() != null) {
-            tAccountMyClient.setBeneficiaryComment(factory.createTAccountBeneficiaryComment(accounts.getComments()));
-        }
-        tAccountMyClient.setComments(accounts.getComments());
         return tAccountMyClient;
     }
 
-    private TEntityMyClient getTEntityMyClient(ObjectFactory factory, FromToMappingDTO to) {
+    private TEntityMyClient getTEntityMyClient(ObjectFactory factory, FromToMappingDTO fromToMappingDTO) {
 
-        EntitiesDTO entities = to.getEntitiesDTO();
+        EntitiesDTO entities = fromToMappingDTO.getEntitiesDTO();
         TEntityMyClient tEntityMyClient = factory.createTEntityMyClient();
 
-        tEntityMyClient.setName(entities.getName());
-        tEntityMyClient.setCommercialName(entities.getCommercialName());
-        tEntityMyClient.setIncorporationLegalForm(entities.getIncorporationLegalForm());
-        tEntityMyClient.setIncorporationNumber(entities.getIncorporationNumber());
-        tEntityMyClient.setBusiness(entities.getBusiness());
-
+        if (entities.getName() != null) {
+            tEntityMyClient.setName(entities.getName());
+        } else {
+            LOG.error("Value not found for Name. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            errorsLog.add("Value not found for Name CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+        }
+        if (entities.getCommercialName() != null) {
+            tEntityMyClient.setCommercialName(entities.getCommercialName());
+        } else {
+            LOG.warn("Value not found for Commercial Name. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            warnings.add("Value not found for getCommercial Name. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+        }
+        if (entities.getIncorporationLegalForm() != null) {
+            tEntityMyClient.setIncorporationLegalForm(entities.getIncorporationLegalForm());
+        } else {
+            LOG.error("Value not found for Incorporation Legal Form. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            errorsLog.add("Value not found for Incorporation Legal Form. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+        }
+        if (entities.getIncorporationNumber() != null) {
+            tEntityMyClient.setIncorporationNumber(entities.getIncorporationNumber());
+        } else {
+            LOG.warn("Value not found for Incorporation Number. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            warnings.add("Value not found for Incorporation Number. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+        }
+        if (entities.getBusiness() != null) {
+            tEntityMyClient.setBusiness(entities.getBusiness());
+        } else {
+            LOG.error("Value not found for Business. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            errorsLog.add("Value not found for Business CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+        }
         if (entities.getPhoneDTO() != null) {
             Iterator<PhoneDTO> phoneIterator = entities.getPhoneDTO().iterator();
             TEntityMyClient.Phones phones = factory.createTEntityMyClientPhones();
-            setPhoneToXML(factory, phoneIterator, phones.getPhone());
+            setPhoneToXML(factory, phoneIterator, phones.getPhone(),entities.getCifId());
             tEntityMyClient.setPhones(phones);
+        } else {
+            LOG.error("Value not found for Address. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            errorsLog.add("Value not found for Address CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
         }
         if (entities.getAddressDTO() != null) {
             TEntityMyClient.Addresses addresses = factory.createTEntityMyClientAddresses();
             Iterator<AddressDTO> addressIterator = entities.getAddressDTO().iterator();
-            setAddressToXML(factory, addressIterator, addresses.getAddress());
+            setAddressToXML(factory, addressIterator, addresses.getAddress(),fromToMappingDTO.getCifId());
             tEntityMyClient.setAddresses(addresses);
+        } else {
+            LOG.warn("Value not found for Phone. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            warnings.add("Value not found for Phone. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
         }
 
         if (entities.getEmail() != null) {
             tEntityMyClient.setEmail(entities.getEmail());
+        } else {
+            LOG.warn("Value not found for Email. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            warnings.add("Value not found for Email. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
         }
 
-        tEntityMyClient.setIncorporationCountryCode(entities.getIncorporationCountryCode());
+        if (entities.getIncorporationCountryCode() != null) {
+            tEntityMyClient.setIncorporationCountryCode(entities.getIncorporationCountryCode());
+        } else {
+            LOG.error("Value not found for Incorporation Country Code. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            errorsLog.add("Value not found for Incorporation Country Code. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+        }
         if (entities.getIncorporationDate() != null) {
             tEntityMyClient.setIncorporationDate(getXMLGregorianCalendarFromDate(entities.getIncorporationDate()));
+        } else {
+            LOG.warn("Value not found for Incorporation Date. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            warnings.add("Value not found for Incorporation Date. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
         }
-        tEntityMyClient.setBusinessClosed(Boolean.valueOf(entities.getBusinessClosed()));
+        if (entities.getBusinessClosed() != null) {
+            tEntityMyClient.setBusinessClosed(Boolean.valueOf(entities.getBusinessClosed()));
+        } else {
+            LOG.warn("Value not found for Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            warnings.add("Value not found for Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+        }
         if (entities.getDateBusinessClosed() != null) {
             tEntityMyClient.setDateBusinessClosed(getXMLGregorianCalendarFromDate(entities.getDateBusinessClosed()));
+        } else {
+            LOG.warn("Value not found for Date Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            warnings.add("Value not found for Date Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
         }
-        tEntityMyClient.setTaxNumber(entities.getTaxNumber());
-        tEntityMyClient.setTaxRegNumber(entities.getTaxRegNumber());
+        if (entities.getTaxNumber() != null) {
+            tEntityMyClient.setTaxNumber(entities.getTaxNumber());
+        } else {
+            LOG.warn("Value not found for Date Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            warnings.add("Value not found for Date Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+        }
+        if (entities.getTaxRegNumber() != null) {
+            tEntityMyClient.setTaxRegNumber(entities.getTaxRegNumber());
+        } else {
+            LOG.warn("Value not found for Tax Reg Number. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            warnings.add("Value not found for Tax Reg Number. CIF_ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+        }
+        if (entities.getComments() != null) {
+            tEntityMyClient.setComments(entities.getComments());
+        }
         return tEntityMyClient;
     }
 
-    private void setAddressToXML(ObjectFactory factory, Iterator<AddressDTO> addressIterator, List<TAddress> address2) {
+    private void setAddressToXML(ObjectFactory factory, Iterator<AddressDTO> addressIterator, List<TAddress> address2,String cifId) {
         while ((addressIterator.hasNext())) {
             TAddress tAddress = factory.createTAddress();
             AddressDTO address = addressIterator.next();
-            tAddress.setAddressType(address.getAddressType());
-            tAddress.setAddress(address.getAddress());
-            tAddress.setTown(address.getTown());
-            tAddress.setCity(address.getCity());
-            tAddress.setZip(address.getZip());
-            tAddress.setCountryCode(address.getCountryCode());
-            tAddress.setState(address.getState());
-            tAddress.setComments(address.getComments());
+            if(address.getAddressType()!=null){
+                tAddress.setAddressType(address.getAddressType());
+            }else{
+                LOG.error("Value not found for Address Type. CIF ID " + cifId);
+                errorsLog.add("Value not found for Address Type. CIF ID " + cifId);
+            }
+            if(address.getAddress()!=null){
+                tAddress.setAddress(address.getAddress());
+            }else{
+                LOG.error("Value not found for Address. CIF ID " + cifId);
+                errorsLog.add("Value not found for Address. CIF ID " + cifId);
+            }
+            if(address.getCountryCode()!=null){
+                tAddress.setCountryCode(address.getCountryCode());
+            }else{
+                LOG.error("Value not found for Country Code. CIF ID " + cifId);
+                errorsLog.add("Value not found for Country Code. CIF ID " + cifId);
+            }
+            if(address.getCity()!=null){
+                tAddress.setCity(address.getCity());
+            }else{
+                LOG.error("Value not found for City. CIF ID " + cifId);
+                errorsLog.add("Value not found for City. CIF ID " + cifId);
+            }
+            if(address.getTown()!=null){
+                tAddress.setTown(address.getTown());
+            }else{
+                LOG.warn("Value not found for Town. CIF ID " + cifId);
+                warnings.add("Value not found for Town. CIF ID " + cifId);
+            }
+            if(address.getZip()!=null){
+                tAddress.setZip(address.getZip());
+            }else{
+                LOG.warn("Value not found for Zip. CIF ID " + cifId);
+                warnings.add("Value not found for Zip. CIF ID " + cifId);
+            }
+            if(address.getState()!=null){
+                tAddress.setState(address.getState());
+            }else{
+                LOG.warn("Value not found for State. CIF ID " + cifId);
+                warnings.add("Value not found for State. CIF ID " + cifId);
+            }
+            if(address.getComments()!=null){
+                tAddress.setComments(address.getComments());
+            }else{
+                LOG.warn("Value not found for Address Comments. CIF ID " + cifId);
+                warnings.add("Value not found for Address Comments. CIF ID " + cifId);
+            }
             address2.add(tAddress);
         }
     }
@@ -410,44 +728,61 @@ public class JavaToXMLAdaptor {
     private TPersonMyClient getTPersonMyClient(ObjectFactory factory, PersonDTO person) {
         TPersonMyClient tPersonMyClient = factory.createTPersonMyClient();
 
-        tPersonMyClient.setGender(person.getGender());
+        tPersonMyClient.setGender(person.getGender());//n
         if (person.getTitle() != null) {
             tPersonMyClient.setTitle(factory.createTPersonTitle(person.getTitle()));
         }
-        tPersonMyClient.setFirstName(person.getFirstName());
-        tPersonMyClient.setLastName(person.getLastName());
-        tPersonMyClient.setLastName(person.getLastName());
-        if (person.getBirthDate() != null) {
-            tPersonMyClient.setBirthdate(getXMLGregorianCalendarFromDate(person.getBirthDate()));
+        if (person.getFirstName() != null) {
+            tPersonMyClient.setFirstName(person.getFirstName());//M
         }
-        tPersonMyClient.setIdNumber(person.getIdNumber());
-        tPersonMyClient.setNationality1(person.getNationality1());
-        tPersonMyClient.setNationality2(person.getNationality2());
-        //tPersonMyClient.setNationality3(); No Column
-        tPersonMyClient.setResidence(person.getResidence());
+        if (person.getLastName() != null) {
+            tPersonMyClient.setLastName(person.getLastName());//M
+        }
+        if (person.getBirthDate() != null) {
+            tPersonMyClient.setBirthdate(getXMLGregorianCalendarFromDate(person.getBirthDate()));//M
+        }
+        if (person.getNationality1() != null) {
+            tPersonMyClient.setNationality1(person.getNationality1());
+        }
+        if ("LK".equals(person.getNationality1())) {
+            tPersonMyClient.setIdNumber(person.getIdNumber());//Conditional
+        }
+        if (person.getNationality2() != null) {
+            tPersonMyClient.setNationality2(person.getNationality2());
+        }
+        if (person.getResidence() != null) {
+            tPersonMyClient.setResidence(person.getResidence());//M
+        }
 
         if (person.getPhoneDTO() != null) {
             Iterator<PhoneDTO> phoneIterator = person.getPhoneDTO().iterator();
             TPersonMyClient.Phones phones = factory.createTPersonMyClientPhones();
 
-            setPhoneToXML(factory, phoneIterator, phones.getPhone());
+            setPhoneToXML(factory, phoneIterator, phones.getPhone(),person.getCifId());
             tPersonMyClient.setPhones(phones);
         }
         if (person.getAddressDTO() != null) {
-            TPersonMyClient.Addresses addresses = factory.createTPersonMyClientAddresses();
-            Iterator<AddressDTO> addressIterator = person.getAddressDTO().iterator();
-            setAddressToXML(factory, addressIterator, addresses.getAddress());
+            TPersonMyClient.Addresses addresses = factory.createTPersonMyClientAddresses();//M
+            Iterator<AddressDTO> addressIterator = person.getAddressDTO().iterator();//M
+            setAddressToXML(factory, addressIterator, addresses.getAddress(),person.getCifId());//M
             tPersonMyClient.setAddresses(addresses);
         }
-
-
-        setTPersonalIdentification(factory, person, tPersonMyClient);
+        if(person.getPersonIdentificationDTO()!=null){
+            setTPersonalIdentification(factory, person, tPersonMyClient);//Conditionally if not a sri lankan
+        }else{
+            LOG.error("Data not found for Personal Identification. CIF ID " + person.getCifId());
+            errorsLog.add("Data not found for Personal Identification. CIF ID " + person.getCifId());
+        }
 
         if (person.getEmail() != null) {
             tPersonMyClient.getEmail().add(person.getEmail());//The actual email format should be a list
         }
-        tPersonMyClient.setOccupation(person.getOccupation());
-        tPersonMyClient.setComments(person.getComments());
+        if (person.getOccupation() != null) {
+            tPersonMyClient.setOccupation(person.getOccupation());//M
+        }
+        if (person.getComments() != null) {
+            tPersonMyClient.setComments(person.getComments());
+        }
         return tPersonMyClient;
     }
 
@@ -456,30 +791,88 @@ public class JavaToXMLAdaptor {
         TPersonIdentification tPersonIdentification = factory.createTPersonIdentification();
         while (phoneIterator.hasNext()) {
             PersonIdentificationDTO personIdentification = phoneIterator.next();
-            tPersonIdentification.setType(personIdentification.getIdentificationType());
-            tPersonIdentification.setNumber(personIdentification.getNumber());
+            if(personIdentification.getIdentificationType()!=null){
+                tPersonIdentification.setType(personIdentification.getIdentificationType());
+            }else{
+                LOG.error("Value not found for Identification Type. CIF ID " + person.getCifId());
+                errorsLog.add("Value not found for Identification Type. CIF ID " + person.getCifId());
+            }
+            if(personIdentification.getNumber()!=null){
+                tPersonIdentification.setNumber(personIdentification.getNumber());
+            }else{
+                LOG.error("Value not found for Identification Number. CIF ID " + person.getCifId());
+                errorsLog.add("Value not found for Identification Number. CIF ID " + person.getCifId());
+            }
+            if(personIdentification.getIssueCountry()!=null){
+                tPersonIdentification.setIssueCountry(personIdentification.getIssueCountry());
+            }else{
+                LOG.error("Value not found for Identification Issue Country. CIF ID " + person.getCifId());
+                errorsLog.add("Value not found for Identification Issue Country. CIF ID " + person.getCifId());
+            }
             if (personIdentification.getIssueDate() != null) {
                 tPersonIdentification.setIssueDate(getXMLGregorianCalendarFromDate(personIdentification.getIssueDate()));
+            }else{
+                LOG.warn("Value not found for Identification Issue Date. CIF ID " + person.getCifId());
+                warnings.add("Value not found for Identification Issue Date. CIF ID " + person.getCifId());
             }
             if (personIdentification.getExpiryDate() != null) {
                 tPersonIdentification.setExpiryDate(getXMLGregorianCalendarFromDate(personIdentification.getExpiryDate()));
+            }else{
+                LOG.warn("Value not found for Identification Expiry Date. CIF ID " + person.getCifId());
+                warnings.add("Value not found for Identification Expiry Date. CIF ID " + person.getCifId());
             }
-            tPersonIdentification.setIssuedBy(personIdentification.getIssuedBy());
-            tPersonIdentification.setIssueCountry(personIdentification.getIssueCountry());
-            tPersonIdentification.setComments(personIdentification.getComment());
+            if(personIdentification.getIssuedBy()!=null){
+                tPersonIdentification.setIssuedBy(personIdentification.getIssuedBy());
+            }else{
+                LOG.warn("Value not found for Identification Issue Country. CIF ID " + person.getCifId());
+                warnings.add("Value not found for Identification Issue Country. CIF ID " + person.getCifId());
+            }
+            if(personIdentification.getComment()!=null){
+                tPersonIdentification.setComments(personIdentification.getComment());
+            }else{
+                LOG.warn("Value not found for Identification Comment. CIF ID " + person.getCifId());
+                warnings.add("Value not found for Identification Comment. CIF ID " + person.getCifId());
+            }
             tPersonMyClient.getIdentification().add(tPersonIdentification);
         }
     }
 
-    private void setPhoneToXML(ObjectFactory factory, Iterator<PhoneDTO> phoneIterator, List<TPhone> phone) {
+    private void setPhoneToXML(ObjectFactory factory, Iterator<PhoneDTO> phoneIterator, List<TPhone> phone,String cifId) {
         while (phoneIterator.hasNext()) {
             TPhone tPhone = factory.createTPhone();
             PhoneDTO aPhone = phoneIterator.next();
-            tPhone.setTphContactType(aPhone.getContactType());
-            tPhone.setTphCommunicationType(aPhone.getCommunicationType());
-            tPhone.setTphCountryPrefix(aPhone.getCountryPrefix());
-            tPhone.setTphNumber(aPhone.getPhoneNumber());
-            tPhone.setComments(aPhone.getComments());
+
+            if(aPhone.getContactType()!=null){
+                tPhone.setTphContactType(aPhone.getContactType());
+            }else{
+                LOG.error("Value not found for Contact Type. CIF ID " + cifId);
+                errorsLog.add("Value not found for Zip. CIF ID " + cifId);
+            }
+            if(aPhone.getCommunicationType()!=null){
+                tPhone.setTphCommunicationType(aPhone.getCommunicationType());
+            }
+            else{
+                LOG.error("Value not found for Communication Type. CIF ID " + cifId);
+                errorsLog.add("Value not found for Communication Type. CIF ID " + cifId);
+            }
+            if(aPhone.getCountryPrefix()!=null){
+                tPhone.setTphCountryPrefix(aPhone.getCountryPrefix());
+            }else{
+                LOG.error("Value not found for Country Prefix. CIF ID " + cifId);
+                errorsLog.add("Value not found for Country Prefix. CIF ID " + cifId);
+            }
+            if(aPhone.getPhoneNumber()!=null){
+                tPhone.setTphNumber(aPhone.getPhoneNumber());
+            }else{
+                LOG.error("Value not found for Phone Number. CIF ID " + cifId);
+                errorsLog.add("Value not found for Phone Number. CIF ID " + cifId);
+            }
+            if(aPhone.getComments()!=null){
+                tPhone.setComments(aPhone.getComments());
+            }else{
+                LOG.warn("Value not found for Phone Comments. Type. CIF ID " + cifId);
+                warnings.add("Value not found for Phone Comments. CIF ID " + cifId);
+            }
             phone.add(tPhone);
         }
     }
@@ -493,11 +886,13 @@ public class JavaToXMLAdaptor {
         reportDTO.setrEntityId(applicationProperties.getPublicREntityId());
         reportDTO.setSubmissionCode(applicationProperties.getSubmissionCode());
         reportDTO.setReportCode(applicationProperties.getReportCode());
+        reportDTO.setEntityReference(applicationProperties.getEntityReference());
         try {
             final Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(applicationProperties.getSubmissionDate());
             reportDTO.setSubmissionDate(date);
         } catch (Exception e) {
             LOG.error("Could not parse the date ", e);
+            errorsLog.add("Could not parse the date " + e.toString());
         }
 
         reportDTO.setCurrencyCodeLocal(applicationProperties.getCurrencyLocalCode());
@@ -528,7 +923,7 @@ public class JavaToXMLAdaptor {
                 && transactionFromOrTo.getCifId() != null
                 && !entitiesMap.containsKey(transactionFromOrTo.getCifId())
         ) {
-
+            successLog.add("Person Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
             LOG.info("Person Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
             if (transactionFromOrTo.getCifId() != null && personMap.containsKey(transactionFromOrTo.getCifId())) {
                 transactionFromOrTo.setPersonDTO(personMap.get(transactionFromOrTo.getCifId()));
@@ -536,6 +931,7 @@ public class JavaToXMLAdaptor {
                     transactionFromOrTo.getPersonDTO().setPersonIdentificationDTO(personalIdentificationMap.get(transactionFromOrTo.getCifId()));
                 } else {
                     LOG.error("Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Personal Identification Details not found");
+                    errorsLog.add("Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Personal Identification Details not found");
                 }
                 if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
                     transactionFromOrTo.getPersonDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
@@ -546,12 +942,14 @@ public class JavaToXMLAdaptor {
 
 
             } else {
+                errorsLog.add("Person Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Cif_Id in Person Table  " + personMap.containsKey(transactionFromOrTo.getCifId()));
                 LOG.error("Person Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Cif_Id in Person Table  " + personMap.containsKey(transactionFromOrTo.getCifId()));
             }
 
 
         } else if (transactionFromOrTo.getAcctNumber() == null && entitiesMap.containsKey(transactionFromOrTo.getCifId())) {
 
+            successLog.add("Entity Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
             LOG.info("Entity Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
             if (transactionFromOrTo.getCifId() != null) {
                 transactionFromOrTo.setEntitiesDTO(entitiesMap.get(transactionFromOrTo.getCifId()));
@@ -559,6 +957,7 @@ public class JavaToXMLAdaptor {
                     transactionFromOrTo.getEntitiesDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
                 }
             } else {
+                errorsLog.add("Entity Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId());
                 LOG.error("Entity Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId());
             }
             if (transactionFromOrTo.getCifId() != null && addressMap.containsKey(transactionFromOrTo.getCifId())) {
@@ -567,6 +966,7 @@ public class JavaToXMLAdaptor {
 
         } else if (transactionFromOrTo.getAcctNumber() != null) {
 
+            successLog.add("Account Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
             LOG.info("Account Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
             if (accountsMap.containsKey(transactionFromOrTo.getAcctNumber())) {
                 transactionFromOrTo.setAccountsDTO(accountsMap.get(transactionFromOrTo.getAcctNumber()));
@@ -578,6 +978,7 @@ public class JavaToXMLAdaptor {
                     if (personalIdentificationMap.containsKey(transactionFromOrTo.getCifId())) {
                         transactionFromOrTo.getAccountsDTO().getPersonDTO().setPersonIdentificationDTO(personalIdentificationMap.get(transactionFromOrTo.getCifId()));
                     } else {
+                        errorsLog.add("Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Personal Identification Details not found");
                         LOG.error("Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Personal Identification Details not found");
                     }
                     if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
@@ -597,12 +998,11 @@ public class JavaToXMLAdaptor {
                         transactionFromOrTo.getAccountsDTO().getEntitiesDTO().setAddressDTO(addressMap.get(transactionFromOrTo.getCifId()));
                     }
                 }
-                if (transactionFromOrTo.getCifId() != null && relatedPartyMap.containsKey(transactionFromOrTo.getCifId())) {
-
-                    transactionFromOrTo.getAccountsDTO().setRelatedPartyDTO(relatedPartyMap.get(transactionFromOrTo.getCifId()));
-
+                if (transactionFromOrTo.getCifId() != null && relatedPartyMap.containsKey(transactionFromOrTo.getAcctNumber())) {
+                    transactionFromOrTo.getAccountsDTO().setRelatedPartyDTO(relatedPartyMap.get(transactionFromOrTo.getAcctNumber()));
                 }
             } else {
+                errorsLog.add("Account Details not found, Account Number : " + transactionFromOrTo.getAcctNumber());
                 LOG.error("Account Details not found, Account Number : " + transactionFromOrTo.getAcctNumber());
 
             }
@@ -612,6 +1012,7 @@ public class JavaToXMLAdaptor {
             if (personNonClientMap.containsKey(transactionNumber)) {
 
                 LOG.info("Person Non Client Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
+                successLog.add("Person Non Client Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
 
                 transactionFromOrTo.setPersonNonClientDTO(personNonClientMap.get(transactionNumber));
                 if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
@@ -619,13 +1020,16 @@ public class JavaToXMLAdaptor {
                 }
 
             } else if (entityNonClientMap.containsKey(transactionNumber.toString())) {
-
+                LOG.info("Entity Non Client Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
+                successLog.add("Entity Non Client Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
                 transactionFromOrTo.setEntityNonClientDTO(entityNonClientMap.get(transactionNumber.toString()));
                 if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
                     transactionFromOrTo.getEntityNonClientDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
                 }
 
             } else {
+
+                errorsLog.add("Can't find the relevant Non Client Person or Non Client Entity for transaction number : " + transactionNumber);
                 LOG.error("Can't find the relevant Non Client Person or Non Client Entity for transaction number : " + transactionNumber);
             }
         }
@@ -635,7 +1039,6 @@ public class JavaToXMLAdaptor {
     private static XMLGregorianCalendar getXMLGregorianCalendarFromDate(Date date) {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if (date == null) {
-            LOG.error("Submission Date is null");
             return null;
         }
         String dateStr = date.toString();
@@ -646,8 +1049,10 @@ public class JavaToXMLAdaptor {
             calendar = DatatypeFactory.newInstance()
                     .newXMLGregorianCalendar(
                             gregory);
+            calendar.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
         } catch (DatatypeConfigurationException e) {
             LOG.error("Error while parsing date ", e);
+            errorsLog.add("Error while parsing date ");
         }
         return calendar;
     }
