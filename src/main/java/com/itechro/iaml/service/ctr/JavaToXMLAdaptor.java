@@ -59,6 +59,8 @@ public class JavaToXMLAdaptor {
 
     private HashMap<String, List<RelatedPartyDTO>> relatedPartyMap;
 
+    private String tranNumberForLog;
+
     public void setCtrJdbcDao(CTRJdbcDao ctrJdbcDao) {
         this.ctrJdbcDao = ctrJdbcDao;
     }
@@ -115,6 +117,7 @@ public class JavaToXMLAdaptor {
             recordCounter++;
 
             ReportDTO reportDTO = getATransactionForReportDTO(transactionNumber);
+            tranNumberForLog=reportDTO.getTransactionDTO().getTransactionNumber();
             
             if (reportDTO.getrEntityId() != null) {
                 report.setRentityId(reportDTO.getrEntityId());
@@ -196,21 +199,21 @@ public class JavaToXMLAdaptor {
             if (transaction.getAmountLocal() != null) {
                 xmlTransaction.setAmountLocal(new BigDecimal(transaction.getAmountLocal()).setScale(2,BigDecimal.ROUND_DOWN));
             } else {
-                LOG.error("No value date found for Amount Local : " + transaction.getDateTransaction() + " Transaction_UID " + transaction.getTran_uid());
-                errorsLog.add("No value date found for Amount Local : " + transaction.getDateTransaction() + " Transaction_UID " + transaction.getTran_uid());
+                LOG.error("No value date found for Amount Local : " + transaction.getDateTransaction() + " Transaction Number " + tranNumberForLog);
+                errorsLog.add("No value date found for Amount Local : " + transaction.getDateTransaction() + " Transaction Number  " + tranNumberForLog);
             }
 
             if (transaction.getValueDate() != null) {
                 xmlTransaction.setValueDate(getXMLGregorianCalendarFromDate(transaction.getValueDate()));//M
             } else {
-                LOG.error("No value date found for transaction number : " + transaction.getDateTransaction() + " Transaction_UID " + transaction.getTran_uid());
-                errorsLog.add("No value date found for transaction number : " + transaction.getDateTransaction() + " Transaction_UID " + transaction.getTran_uid());
+                LOG.error("No value date found for transaction number : " + transaction.getDateTransaction() + " Transaction Number " + tranNumberForLog);
+                errorsLog.add("No value date found for transaction number : " + transaction.getDateTransaction() + " Transaction Number " + tranNumberForLog);
             }
             if (transaction.getDateTransaction() != null) {
                 xmlTransaction.setDateTransaction(getXMLGregorianCalendarFromDate(transaction.getDateTransaction()));//M
             } else {
-                LOG.error("No date transaction found for Date Transaction. Transaction number : " + transaction.getTransactionNumber() + " Transaction_UID " + transaction.getTran_uid());
-                errorsLog.add("No date transaction found for Date Transaction. Transaction number : " + transaction.getTransactionNumber() + " Transaction_UID " + transaction.getTran_uid());
+                LOG.error("No date transaction found for Date Transaction. Transaction number : " + transaction.getTransactionNumber() + " Transaction Number " + tranNumberForLog);
+                errorsLog.add("No date transaction found for Date Transaction. Transaction number : " + transaction.getTransactionNumber() + " Transaction Number " + tranNumberForLog);
             }
 
             FromToMappingDTO from = reportDTO.getTransactionFrom();
@@ -232,8 +235,8 @@ public class JavaToXMLAdaptor {
                     if (from.getFundsCode() != null) {
                         tFromMyClient.setFromFundsCode(from.getFundsCode());//M
                     } else {
-                        LOG.error("No country data found for From Funds Code. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-                        errorsLog.add("No country data found for From Funds Code. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+                        LOG.error("No country data found for From Funds Code. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+                        errorsLog.add("No country data found for From Funds Code. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
                     }
                     if (fromForeignCurrency != null) {
                         tFromMyClient.setFromForeignCurrency(fromForeignCurrency);//N
@@ -242,8 +245,8 @@ public class JavaToXMLAdaptor {
                     if (from.getCountry() != null) {
                         tFromMyClient.setFromCountry(from.getCountry());//M
                     } else {
-                        LOG.error("No country data found for transaction number : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-                        errorsLog.add("No country data found for transaction number : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+                        LOG.error("No country data found for CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog+ " Transaction Type " + from.getTransactionType());
+                        errorsLog.add("No country data found for CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
                     }
                     if (StringUtils.isNotBlank(from.getFundsComment())) {
                         tFromMyClient.setFromFundsComment(from.getFundsComment());//C
@@ -285,8 +288,8 @@ public class JavaToXMLAdaptor {
                         if (entityNonClient.getName() != null) {
                             tEntity.setName(entityNonClient.getName());
                         } else {
-                            LOG.error("Name of the Entity Non Client is Empty " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-                            errorsLog.add("Name of the Entity Non Client is Empty " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+                            LOG.error("Name of the Entity Non Client is Empty. Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+                            errorsLog.add("Name of the Entity Non Client is Empty. Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
                         }
                         tEntity.setIncorporationCountryCode(entityNonClient.getCountryCode());
                         tEntity.setIncorporationNumber(entityNonClient.getIncorporationNumber());
@@ -297,8 +300,8 @@ public class JavaToXMLAdaptor {
                         TPerson tPerson = getTPerson(factory, from);
                         tFrom.setFromPerson(tPerson);
                     } else {
-                        LOG.error("The From Details invalid " + from.getTransactionType());
-                        errorsLog.add("Transaction Id " + from.getTransId() + "The From Details invalid " + from.getTransactionType());
+                        LOG.error("The From Details invalid. Transaction Number " + tranNumberForLog  + from.getTransactionType());
+                        errorsLog.add("From Details invalid Transaction Number " + tranNumberForLog  + "The From Details invalid " + from.getTransactionType());
                     }
                     xmlTransaction.setTFrom(tFrom);
                 }
@@ -362,14 +365,14 @@ public class JavaToXMLAdaptor {
                         TPerson tPerson = getTPerson(factory, to);
                         tTo.setToPerson(tPerson);
                     } else {
-                        LOG.error("The To Details invalid " + to.getTransactionType());
-                        errorsLog.add("The To Details invalid " + to.getTransactionType());
+                        LOG.error("The To Details invalid Transaction Number " + tranNumberForLog  + to.getTransactionType());
+                        errorsLog.add("The To Details invalid Transaction Number " + tranNumberForLog  + to.getTransactionType());
                     }
                     xmlTransaction.setTTo(tTo);
                 }
             } else {
-                LOG.error("Transaction to details not found ");
-                errorsLog.add("Transaction to details not found ");
+                LOG.error("Transaction to details not found.Transaction Number " + tranNumberForLog );
+                errorsLog.add("Transaction to details not found. Transaction Number " + tranNumberForLog );
             }
 
             report.getTransaction().add(xmlTransaction);
@@ -421,46 +424,46 @@ public class JavaToXMLAdaptor {
         if (accounts.getInstituationName() != null) {
             tAccountMyClient.setInstitutionName(accounts.getInstituationName());
         } else {
-            LOG.error("No data found for Institution Name. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for Institution Name. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Institution Name. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog  + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Institution Name. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
         if (accounts.getInstitutionCode() != null) {
             tAccountMyClient.setInstitutionCode(accounts.getInstitutionCode());
         } else {
-            LOG.error("No data found for Institution Code. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for Institution Code. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Institution Code. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Institution Code. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
         if (accounts.getSwift() != null) {
             tAccountMyClient.setSwift(accounts.getSwift());
         } else {
-            LOG.error("No data found for Swift. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for Swift. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Swift. CIF_ID: " + from.getCifId() + "Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Swift. CIF_ID : " + from.getCifId() + "Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
         if (accounts.getAccount() != null) {
             tAccountMyClient.setAccount(accounts.getAccount());
         } else {
-            LOG.error("No data found for Account. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for Account. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Account. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Account. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog+ " Transaction Type " + from.getTransactionType());
         }
         if (accounts.getBranch() != null) {
             tAccountMyClient.setBranch(accounts.getBranch());
         } else {
-            LOG.error("No data found for Branch. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for Branch. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Branch. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Branch. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
 
         if (accounts.getCurrencyCode() != null) {
             tAccountMyClient.setCurrencyCode(accounts.getCurrencyCode());
         } else {
-            LOG.error("No data found for Currency Code. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for Currency Code. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Currency Code. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Currency Code. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
 
         if (accounts.getAccountName() != null) {
             tAccountMyClient.setAccountName(accounts.getAccountName());
         } else {
-            LOG.warn("No data found for Account Name. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-            warnings.add("No data found for Account Name. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            LOG.warn("No data found for Account Name. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            warnings.add("No data found for Account Name. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
 
         if (from.getAccountsDTO().getEntitiesDTO() != null) {
@@ -471,8 +474,8 @@ public class JavaToXMLAdaptor {
         if (accounts.getOpened() != null) {
             tAccountMyClient.setOpened(getXMLGregorianCalendarFromDate(accounts.getOpened()));
         } else {
-            LOG.warn("No data found for Opened Date. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-            warnings.add("No data found for  Opened Date. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            LOG.warn("No data found for Opened Date. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            warnings.add("No data found for  Opened Date. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
         if (accounts.getClosed() != null) {
             tAccountMyClient.setClosed(getXMLGregorianCalendarFromDate(accounts.getClosed()));
@@ -480,27 +483,27 @@ public class JavaToXMLAdaptor {
         if (accounts.getStatusCode() != null) {
             tAccountMyClient.setStatusCode(accounts.getStatusCode());
         } else {
-            LOG.error("No data found for Opened Date. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for  Opened Date. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Opened Date. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for  Opened Date. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
         if (accounts.getBeneficiary() != null) {
             tAccountMyClient.setBeneficiary(factory.createTAccountBeneficiary(accounts.getBeneficiary()));
         } else {
-            LOG.error("No data found for Beneficiary. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for  Beneficiary. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Beneficiary. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for  Beneficiary. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
         if (accounts.getBeneficiaryComment() != null) {
             tAccountMyClient.setBeneficiaryComment(factory.createTAccountBeneficiaryComment(accounts.getComments()));
         } else {
-            LOG.error("No data found for Beneficiary Comment. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for  Beneficiary Comment. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Beneficiary Comment. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for  Beneficiary Comment. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
 
         if (accounts.getComments() != null) {
             tAccountMyClient.setComments(accounts.getComments());
         } else {
-            LOG.error("No data found for Comments. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for  Comments. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Comments. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for  Comments. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
 
         if (accounts.getRelatedPartyDTO() != null) {
@@ -519,14 +522,14 @@ public class JavaToXMLAdaptor {
                         if(addressMap.containsKey(person.getCifId())){
                             person.setAddressDTO(addressMap.get(person.getCifId()));
                         }else{
-                            LOG.error("No data found for Address. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-                            errorsLog.add("No data found for  Address. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+                            LOG.error("No data found for Address. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+                            errorsLog.add("No data found for  Address. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
                         }
                         if(phoneMap.containsKey(person.getCifId())){
                             person.setPhoneDTO(phoneMap.get(person.getCifId()));
                         }else {
-                            LOG.warn("No data found for Phone. CIF_ID: " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
-                            warnings.add("No data found for  Phone. CIF_ID : " + from.getCifId() + " Transaction_UID " + from.getTransId() + " Transaction Type " + from.getTransactionType());
+                            LOG.warn("No data found for Phone. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+                            warnings.add("No data found for  Phone. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
                         }
                         TPersonMyClient tPersonMyClient = getTPersonMyClient(factory, person);
 
@@ -551,12 +554,12 @@ public class JavaToXMLAdaptor {
                         signatory.setTPerson(tPersonMyClient);
                         tAccountMyClient.getSignatory().add(signatory);
                     }else{
-                        LOG.error("Valid Person Not found for the Signatory CIF ID " + from.getCifId() + " Transaction Number " + from.getTransId());
-                        errorsLog.add("Valid Person Not found for the Signatory CIF ID " + from.getCifId() + " Transaction Number " + from.getTransId());
+                        LOG.error("Valid Person Not found for the Signatory CIF ID " + from.getCifId() + " Transaction Number " + tranNumberForLog);
+                        errorsLog.add("Valid Person Not found for the Signatory CIF ID " + from.getCifId() + " Transaction Number " + tranNumberForLog);
                     }
                 } else {
-                    LOG.error("Valid Person Not found for the Signatory CIF ID " + from.getCifId() + " Transaction Number " + from.getTransId());
-                    errorsLog.add("Valid Person Not found for the Signatory CIF ID " + from.getCifId() + " Transaction Number " + from.getTransId());
+                    LOG.error("Valid Person Not found for the Signatory CIF ID " + from.getCifId() + " Transaction Number " + tranNumberForLog);
+                    errorsLog.add("Valid Person Not found for the Signatory CIF ID " + from.getCifId() + " Transaction Number " + tranNumberForLog);
 
                 }
             }
@@ -574,32 +577,32 @@ public class JavaToXMLAdaptor {
         if (entities.getName() != null) {
             tEntityMyClient.setName(entities.getName());
         } else {
-            LOG.error("Value not found for Name. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
-            errorsLog.add("Value not found for Name CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            LOG.error("Value not found for Name. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            errorsLog.add("Value not found for Name CIF ID " + fromToMappingDTO.getCifId() +" Transaction Number " + tranNumberForLog);
         }
         if (entities.getCommercialName() != null) {
             tEntityMyClient.setCommercialName(entities.getCommercialName());
         } else {
-            LOG.warn("Value not found for Commercial Name. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
-            warnings.add("Value not found for getCommercial Name. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            LOG.warn("Value not found for Commercial Name. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            warnings.add("Value not found for getCommercial Name. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
         }
         if (entities.getIncorporationLegalForm() != null) {
             tEntityMyClient.setIncorporationLegalForm(entities.getIncorporationLegalForm());
         } else {
-            LOG.error("Value not found for Incorporation Legal Form. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
-            errorsLog.add("Value not found for Incorporation Legal Form. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            LOG.error("Value not found for Incorporation Legal Form. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            errorsLog.add("Value not found for Incorporation Legal Form. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
         }
         if (entities.getIncorporationNumber() != null) {
             tEntityMyClient.setIncorporationNumber(entities.getIncorporationNumber());
         } else {
-            LOG.warn("Value not found for Incorporation Number. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
-            warnings.add("Value not found for Incorporation Number. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            LOG.warn("Value not found for Incorporation Number. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            warnings.add("Value not found for Incorporation Number. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
         }
         if (entities.getBusiness() != null) {
             tEntityMyClient.setBusiness(entities.getBusiness());
         } else {
-            LOG.error("Value not found for Business. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
-            errorsLog.add("Value not found for Business CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            LOG.error("Value not found for Business. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            errorsLog.add("Value not found for Business CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
         }
         if (entities.getPhoneDTO() != null) {
             Iterator<PhoneDTO> phoneIterator = entities.getPhoneDTO().iterator();
@@ -607,8 +610,8 @@ public class JavaToXMLAdaptor {
             setPhoneToXML(factory, phoneIterator, phones.getPhone(),entities.getCifId());
             tEntityMyClient.setPhones(phones);
         } else {
-            LOG.error("Value not found for Address. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
-            errorsLog.add("Value not found for Address CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            LOG.error("Value not found for Address. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            errorsLog.add("Value not found for Address CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
         }
         if (entities.getAddressDTO() != null) {
             TEntityMyClient.Addresses addresses = factory.createTEntityMyClientAddresses();
@@ -616,52 +619,52 @@ public class JavaToXMLAdaptor {
             setAddressToXML(factory, addressIterator, addresses.getAddress(),fromToMappingDTO.getCifId());
             tEntityMyClient.setAddresses(addresses);
         } else {
-            LOG.warn("Value not found for Phone. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
-            warnings.add("Value not found for Phone. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            LOG.warn("Value not found for Phone. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            warnings.add("Value not found for Phone. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
         }
 
         if (entities.getEmail() != null) {
             tEntityMyClient.setEmail(entities.getEmail());
         } else {
-            LOG.warn("Value not found for Email. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
-            warnings.add("Value not found for Email. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            LOG.warn("Value not found for Email. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            warnings.add("Value not found for Email. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
         }
 
         if (entities.getIncorporationCountryCode() != null) {
             tEntityMyClient.setIncorporationCountryCode(entities.getIncorporationCountryCode());
         } else {
-            LOG.error("Value not found for Incorporation Country Code. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
-            errorsLog.add("Value not found for Incorporation Country Code. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            LOG.error("Value not found for Incorporation Country Code. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            errorsLog.add("Value not found for Incorporation Country Code. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
         }
         if (entities.getIncorporationDate() != null) {
             tEntityMyClient.setIncorporationDate(getXMLGregorianCalendarFromDate(entities.getIncorporationDate()));
         } else {
-            LOG.warn("Value not found for Incorporation Date. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
-            warnings.add("Value not found for Incorporation Date. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            LOG.warn("Value not found for Incorporation Date. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            warnings.add("Value not found for Incorporation Date. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
         }
         if (entities.getBusinessClosed() != null) {
             tEntityMyClient.setBusinessClosed(Boolean.valueOf(entities.getBusinessClosed()));
         } else {
-            LOG.warn("Value not found for Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
-            warnings.add("Value not found for Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            LOG.warn("Value not found for Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            warnings.add("Value not found for Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
         }
         if (entities.getDateBusinessClosed() != null) {
             tEntityMyClient.setDateBusinessClosed(getXMLGregorianCalendarFromDate(entities.getDateBusinessClosed()));
         } else {
-            LOG.warn("Value not found for Date Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
-            warnings.add("Value not found for Date Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            LOG.warn("Value not found for Date Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            warnings.add("Value not found for Date Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
         }
         if (entities.getTaxNumber() != null) {
             tEntityMyClient.setTaxNumber(entities.getTaxNumber());
         } else {
-            LOG.warn("Value not found for Date Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
-            warnings.add("Value not found for Date Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            LOG.warn("Value not found for Date Business Closed. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            warnings.add("Value not found for Date Business Closed. CIF ID " + fromToMappingDTO.getCifId() +" Transaction Number " + tranNumberForLog);
         }
         if (entities.getTaxRegNumber() != null) {
             tEntityMyClient.setTaxRegNumber(entities.getTaxRegNumber());
         } else {
-            LOG.warn("Value not found for Tax Reg Number. CIF ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
-            warnings.add("Value not found for Tax Reg Number. CIF_ID " + fromToMappingDTO.getCifId() + " Transaction UID " + fromToMappingDTO.getTransId());
+            LOG.warn("Value not found for Tax Reg Number. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            warnings.add("Value not found for Tax Reg Number. CIF_ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
         }
         if (entities.getComments() != null) {
             tEntityMyClient.setComments(entities.getComments());
@@ -676,50 +679,50 @@ public class JavaToXMLAdaptor {
             if(address.getAddressType()!=null){
                 tAddress.setAddressType(address.getAddressType());
             }else{
-                LOG.error("Value not found for Address Type. CIF ID " + cifId);
-                errorsLog.add("Value not found for Address Type. CIF ID " + cifId);
+                LOG.error("Value not found for Address Type. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
+                errorsLog.add("Value not found for Address Type. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
             }
             if(address.getAddress()!=null){
                 tAddress.setAddress(address.getAddress());
             }else{
-                LOG.error("Value not found for Address. CIF ID " + cifId);
-                errorsLog.add("Value not found for Address. CIF ID " + cifId);
+                LOG.error("Value not found for Address. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
+                errorsLog.add("Value not found for Address. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
             }
             if(address.getCountryCode()!=null){
                 tAddress.setCountryCode(address.getCountryCode());
             }else{
-                LOG.error("Value not found for Country Code. CIF ID " + cifId);
-                errorsLog.add("Value not found for Country Code. CIF ID " + cifId);
+                LOG.error("Value not found for Country Code. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
+                errorsLog.add("Value not found for Country Code. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
             }
             if(address.getCity()!=null){
                 tAddress.setCity(address.getCity());
             }else{
-                LOG.error("Value not found for City. CIF ID " + cifId);
-                errorsLog.add("Value not found for City. CIF ID " + cifId);
+                LOG.error("Value not found for City. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
+                errorsLog.add("Value not found for City. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
             }
             if(address.getTown()!=null){
                 tAddress.setTown(address.getTown());
             }else{
-                LOG.warn("Value not found for Town. CIF ID " + cifId);
-                warnings.add("Value not found for Town. CIF ID " + cifId);
+                LOG.warn("Value not found for Town. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
+                warnings.add("Value not found for Town. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
             }
             if(address.getZip()!=null){
                 tAddress.setZip(address.getZip());
             }else{
-                LOG.warn("Value not found for Zip. CIF ID " + cifId);
-                warnings.add("Value not found for Zip. CIF ID " + cifId);
+                LOG.warn("Value not found for Zip. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
+                warnings.add("Value not found for Zip. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
             }
             if(address.getState()!=null){
                 tAddress.setState(address.getState());
             }else{
-                LOG.warn("Value not found for State. CIF ID " + cifId);
-                warnings.add("Value not found for State. CIF ID " + cifId);
+                LOG.warn("Value not found for State. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
+                warnings.add("Value not found for State. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
             }
             if(address.getComments()!=null){
                 tAddress.setComments(address.getComments());
             }else{
-                LOG.warn("Value not found for Address Comments. CIF ID " + cifId);
-                warnings.add("Value not found for Address Comments. CIF ID " + cifId);
+                LOG.warn("Value not found for Address Comments. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
+                warnings.add("Value not found for Address Comments. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
             }
             address2.add(tAddress);
         }
@@ -770,8 +773,8 @@ public class JavaToXMLAdaptor {
         if(person.getPersonIdentificationDTO()!=null){
             setTPersonalIdentification(factory, person, tPersonMyClient);//Conditionally if not a sri lankan
         }else{
-            LOG.error("Data not found for Personal Identification. CIF ID " + person.getCifId());
-            errorsLog.add("Data not found for Personal Identification. CIF ID " + person.getCifId());
+            LOG.error("Data not found for Personal Identification. CIF ID " + person.getCifId()+" Transaction Number " + tranNumberForLog);
+            errorsLog.add("Data not found for Personal Identification. CIF ID " + person.getCifId()+" Transaction Number " + tranNumberForLog);
         }
 
         if (person.getEmail() != null) {
@@ -794,44 +797,44 @@ public class JavaToXMLAdaptor {
             if(personIdentification.getIdentificationType()!=null){
                 tPersonIdentification.setType(personIdentification.getIdentificationType());
             }else{
-                LOG.error("Value not found for Identification Type. CIF ID " + person.getCifId());
-                errorsLog.add("Value not found for Identification Type. CIF ID " + person.getCifId());
+                LOG.error("Value not found for Identification Type. CIF ID " + person.getCifId()+" Transaction Number " + tranNumberForLog);
+                errorsLog.add("Value not found for Identification Type. CIF ID " + person.getCifId()+" Transaction Number " + tranNumberForLog);
             }
             if(personIdentification.getNumber()!=null){
                 tPersonIdentification.setNumber(personIdentification.getNumber());
             }else{
-                LOG.error("Value not found for Identification Number. CIF ID " + person.getCifId());
-                errorsLog.add("Value not found for Identification Number. CIF ID " + person.getCifId());
+                LOG.error("Value not found for Identification Number. CIF ID " + person.getCifId()+" Transaction Number " + tranNumberForLog);
+                errorsLog.add("Value not found for Identification Number. CIF ID " + person.getCifId()+" Transaction Number " + tranNumberForLog);
             }
             if(personIdentification.getIssueCountry()!=null){
                 tPersonIdentification.setIssueCountry(personIdentification.getIssueCountry());
             }else{
-                LOG.error("Value not found for Identification Issue Country. CIF ID " + person.getCifId());
-                errorsLog.add("Value not found for Identification Issue Country. CIF ID " + person.getCifId());
+                LOG.error("Value not found for Identification Issue Country. CIF ID " + person.getCifId()+" Transaction Number " + tranNumberForLog);
+                errorsLog.add("Value not found for Identification Issue Country. CIF ID " + person.getCifId()+" Transaction Number " + tranNumberForLog);
             }
             if (personIdentification.getIssueDate() != null) {
                 tPersonIdentification.setIssueDate(getXMLGregorianCalendarFromDate(personIdentification.getIssueDate()));
             }else{
-                LOG.warn("Value not found for Identification Issue Date. CIF ID " + person.getCifId());
-                warnings.add("Value not found for Identification Issue Date. CIF ID " + person.getCifId());
+                LOG.warn("Value not found for Identification Issue Date. CIF ID " + person.getCifId()+" Transaction Number " + tranNumberForLog);
+                warnings.add("Value not found for Identification Issue Date. CIF ID " + person.getCifId()+" Transaction Number " + tranNumberForLog);
             }
             if (personIdentification.getExpiryDate() != null) {
                 tPersonIdentification.setExpiryDate(getXMLGregorianCalendarFromDate(personIdentification.getExpiryDate()));
             }else{
-                LOG.warn("Value not found for Identification Expiry Date. CIF ID " + person.getCifId());
-                warnings.add("Value not found for Identification Expiry Date. CIF ID " + person.getCifId());
+                LOG.warn("Value not found for Identification Expiry Date. CIF ID " + person.getCifId()+" Transaction Number " + tranNumberForLog);
+                warnings.add("Value not found for Identification Expiry Date. CIF ID " + person.getCifId()+" Transaction Number " + tranNumberForLog);
             }
             if(personIdentification.getIssuedBy()!=null){
                 tPersonIdentification.setIssuedBy(personIdentification.getIssuedBy());
             }else{
-                LOG.warn("Value not found for Identification Issue Country. CIF ID " + person.getCifId());
-                warnings.add("Value not found for Identification Issue Country. CIF ID " + person.getCifId());
+                LOG.warn("Value not found for Identification Issue Country. CIF ID " + person.getCifId()+" Transaction Number " + tranNumberForLog);
+                warnings.add("Value not found for Identification Issue Country. CIF ID " + person.getCifId()+" Transaction Number " + tranNumberForLog);
             }
             if(personIdentification.getComment()!=null){
                 tPersonIdentification.setComments(personIdentification.getComment());
             }else{
-                LOG.warn("Value not found for Identification Comment. CIF ID " + person.getCifId());
-                warnings.add("Value not found for Identification Comment. CIF ID " + person.getCifId());
+                LOG.warn("Value not found for Identification Comment. CIF ID " + person.getCifId()+" Transaction Number " + tranNumberForLog);
+                warnings.add("Value not found for Identification Comment. CIF ID " + person.getCifId()+" Transaction Number " + tranNumberForLog);
             }
             tPersonMyClient.getIdentification().add(tPersonIdentification);
         }
@@ -845,33 +848,33 @@ public class JavaToXMLAdaptor {
             if(aPhone.getContactType()!=null){
                 tPhone.setTphContactType(aPhone.getContactType());
             }else{
-                LOG.error("Value not found for Contact Type. CIF ID " + cifId);
-                errorsLog.add("Value not found for Zip. CIF ID " + cifId);
+                LOG.error("Value not found for Contact Type. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
+                errorsLog.add("Value not found for Zip. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
             }
             if(aPhone.getCommunicationType()!=null){
                 tPhone.setTphCommunicationType(aPhone.getCommunicationType());
             }
             else{
-                LOG.error("Value not found for Communication Type. CIF ID " + cifId);
-                errorsLog.add("Value not found for Communication Type. CIF ID " + cifId);
+                LOG.error("Value not found for Communication Type. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
+                errorsLog.add("Value not found for Communication Type. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
             }
             if(aPhone.getCountryPrefix()!=null){
                 tPhone.setTphCountryPrefix(aPhone.getCountryPrefix());
             }else{
-                LOG.error("Value not found for Country Prefix. CIF ID " + cifId);
-                errorsLog.add("Value not found for Country Prefix. CIF ID " + cifId);
+                LOG.error("Value not found for Country Prefix. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
+                errorsLog.add("Value not found for Country Prefix. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
             }
             if(aPhone.getPhoneNumber()!=null){
                 tPhone.setTphNumber(aPhone.getPhoneNumber());
             }else{
-                LOG.error("Value not found for Phone Number. CIF ID " + cifId);
-                errorsLog.add("Value not found for Phone Number. CIF ID " + cifId);
+                LOG.error("Value not found for Phone Number. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
+                errorsLog.add("Value not found for Phone Number. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
             }
             if(aPhone.getComments()!=null){
                 tPhone.setComments(aPhone.getComments());
             }else{
-                LOG.warn("Value not found for Phone Comments. Type. CIF ID " + cifId);
-                warnings.add("Value not found for Phone Comments. CIF ID " + cifId);
+                LOG.warn("Value not found for Phone Comments. Type. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
+                warnings.add("Value not found for Phone Comments. CIF ID " + cifId+" Transaction Number " + tranNumberForLog);
             }
             phone.add(tPhone);
         }
@@ -930,8 +933,8 @@ public class JavaToXMLAdaptor {
                 if (personalIdentificationMap.containsKey(transactionFromOrTo.getCifId())) {
                     transactionFromOrTo.getPersonDTO().setPersonIdentificationDTO(personalIdentificationMap.get(transactionFromOrTo.getCifId()));
                 } else {
-                    LOG.error("Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Personal Identification Details not found");
-                    errorsLog.add("Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Personal Identification Details not found");
+                    LOG.error("Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Personal Identification Details not found. Transaction Number " + tranNumberForLog);
+                    errorsLog.add("Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Personal Identification Details not found. Transaction Number " + tranNumberForLog);
                 }
                 if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
                     transactionFromOrTo.getPersonDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
@@ -942,23 +945,23 @@ public class JavaToXMLAdaptor {
 
 
             } else {
-                errorsLog.add("Person Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Cif_Id in Person Table  " + personMap.containsKey(transactionFromOrTo.getCifId()));
-                LOG.error("Person Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Cif_Id in Person Table  " + personMap.containsKey(transactionFromOrTo.getCifId()));
+                errorsLog.add("Person Level  Details Not Found, Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId()+" Transaction Number " + tranNumberForLog);
+                LOG.error("Person Level  Details Not Found, Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId()+" Transaction Number " + tranNumberForLog );
             }
 
 
         } else if (transactionFromOrTo.getAcctNumber() == null && entitiesMap.containsKey(transactionFromOrTo.getCifId())) {
 
-            successLog.add("Entity Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
-            LOG.info("Entity Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
+            successLog.add("Entity Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType()+" Transaction Number " + tranNumberForLog);
+            LOG.info("Entity Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType()+" Transaction Number " + tranNumberForLog);
             if (transactionFromOrTo.getCifId() != null) {
                 transactionFromOrTo.setEntitiesDTO(entitiesMap.get(transactionFromOrTo.getCifId()));
                 if (transactionFromOrTo.getCifId() != null && phoneMap.containsKey(transactionFromOrTo.getCifId())) {
                     transactionFromOrTo.getEntitiesDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
                 }
             } else {
-                errorsLog.add("Entity Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId());
-                LOG.error("Entity Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId());
+                errorsLog.add("Entity Level Details Not Found. Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId()+" Transaction Number " + tranNumberForLog);
+                LOG.error("Entity Level Details Not Found. Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId()+" Transaction Number " + tranNumberForLog);
             }
             if (transactionFromOrTo.getCifId() != null && addressMap.containsKey(transactionFromOrTo.getCifId())) {
                 transactionFromOrTo.getEntitiesDTO().setAddressDTO(addressMap.get(transactionFromOrTo.getCifId()));
@@ -966,8 +969,8 @@ public class JavaToXMLAdaptor {
 
         } else if (transactionFromOrTo.getAcctNumber() != null) {
 
-            successLog.add("Account Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
-            LOG.info("Account Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
+            successLog.add("Account Level Transaction No : " + tranNumberForLog + " Type : " + transactionFromOrTo.getTransactionType());
+            LOG.info("Account Level Transaction No : " + tranNumberForLog + " Type : " + transactionFromOrTo.getTransactionType());
             if (accountsMap.containsKey(transactionFromOrTo.getAcctNumber())) {
                 transactionFromOrTo.setAccountsDTO(accountsMap.get(transactionFromOrTo.getAcctNumber()));
                 if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
@@ -978,8 +981,8 @@ public class JavaToXMLAdaptor {
                     if (personalIdentificationMap.containsKey(transactionFromOrTo.getCifId())) {
                         transactionFromOrTo.getAccountsDTO().getPersonDTO().setPersonIdentificationDTO(personalIdentificationMap.get(transactionFromOrTo.getCifId()));
                     } else {
-                        errorsLog.add("Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Personal Identification Details not found");
-                        LOG.error("Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Personal Identification Details not found");
+                        errorsLog.add("Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Personal Identification Details not found. Transaction Number " + tranNumberForLog);
+                        LOG.error("Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Personal Identification Details not found. Transaction Number " + tranNumberForLog);
                     }
                     if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
                         transactionFromOrTo.getAccountsDTO().getPersonDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
@@ -1011,8 +1014,8 @@ public class JavaToXMLAdaptor {
 
             if (personNonClientMap.containsKey(transactionNumber)) {
 
-                LOG.info("Person Non Client Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
-                successLog.add("Person Non Client Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
+                LOG.info("Person Non Client Transaction No : " + tranNumberForLog + " Type : " + transactionFromOrTo.getTransactionType());
+                successLog.add("Person Non Client Transaction No : " + tranNumberForLog + " Type : " + transactionFromOrTo.getTransactionType());
 
                 transactionFromOrTo.setPersonNonClientDTO(personNonClientMap.get(transactionNumber));
                 if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
@@ -1029,8 +1032,8 @@ public class JavaToXMLAdaptor {
 
             } else {
 
-                errorsLog.add("Can't find the relevant Non Client Person or Non Client Entity for transaction number : " + transactionNumber);
-                LOG.error("Can't find the relevant Non Client Person or Non Client Entity for transaction number : " + transactionNumber);
+                errorsLog.add("Can't find the relevant Non Client Person or Non Client Entity for transaction number : " + tranNumberForLog);
+                LOG.error("Can't find the relevant Non Client Person or Non Client Entity for transaction number : " + tranNumberForLog);
             }
         }
     }
@@ -1050,6 +1053,7 @@ public class JavaToXMLAdaptor {
                     .newXMLGregorianCalendar(
                             gregory);
             calendar.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+            calendar.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
         } catch (DatatypeConfigurationException e) {
             LOG.error("Error while parsing date ", e);
             errorsLog.add("Error while parsing date ");
