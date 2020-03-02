@@ -424,46 +424,46 @@ public class JavaToXMLAdaptor {
         if (accounts.getInstituationName() != null) {
             tAccountMyClient.setInstitutionName(accounts.getInstituationName());
         } else {
-            LOG.error("No data found for Institution Name. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog  + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for Institution Name. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Institution Name. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog  + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Institution Name. Account Number : " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
         if (accounts.getInstitutionCode() != null) {
             tAccountMyClient.setInstitutionCode(accounts.getInstitutionCode());
         } else {
-            LOG.error("No data found for Institution Code. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for Institution Code. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Institution Code. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Institution Code. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
         if (accounts.getSwift() != null) {
             tAccountMyClient.setSwift(accounts.getSwift());
         } else {
-            LOG.error("No data found for Swift. CIF_ID: " + from.getCifId() + "Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for Swift. CIF_ID : " + from.getCifId() + "Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Swift. Account Number: " + from.getAcctNumber() + "Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Swift. Account Number: " + from.getAcctNumber() + "Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
         if (accounts.getAccount() != null) {
             tAccountMyClient.setAccount(accounts.getAccount());
         } else {
-            LOG.error("No data found for Account. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for Account. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog+ " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Account. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Account. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog+ " Transaction Type " + from.getTransactionType());
         }
         if (accounts.getBranch() != null) {
             tAccountMyClient.setBranch(accounts.getBranch());
         } else {
-            LOG.error("No data found for Branch. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for Branch. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Branch. Account Number: " + from.getAcctNumber()+ " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Branch. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
 
         if (accounts.getCurrencyCode() != null) {
             tAccountMyClient.setCurrencyCode(accounts.getCurrencyCode());
         } else {
-            LOG.error("No data found for Currency Code. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for Currency Code. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Currency Code. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for Currency Code. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
 
         if (accounts.getAccountName() != null) {
             tAccountMyClient.setAccountName(accounts.getAccountName());
         } else {
-            LOG.warn("No data found for Account Name. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
-            warnings.add("No data found for Account Name. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            LOG.warn("No data found for Account Name. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            warnings.add("No data found for Account Name. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
 
         if (from.getAccountsDTO().getEntitiesDTO() != null) {
@@ -474,8 +474,8 @@ public class JavaToXMLAdaptor {
         if (accounts.getOpened() != null) {
             tAccountMyClient.setOpened(getXMLGregorianCalendarFromDate(accounts.getOpened()));
         } else {
-            LOG.warn("No data found for Opened Date. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
-            warnings.add("No data found for  Opened Date. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            LOG.warn("No data found for Opened Date. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            warnings.add("No data found for  Opened Date. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
         if (accounts.getClosed() != null) {
             tAccountMyClient.setClosed(getXMLGregorianCalendarFromDate(accounts.getClosed()));
@@ -483,27 +483,27 @@ public class JavaToXMLAdaptor {
         if (accounts.getStatusCode() != null) {
             tAccountMyClient.setStatusCode(accounts.getStatusCode());
         } else {
-            LOG.error("No data found for Opened Date. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for  Opened Date. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Opened Date. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for  Opened Date. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
         if (accounts.getBeneficiary() != null) {
             tAccountMyClient.setBeneficiary(factory.createTAccountBeneficiary(accounts.getBeneficiary()));
         } else {
-            LOG.error("No data found for Beneficiary. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for  Beneficiary. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Beneficiary. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for  Beneficiary. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
         if (accounts.getBeneficiaryComment() != null) {
             tAccountMyClient.setBeneficiaryComment(factory.createTAccountBeneficiaryComment(accounts.getComments()));
         } else {
-            LOG.error("No data found for Beneficiary Comment. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for  Beneficiary Comment. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Beneficiary Comment. Account Number: " + from.getAcctNumber()+ " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for  Beneficiary Comment. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
 
         if (accounts.getComments() != null) {
             tAccountMyClient.setComments(accounts.getComments());
         } else {
-            LOG.error("No data found for Comments. CIF_ID: " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
-            errorsLog.add("No data found for  Comments. CIF_ID : " + from.getCifId() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            LOG.error("No data found for Comments. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
+            errorsLog.add("No data found for  Comments. Account Number: " + from.getAcctNumber() + " Transaction Number " + tranNumberForLog + " Transaction Type " + from.getTransactionType());
         }
 
         if (accounts.getRelatedPartyDTO() != null) {
