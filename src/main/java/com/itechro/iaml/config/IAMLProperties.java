@@ -66,6 +66,9 @@ public class IAMLProperties {
     @Value("${public.report.indicator}")
     public String reportIndicator;
 
+    @Value("${public.trans.mode,code.validator}")
+    public String transModeCodeValidator;
+
     public String getToNonMyClient() {
         return toNonMyClient;
     }
@@ -224,5 +227,13 @@ public class IAMLProperties {
 
     public void setReportIndicator(String reportIndicator) {
         this.reportIndicator = reportIndicator;
+    }
+
+    public String getTransModeCodeValidator() {
+        return transModeCodeValidator;
+    }
+
+    public void setTransModeCodeValidator(String transModeCodeValidator) {
+        this.transModeCodeValidator = transModeCodeValidator;
     }
 }

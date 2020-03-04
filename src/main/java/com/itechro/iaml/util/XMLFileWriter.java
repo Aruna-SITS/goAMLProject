@@ -24,7 +24,7 @@ public class XMLFileWriter {
 
             marshallerObj.marshal(report, new FileOutputStream(new File(path,fileName)));
         } catch (FileNotFoundException e) {
-            LOG.error("ERROR: Generating exm file failed. {}", report.getRentityId());
+            LOG.error("ERROR: Generating xml file failed. {}", report.getRentityId());
         }
     }
 }

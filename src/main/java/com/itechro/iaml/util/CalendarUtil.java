@@ -3,7 +3,10 @@ package com.itechro.iaml.util;
 import com.itechro.iaml.exception.impl.AppsCommonErrorCode;
 import com.itechro.iaml.exception.impl.AppsException;
 import com.itechro.iaml.exception.impl.AppsRuntimeException;
+import com.itechro.iaml.service.ctr.JavaToXMLAdaptor;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeConstants;
@@ -22,6 +25,7 @@ import java.util.GregorianCalendar;
  * @author : chamara
  */
 public class CalendarUtil {
+    private static final Logger LOG = LoggerFactory.getLogger(JavaToXMLAdaptor.class);
 
     public static final String DEFAULT_DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm";
 
@@ -447,5 +451,37 @@ public class CalendarUtil {
         }
 
         return minutes;
+    }
+    //to get the XMLGregorianCalendar date form java date
+    public static XMLGregorianCalendar getXMLGregorianCalendarFromDate(Date date) {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (date == null) {
+            return null;
+        }
+        String dateStr = date.toString();
+        GregorianCalendar gregory = new GregorianCalendar();
+        gregory.setTime(date);
+        XMLGregorianCalendar calendar = null;
+        try {
+            calendar = DatatypeFactory.newInstance()
+                    .newXMLGregorianCalendar(
+                            gregory);
+            calendar.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+            calendar.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
+        } catch (DatatypeConfigurationException e) {
+            LOG.error("Error while parsing date ", e);
+        }
+        return calendar;
+    }
+
+    //to get the XMLGregorianCalendar date form java String
+    public static XMLGregorianCalendar getXMLGregorianCalendarFromString(String date) {
+        Date xmlDate = null;
+        try {
+            xmlDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
+        } catch (ParseException e) {
+            LOG.error("Date Parse Error ", e);
+        }
+        return getXMLGregorianCalendarFromDate(xmlDate);
     }
 }
