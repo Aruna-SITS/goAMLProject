@@ -19,6 +19,8 @@ public class FromToMappingDTO {
     private String acctNumber;
 
     private String cifId;
+    
+    private String direction;
 
     private String foreignCurrencyCode;
 
@@ -31,11 +33,13 @@ public class FromToMappingDTO {
     private EntitiesDTO entitiesDTO;
 
     private PersonDTO personDTO;
+    
+    private String role;
 
     private PersonNonClientDTO personNonClientDTO;
 
     private EntityNonClientDTO entityNonClientDTO;
-
+    
     public PersonNonClientDTO getPersonNonClientDTO() {
         return personNonClientDTO;
     }
@@ -147,7 +151,15 @@ public class FromToMappingDTO {
         return foreignCurrencyCode;
     }
 
-    public void setForeignCurrencyCode(String foreignCurrencyCode) {
+    public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public void setForeignCurrencyCode(String foreignCurrencyCode) {
         this.foreignCurrencyCode = foreignCurrencyCode;
     }
 
@@ -166,4 +178,12 @@ public class FromToMappingDTO {
     public void setForeignExchangeRate(Integer foreignExchangeRate) {
         this.foreignExchangeRate = foreignExchangeRate;
     }
+
+	public String getDirection() {
+		return direction;
+	}
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
 }

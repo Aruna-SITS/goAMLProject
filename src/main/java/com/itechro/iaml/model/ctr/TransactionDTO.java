@@ -30,12 +30,31 @@ public class TransactionDTO {
 
     private Double amountLocal;
 
-
     private FromToMappingDTO transactionFrom;
 
     private FromToMappingDTO transactionTo;
+    
+    private InvolvedPartyDTO involvedPartyDTO;
+    
+    public String getTestString() {
+		return testString;
+	}
 
-    public Integer getTran_uid() {
+	public void setTestString(String testString) {
+		this.testString = testString;
+	}
+
+	private String testString;
+
+    public InvolvedPartyDTO getInvolvedPartyDTO() {
+		return involvedPartyDTO;
+	}
+
+	public void setInvolvedPartyDTO(InvolvedPartyDTO involvedPartyDTO) {
+		this.involvedPartyDTO = involvedPartyDTO;
+	}
+
+	public Integer getTran_uid() {
         return tran_uid;
     }
 

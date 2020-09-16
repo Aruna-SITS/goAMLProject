@@ -38,6 +38,9 @@ public class EntitiesDTO {
     private List<PhoneDTO> phoneDTO;
 
     private List<AddressDTO> addressDTO;
+    
+    //New line added
+    private List<PersonDirectorDTO> personDirectors;
 
     public List<PhoneDTO> getPhoneDTO() {
         return phoneDTO;
@@ -151,7 +154,15 @@ public class EntitiesDTO {
         this.taxRegNumber = taxRegNumber;
     }
 
-    public String getComments() {
+    public List<PersonDirectorDTO> getPersonDirectors() {
+		return personDirectors;
+	}
+
+	public void setPersonDirectors(List<PersonDirectorDTO> personDirectors) {
+		this.personDirectors = personDirectors;
+	}
+
+	public String getComments() {
         return comments;
     }
 

@@ -28,7 +28,7 @@ public class CTRJdbcDao extends BaseJDBCDao {
         Map<String, Object> params = new HashMap<>();
         StringBuilder SQL = new StringBuilder();
         SQL.append("SELECT * FROM L01_TRANSACTIONS");
-        SQL.append(" WHERE TRAN_UID=");
+        SQL.append(" WHERE TRAN_UID="); //210120S5447054-2 TRAN_NUMBER
         SQL.append(transactionNumber.toString());
         params.put("transactionNumber", transactionNumber);
         return namedParameterJdbcTemplate.query(SQL.toString(), params, new ResultSetExtractor<TransactionDTO>() {
@@ -45,8 +45,8 @@ public class CTRJdbcDao extends BaseJDBCDao {
         Map<String, Object> params = new HashMap<>();
         StringBuilder SQL = new StringBuilder();
         SQL.append("SELECT * FROM L01_TRANSACTIONS");
-        SQL.append(" WHERE REPORT_INDICATOR='");
-        SQL.append(appProperties.getReportIndicator());
+        SQL.append(" WHERE REPORT_INDICATOR='"); //220120S5459109-29 TRAN_NUMBER='230120S5930046-44' AND 230120S5930035-9 createReportTransactionTFromMyClient() TRAN_NUMBER='230120S5930035-9' AND 230120S5930035-9
+        SQL.append(appProperties.getReportIndicator()); //TRAN_NUMBER='230120S5930100-13' AND 230120S5930046-44
         SQL.append("' ORDER BY TRAN_UID");
 
         return namedParameterJdbcTemplate.query(SQL.toString(), params, new ResultSetExtractor<HashMap<Integer, TransactionDTO>>() {
@@ -61,28 +61,38 @@ public class CTRJdbcDao extends BaseJDBCDao {
             }
         });
     }
+    
+   //new method to get application indicator
+    public ReportIndicatorDTO getReportIndicatorObj() {
+		List<String> indicators = new ArrayList<String>();
+		indicators.add(appProperties.reportCode);
+		ReportIndicatorDTO reportIndicatorDTO = new ReportIndicatorDTO();
+		reportIndicatorDTO.setIndicators(indicators);
+		return reportIndicatorDTO;
+    }
+   //new End
 
 public HashMap<String,List<FromToMappingDTO>> getFromToMappingRecordsAsMap() {
     HashMap<String,List<FromToMappingDTO>> results = new HashMap<>();
         Map<String, Object> params = new HashMap<>();
         StringBuilder SQL = new StringBuilder();
         SQL.append("SELECT * FROM (");
-        SQL.append("SELECT '")
+        SQL.append("SELECT 'F' direction,'")
                 .append(appProperties.fromMyClient)
                 .append("' AS TRANTYPE ,L02_FROM_MY_CLIENT.* FROM L02_FROM_MY_CLIENT UNION ");
-        SQL.append("SELECT '")
+        SQL.append("SELECT 'F' direction,'")
                 .append(appProperties.fromNonClient)
                 .append("' AS TRANTYPE ,L02_FROM_NON_CLIENT.TRAN_UID,FROM_FUNDS_CODE," +
                         "FROM_FUNDS_COMMENT,FROM_FOREIGN_CURRENCY,FROM_COUNTRY,null as ACCT_NUMBER,null AS CIF_ID," +
-                        "FOREIGN_CURRENCY_CODE,FOREIGN_AMOUNT,FOREIGN_EXCHANGE_RATE FROM L02_FROM_NON_CLIENT UNION ");
-        SQL.append("SELECT '")
+                        "FOREIGN_CURRENCY_CODE,FOREIGN_AMOUNT,FOREIGN_EXCHANGE_RATE,ROLE FROM L02_FROM_NON_CLIENT UNION ");
+        SQL.append("SELECT 'T' direction, '")
                 .append(appProperties.toMyClient)
                 .append("' AS TRANTYPE ,L02_TO_MY_CLIENT.* FROM L02_TO_MY_CLIENT UNION ");
-        SQL.append("SELECT '")
+        SQL.append("SELECT 'T' direction,'")
                 .append(appProperties.toNonMyClient)
                 .append("' AS TRANTYPE ,L02_TO_NON_CLIENT.TRAN_UID,TO_FUNDS_CODE," +
                         "TO_FUNDS_COMMENT,TO_FOREIGN_CURRENCY,TO_COUNTRY,null as ACCT_NUMBER,null AS CIF_ID," +
-                        "FOREIGN_CURRENCY_CODE,FOREIGN_AMOUNT,FOREIGN_EXCHANGE_RATE FROM L02_TO_NON_CLIENT");
+                        "FOREIGN_CURRENCY_CODE,FOREIGN_AMOUNT,FOREIGN_EXCHANGE_RATE,ROLE FROM L02_TO_NON_CLIENT");
         SQL.append(") ORDER BY TRAN_UID");
 
         return namedParameterJdbcTemplate.query(SQL.toString(), params, new ResultSetExtractor<HashMap<String,List<FromToMappingDTO>>>() {
@@ -98,7 +108,6 @@ public HashMap<String,List<FromToMappingDTO>> getFromToMappingRecordsAsMap() {
             }
         });
     }
-
 
     public HashMap<String, AccountsDTO> getAccountsMap() {
         HashMap<String, AccountsDTO> results = new HashMap<>();
@@ -118,7 +127,7 @@ public HashMap<String,List<FromToMappingDTO>> getFromToMappingRecordsAsMap() {
             }
         });
     }
-
+     
     public  HashMap<String, EntitiesDTO> getEntitiesMap() {
         HashMap<String, EntitiesDTO> results=new HashMap<>();
         Map<String, Object> params = new HashMap<>();
@@ -137,6 +146,27 @@ public HashMap<String,List<FromToMappingDTO>> getFromToMappingRecordsAsMap() {
             }
         });
     }
+    
+    //adding new field to the get person directors data
+    public  HashMap<String, List<PersonDirectorDTO>> getPersonDirectorsMap() {
+        HashMap<String,List<PersonDirectorDTO>>   results = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
+        StringBuilder SQL = new StringBuilder();
+        SQL.append("SELECT * FROM L03_PERSON_DIRECTOR");
+
+        return namedParameterJdbcTemplate.query(SQL.toString(), params, new ResultSetExtractor<HashMap<String,List<PersonDirectorDTO>>>() {
+            @Override
+            public HashMap<String,List<PersonDirectorDTO>>   extractData(ResultSet rs) throws SQLException, DataAccessException {
+                while (rs.next()) {
+                	PersonDirectorDTO personDirectorDTO = getDirectorDTO(rs);
+                	putDirectorIdtoHashMap(results,personDirectorDTO.getCifIdRef(),personDirectorDTO);
+                }
+                LOG.info("getPhoneMap() completed and loaded the Phone Details ");
+                return results;
+            }
+        });
+    }
+    //adding new field to the get person directors data
 
     public HashMap<String,EntityNonClientDTO> getEntityNonClientList() {
         HashMap<String,EntityNonClientDTO> results = new HashMap<>();
@@ -152,7 +182,7 @@ public HashMap<String,List<FromToMappingDTO>> getFromToMappingRecordsAsMap() {
                     results.put(entityNonClientDTO.getTranUid(),entityNonClientDTO);
                 }
                 LOG.info("getEntityNonClientList() completed and loaded the Entity Non Clients");
-                return results;
+                return results; 
             }
         });
     }
@@ -194,6 +224,7 @@ public HashMap<String,List<FromToMappingDTO>> getFromToMappingRecordsAsMap() {
             }
         });
     }
+    
     public HashMap<String,List<PhoneDTO>>  xx() {
         HashMap<String,List<PhoneDTO>>   results = new HashMap<>();
         Map<String, Object> params = new HashMap<>();
@@ -212,6 +243,7 @@ public HashMap<String,List<FromToMappingDTO>> getFromToMappingRecordsAsMap() {
             }
         });
     }
+    
     public HashMap<String,List<AddressDTO>> getAddressMap() {
         HashMap<String,List<AddressDTO>> results = new HashMap<>();
         Map<String, Object> params = new HashMap<>();
@@ -273,7 +305,7 @@ public HashMap<String,List<FromToMappingDTO>> getFromToMappingRecordsAsMap() {
         HashMap<String,List<RelatedPartyDTO>>  results = new HashMap<>();
         Map<String, Object> params = new HashMap<>();
         StringBuilder SQL = new StringBuilder();
-        SQL.append("SELECT * FROM L02_RELATED_PARTY WHERE ACCT_NUMBER in (SELECT ACCT_NUMBER FROM L00_ACCOUNTS)");
+        SQL.append("SELECT * FROM L02_RELATED_PARTY WHERE ACCT_NUMBER in (SELECT ACCOUNT FROM L00_ACCOUNTS)");
 
         return namedParameterJdbcTemplate.query(SQL.toString(), params, new ResultSetExtractor<HashMap<String,List<RelatedPartyDTO>>>() {
             @Override
@@ -325,6 +357,9 @@ public HashMap<String,List<FromToMappingDTO>> getFromToMappingRecordsAsMap() {
         fromToMappingDTO.setForeignCurrencyCode(rs.getString("FOREIGN_CURRENCY_CODE"));
         fromToMappingDTO.setForeignAmount(rs.getInt("FOREIGN_AMOUNT"));
         fromToMappingDTO.setForeignExchangeRate(rs.getInt("FOREIGN_EXCHANGE_RATE"));
+        fromToMappingDTO.setDirection(rs.getString("direction"));
+        fromToMappingDTO.setRole(rs.getString("ROLE"));
+      //  fromToMappingDTO.set
 
         return fromToMappingDTO;
     }
@@ -333,7 +368,7 @@ public HashMap<String,List<FromToMappingDTO>> getFromToMappingRecordsAsMap() {
 
         AccountsDTO accountsDTO = new AccountsDTO();
 
-        accountsDTO.setAcctNumber(rs.getString("ACCT_NUMBER"));
+        accountsDTO.setAcctNumber(rs.getString("ACCOUNT"));
         accountsDTO.setCifId(rs.getString("CIF_ID"));
         accountsDTO.setInstituationName(rs.getString("INSTITUATION_NAME"));
         accountsDTO.setInstitutionCode(rs.getString("INSTITUTION_CODE"));
@@ -375,7 +410,21 @@ public HashMap<String,List<FromToMappingDTO>> getFromToMappingRecordsAsMap() {
 
         return entitiesDTO;
     }
+    
+    //new method to Person Director Objects
+    private PersonDirectorDTO getDirectorDTO(ResultSet rs) throws SQLException {
+    	PersonDirectorDTO personDirectorDTO = new PersonDirectorDTO();
 
+    	personDirectorDTO.setCifIdRef(rs.getString("CIF_ID_REF"));
+    	personDirectorDTO.setFirstName(rs.getString("FIRST_NAME"));
+    	personDirectorDTO.setLastName(rs.getString("LAST_NAME"));
+    	personDirectorDTO.setIdNumber(rs.getString("ID_NUMBER"));
+    	personDirectorDTO.setRole(rs.getString("ROLE"));
+    	
+    	return personDirectorDTO;
+    }
+    //new method to Person Director Objects
+    
     private EntityNonClientDTO getEntityNonClientDTO(ResultSet rs) throws SQLException {
 
         EntityNonClientDTO entityNonClientDTO = new EntityNonClientDTO();
@@ -481,6 +530,7 @@ public HashMap<String,List<FromToMappingDTO>> getFromToMappingRecordsAsMap() {
         relatedPartyDTO.setAccountNumber(rs.getString("ACCT_NUMBER"));
         relatedPartyDTO.setCifId(rs.getString("CIF_ID"));
         relatedPartyDTO.setIsPrimary(rs.getString("IS_PRIMARY"));
+        
         relatedPartyDTO.setRole(rs.getString("ROLE"));
 
         return relatedPartyDTO;
@@ -493,6 +543,16 @@ public HashMap<String,List<FromToMappingDTO>> getFromToMappingRecordsAsMap() {
         }
         list.add(PhoneNumber);
     }
+   //new method to putHash Map on Director Id
+    public void putDirectorIdtoHashMap(HashMap<String,List<PersonDirectorDTO>> hashMap,String cifId,PersonDirectorDTO directorDTO) {
+    	List<PersonDirectorDTO> list = hashMap.get(cifId);
+    	if(list == null) {
+    		list = new ArrayList<PersonDirectorDTO>();
+    		hashMap.put(cifId,list);
+    	}
+    	list.add(directorDTO);
+    }
+    
     public void putPersonalIdentificationIntoHashMap(HashMap<String,List<PersonIdentificationDTO>> hashMap, String cifId, PersonIdentificationDTO identification) {
         List<PersonIdentificationDTO> list = hashMap.get(cifId);
         if (list == null) {

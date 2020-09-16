@@ -26,6 +26,19 @@ public class ReportDTO implements Serializable {
     private FromToMappingDTO transactionFrom;
 
     private FromToMappingDTO transactionTo;
+    
+    public String getTestString() {
+		return testString;
+	}
+
+	public void setTestString(String testString) {
+		this.testString = testString;
+	}
+
+	private String testString;
+    
+    //new line add
+    private ReportIndicatorDTO reportIndicatorDTO;
 
     public FromToMappingDTO getTransactionTo() {
         return transactionTo;
@@ -110,4 +123,12 @@ public class ReportDTO implements Serializable {
     public void setEntityReference(String entityReference) {
         this.entityReference = entityReference;
     }
+
+	public ReportIndicatorDTO getReportIndicatorDTO() {
+		return reportIndicatorDTO;
+	}
+
+	public void setReportIndicatorDTO(ReportIndicatorDTO reportIndicatorDTO) {
+		this.reportIndicatorDTO = reportIndicatorDTO;
+	}
 }

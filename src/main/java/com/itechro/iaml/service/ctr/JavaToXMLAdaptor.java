@@ -7,8 +7,15 @@ import com.itechro.iaml.service.ctr.support.ReportDataLoader;
 import com.itechro.iaml.util.CalendarUtil;
 import com.itechro.iaml.util.LogFileWriter;
 import com.itechro.iaml.util.XMLFileWriter;
+import com.sun.scenario.effect.impl.prism.PrTexture;
+
 import generated.*;
+import generated.Report.ReportIndicators;
+import generated.TEntityMyClient.DirectorId;
+import generated.TEntityMyClient.Phones;
+
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.mapping.Array;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +45,8 @@ public class JavaToXMLAdaptor {
     private CTRJdbcDao ctrJdbcDao;
 
     private IAMLProperties applicationProperties;
+    
+    private ReportIndicatorDTO reportIndicatorDTO;
 
     private HashMap<Integer, TransactionDTO> transactionsMap;
 
@@ -60,7 +69,9 @@ public class JavaToXMLAdaptor {
     private HashMap<String, List<AddressDTO>> addressMap;
 
     private HashMap<String, List<RelatedPartyDTO>> relatedPartyMap;
-
+    
+    private HashMap<String, List<PersonDirectorDTO>> personDirectorMap;
+    
     private String tranNumberForLog;
 
     public void setCtrJdbcDao(CTRJdbcDao ctrJdbcDao) {
@@ -73,11 +84,9 @@ public class JavaToXMLAdaptor {
 
     public void generateReport() throws JAXBException {
 
-
         ReportDataLoader reportDataLoader = new ReportDataLoader();
         reportDataLoader.setCtrJdbcDao(ctrJdbcDao);
         reportDataLoader.loadData();
-
 
         transactionsMap = reportDataLoader.getTransactionsMap();
         entitiesMap = reportDataLoader.getEntitiesMap();
@@ -90,15 +99,17 @@ public class JavaToXMLAdaptor {
         addressMap = reportDataLoader.getAddressMap();
         relatedPartyMap = reportDataLoader.getRelatedPartyMap();
         fromToMappingDTOMap = reportDataLoader.getFromToMappingDTOMap();
-
+        reportIndicatorDTO = reportDataLoader.getReportIndicatorDTO();
+        personDirectorMap = reportDataLoader.getPersonDirectorMap(); 
+        
         ObjectFactory factory = new ObjectFactory();
         Report report = factory.createReport();
 
-        LOG.info("+++++++++++++++++++++++++ Execution Started ++++++++++++++++++++++++++++");
         successLog.add(new Date() + "+++++++++++++++++++++++++ Execution Started ++++++++++++++++++++++++++++");
 
         int recordCounter = 0;
         int fileNumber = 1;
+        
         for (Integer transactionNumber : transactionsMap.keySet()) {
             if (recordCounter == applicationProperties.getNumberOfRecordsToLoad()) {
 
@@ -106,7 +117,7 @@ public class JavaToXMLAdaptor {
                 report = factory.createReport();
 
                 successLog.add(applicationProperties.getOutputXmlFileName()+".xml file Created in "+applicationProperties.getOutputXmlFilePath());
-                LOG.info("{}.xml file created in {} ",applicationProperties.getOutputXmlFileName(),applicationProperties.getOutputXmlFilePath());
+               // LOG.info("{}.xml file created in {} ",applicationProperties.getOutputXmlFileName(),applicationProperties.getOutputXmlFilePath());
 
                 LogFileWriter.writeLogFile(fileNumber, successLog, applicationProperties.getSuccessLogFileName(), applicationProperties.getSuccessLogFilePath());
                 LogFileWriter.writeLogFile(fileNumber, errorsLog, applicationProperties.getErrorLogFileName(), applicationProperties.getErrorLogFilePath());
@@ -122,30 +133,50 @@ public class JavaToXMLAdaptor {
             recordCounter++;
 
             ReportDTO reportDTO = getATransactionForReportDTO(transactionNumber);
+ 
             tranNumberForLog = reportDTO.getTransactionDTO().getTransactionNumber();
 
             setReportLevelData(report, reportDTO);
 
-            //TODO: create recordCounter report indicator
-            report.setReportIndicators(factory.createReportReportIndicators());//M
+            Report.ReportIndicators reportIndicators = factory.createReportReportIndicators();
+            reportIndicators.getIndicator().addAll(reportIndicatorDTO.getIndicators());
+            
+            LOG.info("reportIndicators : "+reportIndicators.getIndicator().toString());
 
+            report.setReportIndicators(reportIndicators);//M
+           
             Report.Transaction xmlTransaction = factory.createReportTransaction();
+            Report.Transaction.InvolvedParties xmlInvolvedParties = null ;
+            
+         //   List<TParty> invlprty = new ArrayList<TParty>();
+          //  xmlTransaction.getInvolvedParties().getParty().add((TParty)invlprty);
 
             TransactionDTO transaction = reportDTO.getTransactionDTO();
-
-            setTransactionLevelData(xmlTransaction, transaction);
-
+          //  transaction.setTestString(reportDTO.getTestString());
+            
             FromToMappingDTO from = reportDTO.getTransactionFrom();
             FromToMappingDTO to = reportDTO.getTransactionTo();
-
-
+            
+           if(reportDTO.getTransactionDTO().getInvolvedPartyDTO() == null) {
+           
             setFromDataForAdaptor(factory, xmlTransaction, from);
 
             setToDataForAdaptor(factory, xmlTransaction, from, to);
-
+           
+           }else {            
+        	xmlInvolvedParties = factory.createReportTransactionInvolvedParties();
+        	transaction.setInvolvedPartyDTO(reportDTO.getTransactionDTO().getInvolvedPartyDTO());
+           }
+            
+            setTransactionLevelData(xmlTransaction, transaction,xmlInvolvedParties);
+            
+            //xmlTransaction.setInvolvedParties(xmlInvolvedParties);
+            
             report.getTransaction().add(xmlTransaction);
+            
         }
         if (recordCounter != 0) {
+        	LOG.info("RECORD COUNTER : "+recordCounter);
             XMLFileWriter.writeReportXML(applicationProperties.getOutputXmlFilePath(), applicationProperties.getOutputXmlFileName() + fileNumber + ".xml", report);
         }
         LOG.info("+++++++++++++++++++++++++ Execution Completed ++++++++++++++++++++++++++++");
@@ -232,7 +263,6 @@ public class JavaToXMLAdaptor {
                 fromForeignCurrency.setForeignAmount(new BigDecimal(from.getForeignAmount()).setScale(2, BigDecimal.ROUND_DOWN));
                 fromForeignCurrency.setForeignExchangeRate(BigDecimal.valueOf(from.getForeignExchangeRate()));
             }
-
             if (from.getTransactionType().equals(applicationProperties.getFromMyClient())) {
                 Report.Transaction.TFromMyClient tFromMyClient = factory.createReportTransactionTFromMyClient();
 
@@ -257,7 +287,6 @@ public class JavaToXMLAdaptor {
                 } else if (StringUtils.isNotBlank(from.getFundsComment()) && "OTHER".equalsIgnoreCase(from.getFundsCode())) {
                     //TODO att error log
                 }
-
                 if (from.getAccountsDTO() != null) {
 
                     TAccountMyClient tAccountMyClient = getTAccountMyClient(factory, from);
@@ -316,7 +345,143 @@ public class JavaToXMLAdaptor {
         }
     }
 
-    private void setTransactionLevelData(Report.Transaction xmlTransaction, TransactionDTO transaction) {
+    private void setTransactionLevelData(Report.Transaction xmlTransaction, TransactionDTO transaction,Report.Transaction.InvolvedParties xmlInvolvedParties) {
+    	if(transaction.getInvolvedPartyDTO() != null) {
+    		TParty tParty = new TParty();
+    		List<PartyDTO> listParty =new ArrayList<PartyDTO>();
+    		
+    		if(transaction.getInvolvedPartyDTO().getListParty()!=null) {
+    			listParty = transaction.getInvolvedPartyDTO().getListParty();
+    		}else {
+	            LOG.warn("Value not found for Party . Transaction Number " + transaction.getTransactionNumber());
+	            warnings.add("Value not found for Party. Transaction_UID " + transaction.getTransactionNumber());
+    		}
+    		
+   		    
+    		for (PartyDTO element : listParty) {
+    			
+    			if(element.getRole() != null) {tParty.setRole(element.getRole());}
+    			if(element.getCountry() != null) {tParty.setCountry(element.getCountry());}
+    			if(element.getFundCode() != null) {tParty.setFundsCode(element.getFundCode());}
+
+    			if(element.getPersonNonClientDTO() != null) 
+    			{
+   				 TPerson tPerson = new TPerson();
+   				 if(element.getPersonNonClientDTO().getFirstName() != null) {tPerson.setFirstName(element.getPersonNonClientDTO().getFirstName());}
+   				 if(element.getPersonNonClientDTO().getLastName() != null) {tPerson.setLastName(element.getPersonNonClientDTO().getLastName());}
+   				 
+   				 tParty.setPerson(tPerson); 				
+    			}else {
+    	            LOG.warn("Value not found for Party PersonNonClient First Name. Transaction Number " + transaction.getTransactionNumber());
+    	            warnings.add("Value not found for Party PersonNonClient First Name. Transaction_UID " + transaction.getTransactionNumber());
+    			}
+    			
+    			if(element.getPersonDTO() != null) {
+    				
+    				TPersonMyClient  tPersonMyClient = new TPersonMyClient();
+    				if(element.getPersonDTO().getFirstName()!=null){tPersonMyClient.setFirstName(element.getPersonDTO().getFirstName());}else{LOG.warn("Value not found for Part PersonDTO First Name");}
+    				if(element.getPersonDTO().getLastName()!=null){tPersonMyClient.setLastName(element.getPersonDTO().getLastName());}else{LOG.warn("Value not found for Part PersonDTO Last Name");}
+    				if(element.getPersonDTO().getIdNumber()!=null){tPersonMyClient.setIdNumber(element.getPersonDTO().getIdNumber());}else{LOG.warn("Value not found for Part PersonDTO Id Number");}
+    				if(element.getPersonDTO().getNationality1()!=null){tPersonMyClient.setNationality1(element.getPersonDTO().getNationality1());}else{LOG.warn("Value not found for Part PersonDTO Nationality1");} 
+    				if(element.getPersonDTO().getNationality2()!=null){tPersonMyClient.setNationality2(element.getPersonDTO().getNationality2());}else{LOG.warn("Value not found for Part PersonDTO Nationality2");}
+
+    				tParty.setPersonMyClient(tPersonMyClient);
+    				
+    			}else {
+    	            LOG.warn("Value not found for Party PersonMyClient First Name. Transaction Number " + transaction.getTransactionNumber());
+    	            warnings.add("Value not found for Party PersonMyClient First Name. Transaction_UID " + transaction.getTransactionNumber());
+    			}if(element.getEntitiesDTO() != null) {
+    				TEntityMyClient tEntityMyClient = new TEntityMyClient();
+    				
+    				if(element.getEntitiesDTO().getName()!=null){tEntityMyClient.setName(element.getEntitiesDTO().getName());}else{LOG.warn("Value not found for Part EntitiesDTO Name");}
+    	            if(element.getEntitiesDTO().getCommercialName()!=null){tEntityMyClient.setCommercialName(element.getEntitiesDTO().getCommercialName());}else{LOG.warn("Value not found for Part EntitiesDTO Commercial Name");}
+    				if(element.getEntitiesDTO().getIncorporationNumber()!=null){tEntityMyClient.setIncorporationLegalForm(element.getEntitiesDTO().getIncorporationNumber());}else{LOG.warn("Value not found for Part EntitiesDTO Incorpartion Legal Form");}
+    				if(element.getEntitiesDTO().getBusiness()!=null){tEntityMyClient.setBusiness(element.getEntitiesDTO().getBusiness());}else{LOG.warn("Value not found for Part EntitiesDTO Business");}
+    				if(element.getEntitiesDTO().getEmail()!=null){tEntityMyClient.setEmail(element.getEntitiesDTO().getEmail());}else{LOG.warn("Value not found for Part EntitiesDTO Email");}
+
+					/*
+					 * if(element.getEntitiesDTO().getPhoneDTO() !=null) { List<PhoneDTO>
+					 * phoneDTOList = new ArrayList<PhoneDTO>();
+					 * if(element.getEntitiesDTO().getPhoneDTO()!=null) {
+					 * 
+					 * 
+					 * phoneDTOList = element.getEntitiesDTO().getPhoneDTO(); for(int
+					 * i=0;i<phoneDTOList.size();i++) {
+					 * 
+					 * if(phoneDTOList.get(i).getPhoneNumber()!=null){tPhone.setTphNumber(
+					 * phoneDTOList.get(i).getPhoneNumber());}else{LOG.
+					 * warn("Value not found for Part TPhone Number");}
+					 * if(phoneDTOList.get(i).getCommunicationType()!=null){tPhone.
+					 * setTphCommunicationType(phoneDTOList.get(i).getCommunicationType());}else{LOG
+					 * .warn("Value not found for Part TPhone Communication Type");}
+					 * if(phoneDTOList.get(i).getCountryPrefix()!=null){tPhone.setTphCountryPrefix(
+					 * phoneDTOList.get(i).getCountryPrefix());}else{LOG.
+					 * warn("Value not found for Part TPhone Prefix");}
+					 * if(phoneDTOList.get(i).getComments()!=null){tPhone.setComments(phoneDTOList.
+					 * get(i).getComments());}else{LOG.
+					 * warn("Value not found for Part TPhone Comments");}
+					 * if(phoneDTOList.get(i).getContactType()!=null){tPhone.setTphContactType(
+					 * phoneDTOList.get(i).getContactType());
+					 * }else{LOG.warn("Value not found for Part TPhone Contact Type");}
+					 * LOG.warn("ERROR point 1");
+					 * 
+					 * LOG.warn("ERROR point 2"); }
+					 * 
+					 * }else { LOG.warn("Value not found for Party PhoneDTO"); } }
+					 * 
+					 * if(element.getEntitiesDTO().getAddressDTO() != null) {
+					 * 
+					 * List<AddressDTO> addressDTOList = element.getEntitiesDTO().getAddressDTO();
+					 * 
+					 * for(int i=0;i<addressDTOList.size();i++) { TAddress tAddress = new
+					 * TAddress(); if(addressDTOList.get(i).getAddress()!=null){tAddress.setAddress(
+					 * addressDTOList.get(i).getAddress());}else{LOG.
+					 * warn("Value not found for Part AdressDTO Address");}
+					 * if(addressDTOList.get(i).getAddressType()!=null){tAddress.setAddressType(
+					 * addressDTOList.get(i).getAddressType());}else{LOG.
+					 * warn("Value not found for Part AdressDTO Address Type");}
+					 * if(addressDTOList.get(i).getCountryCode()!=null){tAddress.setCountryCode(
+					 * addressDTOList.get(i).getCountryCode());}else{LOG.
+					 * warn("Value not found for Part AdressDTO Country Code");}
+					 * if(addressDTOList.get(i).getCity()!=null){tAddress.setCity(addressDTOList.get
+					 * (i).getCity());}else{LOG.warn("Value not found for Part AdressDTO City");}
+					 * if(addressDTOList.get(i).getZip()!=null){tAddress.setZip(addressDTOList.get(i
+					 * ).getZip());}else{LOG.warn("Value not found for Part AdressDTO ZIP");}
+					 * if(addressDTOList.get(i).getTown()!=null){tAddress.setTown(addressDTOList.get
+					 * (i).getTown());}else{LOG.warn("Value not found for Part AdressDTO Town");}
+					 * 
+					 * tEntityMyClient.getAddresses().getAddress().add(tAddress); } }
+					 */
+    				
+    				tParty.setEntityMyClient(tEntityMyClient);
+    			}else {
+    	            LOG.warn("Party Value not found for TEntityMyClient Commercial Name. Transaction Number " + transaction.getTransactionNumber());
+    	            warnings.add("Value not found for Party TEntityMyClient Commercial Name. Transaction_UID " + transaction.getTransactionNumber());
+    			}if(element.getAccountsDTO() != null) {
+    				TAccountMyClient tAccountMyClient = new TAccountMyClient();
+    				
+    				if(element.getAccountsDTO().getInstituationName()!=null){tAccountMyClient.setInstitutionName(element.getAccountsDTO().getInstituationName());}else{LOG.warn("Value not found for Part AccountsDTO Institution Name");}
+    				if(element.getAccountsDTO().getBranch()!=null){tAccountMyClient.setBranch(element.getAccountsDTO().getBranch());}else{LOG.warn("Value not found for Part AccountsDTO Branch");}
+    				if(element.getAccountsDTO().getAccount()!=null){tAccountMyClient.setAccount(element.getAccountsDTO().getAccount());}else{LOG.warn("Value not found for Part AccountsDTO Account");}
+    				if(element.getAccountsDTO().getAccountName()!=null){tAccountMyClient.setAccountName(element.getAccountsDTO().getAccountName());}else{LOG.warn("Value not found for Part AccountsDTO Account Name");}
+    				if(element.getAccountsDTO().getPersonalAccountType()!=null){tAccountMyClient.setPersonalAccountType(element.getAccountsDTO().getPersonalAccountType());}else{LOG.warn("Value not found for Part AccountsDTO Account Type");}
+    				if(element.getAccountsDTO().getStatusCode()!=null){tAccountMyClient.setStatusCode(element.getAccountsDTO().getStatusCode());}else{LOG.warn("Value not found for Part AccountsDTO Status Code");}
+    				if(element.getAccountsDTO().getCurrencyCode()!=null){tAccountMyClient.setCurrencyCode(element.getAccountsDTO().getCurrencyCode());}else{LOG.warn("Value not found for Part AccountsDTO Currency Code");}
+
+					tParty.setAccountMyClient(tAccountMyClient);
+					
+    			}else {
+    				LOG.warn("Party Value not found for TEntityMyClient Commercial Name. Transaction Number " + transaction.getTransactionNumber());
+    				warnings.add("Value not found for Party TEntityMyClient Commercial Name. Transaction_UID " + transaction.getTransactionNumber());
+    			}
+    			xmlInvolvedParties.getParty().add(tParty);
+    		}  			
+    		xmlTransaction.setInvolvedParties(xmlInvolvedParties);
+    		
+    	}else {
+            LOG.warn("Value not found for Involved Party. Transaction_UID " + transaction.getTran_uid());           
+            errorsLog.add("Value not found for Involved Party. Transaction_UID " + transaction.getTran_uid());
+    	}
         if (transaction.getTransactionNumber() != null) {
             xmlTransaction.setTransactionnumber(transaction.getTransactionNumber());//M
         } else {
@@ -554,6 +719,7 @@ public class JavaToXMLAdaptor {
                         TAccountMyClient.Signatory signatory = factory.createTAccountMyClientSignatory();
                         signatory.setRole(relatedParty.getRole());
                         signatory.setIsPrimary(relatedParty.getIsPrimary());
+                        
                         if (addressMap.containsKey(person.getCifId())) {
                             person.setAddressDTO(addressMap.get(person.getCifId()));
                         } else {
@@ -648,9 +814,19 @@ public class JavaToXMLAdaptor {
             Iterator<AddressDTO> addressIterator = entities.getAddressDTO().iterator();
             setAddressToXML(factory, addressIterator, addresses.getAddress(), fromToMappingDTO.getCifId());
             tEntityMyClient.setAddresses(addresses);
+        }
+        else {
+            LOG.warn("Value not found for PersonDirectors. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            warnings.add("Value not found for PersonDirectors. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+        }
+        LOG.error("entities.getPersonDirectors() != null " + entities.getPersonDirectors());
+        if(entities.getPersonDirectors() != null) {
+        	// factory.createTEntityDirectorId();
+        	Iterator<PersonDirectorDTO> personDirectorIterator = entities.getPersonDirectors().iterator();
+        	setPersonDirectorsToXML(factory,personDirectorIterator,tEntityMyClient,fromToMappingDTO.getCifId());
         } else {
-            LOG.warn("Value not found for Phone. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
-            warnings.add("Value not found for Phone. CIF ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            LOG.warn("Value not found for Director ID" + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
+            warnings.add("Value not found forDirector ID " + fromToMappingDTO.getCifId() + " Transaction Number " + tranNumberForLog);
         }
 
         if (entities.getEmail() != null) {
@@ -702,7 +878,45 @@ public class JavaToXMLAdaptor {
         return tEntityMyClient;
     }
 
-    private void setAddressToXML(ObjectFactory factory, Iterator<AddressDTO> addressIterator, List<TAddress> address2, String cifId) {
+    private void setPersonDirectorsToXML(ObjectFactory factory, Iterator<PersonDirectorDTO> personDirectorIterator,TEntityMyClient tEntityMyClient, String cifId) {
+		 
+    	 Iterator<PersonDirectorDTO> prsnDirectorItrator = personDirectorIterator;
+		 TEntityMyClient.DirectorId tDirectorId = factory.createTEntityMyClientDirectorId();
+		 		
+		  while(prsnDirectorItrator.hasNext()) { 
+			  PersonDirectorDTO personDirectorDTO = prsnDirectorItrator.next();
+		   
+		  if(personDirectorDTO.getFirstName() != null) { 
+			  tDirectorId.setFirstName(personDirectorDTO.getFirstName()); 
+		  }else {
+			  LOG.warn("Value not found for FirstName. CIF ID " +personDirectorDTO.getFirstName() + " Transaction Number " +tranNumberForLog); 
+			  warnings.add("Value not found for FirstName. CIF_ID " +personDirectorDTO.getFirstName() + " Transaction Number " +tranNumberForLog); 
+		  } 		  
+		  if(personDirectorDTO.getLastName() != null) { 
+			  tDirectorId.setLastName(personDirectorDTO.getLastName()); 
+		  }else {
+			  LOG.warn("Value not found for LastName. CIF ID " +personDirectorDTO.getFirstName() + " Transaction Number " +tranNumberForLog); 
+			  warnings.add("Value not found for LastName. CIF_ID " +personDirectorDTO.getFirstName() + " Transaction Number " +tranNumberForLog); 
+		  } 
+		  if(personDirectorDTO.getIdNumber() != null) { 
+			  tDirectorId.setIdNumber(personDirectorDTO.getIdNumber()); 
+		  }else {
+			  LOG.warn("Value not found for IdNumber. CIF ID " +personDirectorDTO.getFirstName() + " Transaction Number " +tranNumberForLog); 
+			  warnings.add("Value not found for IdNumber. CIF_ID " +personDirectorDTO.getFirstName() + " Transaction Number " +tranNumberForLog); 
+		  } 
+		  if(personDirectorDTO.getRole() != null) { 
+			  tDirectorId.setRole(personDirectorDTO.getRole()); 
+		  }else {
+			  LOG.warn("Value not found for Role. CIF ID " +personDirectorDTO.getFirstName() + " Transaction Number " +tranNumberForLog); 
+			  warnings.add("Value not found for Role. CIF_ID " +personDirectorDTO.getFirstName() + " Transaction Number " +tranNumberForLog); 
+		  } 		  
+		  	
+		 }
+		 tEntityMyClient.getDirectorId().add(tDirectorId);
+		
+	}
+
+	private void setAddressToXML(ObjectFactory factory, Iterator<AddressDTO> addressIterator, List<TAddress> address2, String cifId) {
         while ((addressIterator.hasNext())) {
             TAddress tAddress = factory.createTAddress();
             AddressDTO address = addressIterator.next();
@@ -757,6 +971,40 @@ public class JavaToXMLAdaptor {
             address2.add(tAddress);
         }
     }
+    
+   // private List<TEntityMyClient.DirectorId> setDirectorIdsToXML(ObjectFactory factory, Iterator<PersonDirectorDTO> directorIterator, List<TEntityMyClient.DirectorId> directorid2, String cifId) {
+  //      while ((directorIterator.hasNext())) {
+  //      	TEntityMyClient.DirectorId directorId = factory.createTEntityMyClientDirectorId();
+  //          PersonDirectorDTO personDirectorDTO = directorIterator.next();
+   ///         if (personDirectorDTO.getFirstName() != null) {
+   //             directorId.setFirstName(personDirectorDTO.getFirstName());
+   //         } else {
+     //           LOG.error("Value not found for Person Director First Name. CIF ID " + cifId + " Transaction Number " + tranNumberForLog);
+    //            errorsLog.add("Value not found for Person Director First Name. CIF ID " + cifId + " Transaction Number " + tranNumberForLog);
+       //     }
+  //          if (personDirectorDTO.getLastName() != null) {
+    //        	directorId.setLastName(personDirectorDTO.getLastName());
+     //       } else {
+      //          LOG.error("Value not found for Person Director Last Name. CIF ID " + cifId + " Transaction Number " + tranNumberForLog);
+       //         errorsLog.add("Value not found for Person Director Last Name. CIF ID " + cifId + " Transaction Number " + tranNumberForLog);
+        //    }
+        ///    if (personDirectorDTO.getIdNumber() != null) {
+          //      directorId.setIdNumber(personDirectorDTO.getIdNumber());
+        //    } else {
+          //      LOG.error("Value not found for Person Director Id Number. CIF ID " + cifId + " Transaction Number " + tranNumberForLog);
+          //      errorsLog.add("Value not found for Person Director Id Number. CIF ID " + cifId + " Transaction Number " + tranNumberForLog);
+          //  }
+          //  if (personDirectorDTO.getRole() != null) {
+          //      directorId.setRole(personDirectorDTO.getRole());;
+         //  } else {
+         //      LOG.error("Value not found for Person Director Role. CIF ID " + cifId + " Transaction Number " + tranNumberForLog);
+          //      errorsLog.add("Value not found for Person Director Role. CIF ID " + cifId + " Transaction Number " + tranNumberForLog);
+          //  }
+    //
+         //   directorid2.add(directorId);
+      ///  }
+      //  return directorid2;
+  //  }
 
     private TPersonMyClient getTPersonMyClient(ObjectFactory factory, PersonDTO person) {
         TPersonMyClient tPersonMyClient = factory.createTPersonMyClient();
@@ -851,6 +1099,51 @@ public class JavaToXMLAdaptor {
         }
         return tPersonMyClient;
     }
+    
+	/*
+	 * // private void setTPersonDirector(ObjectFactory factory ,EntitiesDTO
+	 * entitiesDTO, TEntityMyClient tEntityMyClient) { Iterator<PersonDirectorDTO>
+	 * personDirectorIterator = entitiesDTO.getPersonDirectors().iterator();
+	 * 
+	 * while(personDirectorIterator.hasNext()) { PersonDirectorDTO directorDTO =
+	 * personDirectorIterator.next();
+	 * 
+	 * if(directorDTO.getCifIdRef() != null) { // tEntityMyClient. }else {
+	 * LOG.error("Value not found for Occupation. CIF ID " +
+	 * directorDTO.getCifIdRef() + " Transaction Number " + tranNumberForLog);
+	 * errorsLog.add("Value not found for Occupation. CIF ID " +
+	 * directorDTO.getCifIdRef() + " Transaction Number " + tranNumberForLog); }
+	 * 
+	 * if(directorDTO.getCifIdRef() != null) {
+	 * 
+	 * }else { LOG.error("Value not found for Occupation. CIF ID " +
+	 * directorDTO.getCifIdRef() + " Transaction Number " + tranNumberForLog);
+	 * errorsLog.add("Value not found for Occupation. CIF ID " +
+	 * directorDTO.getCifIdRef() + " Transaction Number " + tranNumberForLog); }
+	 * 
+	 * if(directorDTO.getCifIdRef() != null) {
+	 * 
+	 * }else { LOG.error("Value not found for Occupation. CIF ID " +
+	 * directorDTO.getCifIdRef() + " Transaction Number " + tranNumberForLog);
+	 * errorsLog.add("Value not found for Occupation. CIF ID " +
+	 * directorDTO.getCifIdRef() + " Transaction Number " + tranNumberForLog); }
+	 * 
+	 * if(directorDTO.getCifIdRef() != null) {
+	 * 
+	 * }else { LOG.error("Value not found for Occupation. CIF ID " +
+	 * directorDTO.getCifIdRef() + " Transaction Number " + tranNumberForLog);
+	 * errorsLog.add("Value not found for Occupation. CIF ID " +
+	 * directorDTO.getCifIdRef() + " Transaction Number " + tranNumberForLog); }
+	 * 
+	 * if(directorDTO.getCifIdRef() != null) {
+	 * 
+	 * }else { LOG.error("Value not found for Occupation. CIF ID " +
+	 * directorDTO.getCifIdRef() + " Transaction Number " + tranNumberForLog);
+	 * errorsLog.add("Value not found for Occupation. CIF ID " +
+	 * directorDTO.getCifIdRef() + " Transaction Number " + tranNumberForLog); }
+	 * 
+	 * } }
+	 */
 
     private void setTPersonalIdentification(ObjectFactory factory, PersonDTO person, TPersonMyClient tPersonMyClient) {
         Iterator<PersonIdentificationDTO> personicaIdentiIterator = person.getPersonIdentificationDTO().iterator();
@@ -947,17 +1240,23 @@ public class JavaToXMLAdaptor {
             phone.add(tPhone);
         }
     }
+    
+    //new method to generate Involved parties
 
     private ReportDTO getATransactionForReportDTO(Integer transactionNumber) {
 
         List<FromToMappingDTO> fromToMappingDTO = fromToMappingDTOMap.get(transactionNumber.toString());
-
+        
+        LOG.info("Transaction From To Count : "+fromToMappingDTO.size());
+        
+        
         ReportDTO reportDTO = new ReportDTO();
 
         reportDTO.setrEntityId(applicationProperties.getPublicREntityId());
         reportDTO.setSubmissionCode(applicationProperties.getSubmissionCode());
         reportDTO.setReportCode(applicationProperties.getReportCode());
         reportDTO.setEntityReference(applicationProperties.getEntityReference());
+        
         try {
             final Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(applicationProperties.getSubmissionDate());
             reportDTO.setSubmissionDate(date);
@@ -970,24 +1269,211 @@ public class JavaToXMLAdaptor {
         reportDTO.setTransactionDTO(transactionsMap.get(transactionNumber));
 
         Iterator<FromToMappingDTO> fromToMappingDTOIterator = fromToMappingDTO.iterator();
-        while (fromToMappingDTOIterator.hasNext()) {
+        
+        int	fromCount = 0;
+        int tocount = 0;
+
+        while (fromToMappingDTOIterator.hasNext()) {   
+        	
             FromToMappingDTO fromToMapping = fromToMappingDTOIterator.next();
-            if (fromToMapping.getTransactionType().equals(applicationProperties.fromMyClient)
-                    || fromToMapping.getTransactionType().equals(applicationProperties.fromNonClient)) {
-                reportDTO.setTransactionFrom(fromToMapping);
-                setValidLevels(reportDTO, reportDTO.getTransactionFrom());
-            } else {
-                reportDTO.setTransactionTo(fromToMapping);
-                setValidLevels(reportDTO, reportDTO.getTransactionTo());
+            
+            if(fromToMapping.getDirection().equals("F")) {
+            	fromCount++;
+           }else if(fromToMapping.getDirection().equals("T")) {
+            	tocount++;
+            }else {
+            	fromCount = 0;
+            	tocount = 0;
+          }
+            
+            LOG.info("FROM COUNT "+fromCount);
+            LOG.info("TO COUNT "+tocount);
+            
+            if(!(fromCount==1 && tocount==1)) {
+            	
+                if (fromToMapping.getTransactionType().equals(applicationProperties.fromMyClient)
+                        || fromToMapping.getTransactionType().equals(applicationProperties.fromNonClient)) {                    
+                	reportDTO.setTransactionFrom(fromToMapping);
+                	setInvolvedPartiesLevel(reportDTO, reportDTO.getTransactionFrom());
+
+                } else {
+                	
+                    reportDTO.setTransactionTo(fromToMapping);
+                    setInvolvedPartiesLevel(reportDTO, reportDTO.getTransactionTo());
+              }
+        
+            }else if(fromCount==1 && tocount==1){
+           				
+				 if (fromToMapping.getTransactionType().equals(applicationProperties.
+				  fromMyClient) || fromToMapping.getTransactionType().equals(applicationProperties.fromNonClient )) 
+				 { 
+					 reportDTO.getTransactionDTO().setInvolvedPartyDTO(null);
+				     reportDTO.setTransactionFrom(fromToMapping);
+				     setValidLevels(reportDTO,reportDTO.getTransactionFrom()); 
+				  } else {
+				      reportDTO.getTransactionDTO().setInvolvedPartyDTO(null);
+				      reportDTO.setTransactionTo(fromToMapping); 
+				      setValidLevels(reportDTO, reportDTO.getTransactionTo());
+				 }
+				 
             }
         }
 
         return reportDTO;
     }
 
+    //To map the data to involved parties
+	private void setInvolvedPartiesLevel(ReportDTO reportDTO, FromToMappingDTO transactionFromOrTo) {
+    Integer transactionNumber = transactionFromOrTo.getTransId();
+    	
+    PartyDTO  partyDTO = new PartyDTO();
+    List<PartyDTO> listPartyDTO = new ArrayList<PartyDTO>();
+    InvolvedPartyDTO involvedPartyDTO = new InvolvedPartyDTO();
+  
+   successLog.add("Involved party Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
+      	
+   if(transactionFromOrTo != null) {
+ 
+	   if(transactionFromOrTo.getRole()!=null) {partyDTO.setRole(transactionFromOrTo.getRole());}else {partyDTO.setRole("PAYEE");}
+	   if(transactionFromOrTo.getCountry()!=null) {partyDTO.setCountry(transactionFromOrTo.getCountry());}else {partyDTO.setRole("NONE");}
+	   if(transactionFromOrTo.getFundsCode()!=null) {partyDTO.setFundCode(transactionFromOrTo.getFundsCode());}else {partyDTO.setRole("NONE");}
+	
+   }
+   if (transactionFromOrTo.getAcctNumber() == null
+           && transactionFromOrTo.getCifId() != null
+           && !entitiesMap.containsKey(transactionFromOrTo.getCifId())
+   ) {
+       successLog.add(" Party Person Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
+       LOG.info("Party Person Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
+       if (transactionFromOrTo.getCifId() != null && personMap.containsKey(transactionFromOrTo.getCifId())) {
+    	   partyDTO.setPersonDTO(personMap.get(transactionFromOrTo.getCifId()));
+           if (personalIdentificationMap.containsKey(transactionFromOrTo.getCifId())) {
+               partyDTO.getPersonDTO().setPersonIdentificationDTO(personalIdentificationMap.get(transactionFromOrTo.getCifId()));
+           } else {
+               LOG.error("Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Party Personal Identification Details not found. Transaction Number " + tranNumberForLog);
+               errorsLog.add("Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Party Personal Identification Details not found. Transaction Number " + tranNumberForLog);
+           }
+           if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
+               partyDTO.getPersonDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
+           }
+           if (transactionFromOrTo.getCifId() != null && addressMap.containsKey(transactionFromOrTo.getCifId())) {
+        	   partyDTO.getPersonDTO().setAddressDTO(addressMap.get(transactionFromOrTo.getCifId()));
+           }
+
+       } else {
+           errorsLog.add("Party Person Level  Details Not Found, Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Transaction Number " + tranNumberForLog);
+           LOG.error("Party Person Level  Details Not Found, Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Transaction Number " + tranNumberForLog);
+       }
+   	}else if (transactionFromOrTo.getAcctNumber()!= null && entitiesMap.containsKey(transactionFromOrTo.getCifId())) {
+
+        successLog.add("Party Entity Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType() + " Transaction Number " + tranNumberForLog);
+        LOG.info("Entity Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType() + " Transaction Number " + tranNumberForLog);
+        if (transactionFromOrTo.getCifId() != null) {
+            partyDTO.setEntitiesDTO(entitiesMap.get(transactionFromOrTo.getCifId()));
+            LOG.error("entitiesMap.get(transactionFromOrTo.getCifId()) : " + entitiesMap.get(transactionFromOrTo.getCifId()));
+            if (transactionFromOrTo.getCifId() != null && phoneMap.containsKey(transactionFromOrTo.getCifId())) {
+            	partyDTO.getEntitiesDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
+            }
+        } else {
+            errorsLog.add("Party Entity Level Details Not Found. Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Transaction Number " + tranNumberForLog);
+            LOG.error("Party Entity Level Details Not Found. Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Transaction Number " + tranNumberForLog);
+        }
+        if (transactionFromOrTo.getCifId() != null && addressMap.containsKey(transactionFromOrTo.getCifId())) {
+            partyDTO.getEntitiesDTO().setAddressDTO(addressMap.get(transactionFromOrTo.getCifId()));
+            LOG.error("AddressMapValue" + addressMap.get(transactionFromOrTo.getCifId()) );
+            
+        }else {
+            errorsLog.add("Party Entity Level Details Not Found. Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Address " + tranNumberForLog);
+            LOG.error("Party Entity Level Details Not Found. Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Address " + tranNumberForLog);
+        }
+        if(transactionFromOrTo.getCifId() != null && personDirectorMap.containsKey(transactionFromOrTo.getCifId())) {
+        	partyDTO.getEntitiesDTO().setPersonDirectors(personDirectorMap.get(transactionFromOrTo.getCifId()));          	 
+        }else {
+            errorsLog.add("Party Entity Level Details Not Found. Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Person Director " + tranNumberForLog);
+            LOG.error("Party Entity Level Details Not Found. Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Person Director " + tranNumberForLog);
+        }
+        
+    } else if (transactionFromOrTo.getAcctNumber() != null) {
+
+        successLog.add("Party Account Level Transaction No : " + tranNumberForLog + " Type : " + transactionFromOrTo.getTransactionType());
+        LOG.info("Account Level Transaction No : " + tranNumberForLog + " Type : " + transactionFromOrTo.getTransactionType());
+        
+        if (accountsMap.containsKey(transactionFromOrTo.getAcctNumber())) {
+            partyDTO.setAccountsDTO(accountsMap.get(transactionFromOrTo.getAcctNumber()));
+            if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
+                partyDTO.getAccountsDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
+            }
+            if (personMap.containsKey(transactionFromOrTo.getCifId())) {
+            	partyDTO.getAccountsDTO().setPersonDTO(personMap.get(transactionFromOrTo.getCifId()));
+                if (personalIdentificationMap.containsKey(transactionFromOrTo.getCifId())) {
+                	partyDTO.getAccountsDTO().getPersonDTO().setPersonIdentificationDTO(personalIdentificationMap.get(transactionFromOrTo.getCifId()));
+                } else {
+                    errorsLog.add("Party Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Personal Identification Details not found. Transaction Number " + tranNumberForLog);
+                    LOG.error("Transaction CIF_ID : " + transactionFromOrTo.getCifId() + " Personal Identification Details not found. Transaction Number " + tranNumberForLog);
+                }
+                if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
+                	partyDTO.getAccountsDTO().getPersonDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
+                }
+                if (transactionFromOrTo.getCifId() != null && addressMap.containsKey(transactionFromOrTo.getCifId())) {
+                	partyDTO.getAccountsDTO().getPersonDTO().setAddressDTO(addressMap.get(transactionFromOrTo.getCifId()));
+                }
+
+            } else if (entitiesMap.containsKey(transactionFromOrTo.getCifId())) {
+            	partyDTO.getAccountsDTO().setEntitiesDTO(entitiesMap.get(transactionFromOrTo.getCifId()));
+
+                if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
+                	partyDTO.getAccountsDTO().getEntitiesDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
+                }
+                if (transactionFromOrTo.getCifId() != null && addressMap.containsKey(transactionFromOrTo.getCifId())) {
+                	partyDTO.getAccountsDTO().getEntitiesDTO().setAddressDTO(addressMap.get(transactionFromOrTo.getCifId()));
+                }
+            }
+            if (transactionFromOrTo.getCifId() != null && relatedPartyMap.containsKey(transactionFromOrTo.getAcctNumber())) {
+            	partyDTO.getAccountsDTO().setRelatedPartyDTO(relatedPartyMap.get(transactionFromOrTo.getAcctNumber()));
+            }
+        } else {
+            errorsLog.add("Party Account Details not found, Account Number : " + transactionFromOrTo.getAcctNumber());
+            LOG.error("Party Account Details not found, Account Number : " + transactionFromOrTo.getAcctNumber());
+
+        }
+
+    } 
+    else if (transactionFromOrTo.getCifId() == null) {
+
+        if (personNonClientMap.containsKey(transactionNumber)) {
+
+            LOG.info("Party Person Non Client Transaction No : " + tranNumberForLog + " Type : " + transactionFromOrTo.getTransactionType());
+            successLog.add("Party Person Non Client Transaction No : " + tranNumberForLog + " Type : " + transactionFromOrTo.getTransactionType());
+
+            partyDTO.setPersonNonClientDTO(personNonClientMap.get(transactionNumber));
+            if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
+                partyDTO.getPersonNonClientDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
+            }
+
+        } else if (entityNonClientMap.containsKey(transactionNumber.toString())) {
+            LOG.info("Party Entity Non Client Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
+            successLog.add("Party Entity Non Client Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType());
+            partyDTO.setEntityNonClientDTO(entityNonClientMap.get(transactionNumber.toString()));
+            if (phoneMap.containsKey(transactionFromOrTo.getCifId()) && transactionFromOrTo.getCifId() != null) {
+                partyDTO.getEntityNonClientDTO().setPhoneDTO(phoneMap.get(transactionFromOrTo.getCifId()));
+            }
+
+        } else {
+
+            errorsLog.add("Can't find the relevant Party Non Client Person or Non Client Entity for transaction number : " + tranNumberForLog);
+            LOG.error("Can't find the relevant Party Non Client Person or Non Client Entity for transaction number : " + tranNumberForLog);
+        }
+    }
+      
+	  	listPartyDTO.add(partyDTO);
+	   	involvedPartyDTO.getListParty().add(partyDTO);
+	   	reportDTO.getTransactionDTO().setInvolvedPartyDTO(involvedPartyDTO);
+	  // 	reportDTO.getTransactionDTO().getInvolvedPartyDTO().getListParty().add(partyDTO);
+        	   
+    }
+    
     //To map the data to corresponding types based on account, person, entities
     private void setValidLevels(ReportDTO reportDTO, FromToMappingDTO transactionFromOrTo) {
-
         Integer transactionNumber = transactionFromOrTo.getTransId();
 
         if (transactionFromOrTo.getAcctNumber() == null
@@ -1018,7 +1504,7 @@ public class JavaToXMLAdaptor {
             }
 
 
-        } else if (transactionFromOrTo.getAcctNumber() == null && entitiesMap.containsKey(transactionFromOrTo.getCifId())) {
+        } else if (transactionFromOrTo.getAcctNumber()!= null && entitiesMap.containsKey(transactionFromOrTo.getCifId())) {
 
             successLog.add("Entity Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType() + " Transaction Number " + tranNumberForLog);
             LOG.info("Entity Level Transaction No : " + transactionNumber + " Type : " + transactionFromOrTo.getTransactionType() + " Transaction Number " + tranNumberForLog);
@@ -1033,8 +1519,18 @@ public class JavaToXMLAdaptor {
             }
             if (transactionFromOrTo.getCifId() != null && addressMap.containsKey(transactionFromOrTo.getCifId())) {
                 transactionFromOrTo.getEntitiesDTO().setAddressDTO(addressMap.get(transactionFromOrTo.getCifId()));
+                
+            }else {
+                errorsLog.add("Entity Level Details Not Found. Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Address " + tranNumberForLog);
+                LOG.error("Entity Level Details Not Found. Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Address " + tranNumberForLog);
             }
-
+            if(transactionFromOrTo.getCifId() != null && personDirectorMap.containsKey(transactionFromOrTo.getCifId())) {
+            	transactionFromOrTo.getEntitiesDTO().setPersonDirectors(personDirectorMap.get(transactionFromOrTo.getCifId()));          	 
+            }else {
+                errorsLog.add("Entity Level Details Not Found. Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Person Director " + tranNumberForLog);
+                LOG.error("Entity Level Details Not Found. Type : " + transactionFromOrTo.getTransactionType() + " CIF_ID " + transactionFromOrTo.getCifId() + " Person Director " + tranNumberForLog);
+            }
+            
         } else if (transactionFromOrTo.getAcctNumber() != null) {
 
             successLog.add("Account Level Transaction No : " + tranNumberForLog + " Type : " + transactionFromOrTo.getTransactionType());

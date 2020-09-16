@@ -29,7 +29,6 @@ public class CTRService {
     private IAMLProperties applicationProperties;
 
     public void generateDummyReport() throws JAXBException, AppsException {
-
         ObjectFactory factory = new ObjectFactory();
         Report report = factory.createReport();
         report.setRentityId(7278);

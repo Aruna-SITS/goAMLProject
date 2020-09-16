@@ -36,8 +36,16 @@ public class ReportDataLoader {
     private HashMap<String, List<AddressDTO>> addressMap;
 
     private HashMap<String, List<RelatedPartyDTO>> relatedPartyMap;
+    
+    private ReportIndicatorDTO reportIndicatorDTO;
+    
+    private HashMap<String, List<PersonDirectorDTO>> personDirectorMap;
+    
+    public ReportIndicatorDTO getReportIndicatorDTO() {
+		return reportIndicatorDTO;
+	}
 
-    public void loadData() {
+	public void loadData() {
 
         transactionsMap = this.ctrJdbcDao.getTransactionsAsMap();
 
@@ -60,7 +68,18 @@ public class ReportDataLoader {
         relatedPartyMap = this.ctrJdbcDao.getRelatedPartyMap();
 
         fromToMappingDTOMap = this.ctrJdbcDao.getFromToMappingRecordsAsMap();
+        
+        reportIndicatorDTO = this.ctrJdbcDao.getReportIndicatorObj();
+        
+        personDirectorMap = this.ctrJdbcDao.getPersonDirectorsMap();
+        
+        
     }
+	
+//	public HashMap<String, List<FromToMappingDTO>> fromToMappingRecordsAsMapDirector(Integer UID) {
+//		fromToMappingDirectionMap = this.ctrJdbcDao.getFromToMappingRecordsAsMapDirector(UID);
+//		return fromToMappingDirectionMap;
+//	}
 
     public HashMap<Integer, TransactionDTO> getTransactionsMap() {
         return transactionsMap;
@@ -109,4 +128,13 @@ public class ReportDataLoader {
     public void setCtrJdbcDao(CTRJdbcDao ctrJdbcDao) {
         this.ctrJdbcDao = ctrJdbcDao;
     }
+
+	public HashMap<String, List<PersonDirectorDTO>> getPersonDirectorMap() {
+		return personDirectorMap;
+	}
+
+	public void setPersonDirectorMap(HashMap<String, List<PersonDirectorDTO>> personDirectorMap) {
+		this.personDirectorMap = personDirectorMap;
+	}
+
 }
